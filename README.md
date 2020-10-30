@@ -17,14 +17,14 @@ AX is a CLI for the Buffalo framework. The overall goal is to build a simple and
 - Help
 - Fix
 
-# Important 
+## Important 
 
 - Only works with Go Modules
 - We only build static
 - We don't use grifts
 - CGO is disabled when building
 
-# Things to cover
+## Things to cover
 
 - Fixer for models.go and change `models.DB` to `models.DB()` across the app.
 - Fixer to translate database.go into `config/database.go` and add `config/constants.go`.
