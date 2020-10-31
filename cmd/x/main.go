@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/paganotoni/ax/cli"
+	"github.com/paganotoni/x/cli"
 )
 
 func main() {

@@ -3,10 +3,10 @@ package cli
 import (
 	"context"
 
-	"github.com/paganotoni/ax/commands/build"
-	"github.com/paganotoni/ax/tools/compiler"
-	"github.com/paganotoni/ax/tools/packr"
-	"github.com/paganotoni/ax/tools/webpack"
+	"github.com/paganotoni/x/commands/build"
+	"github.com/paganotoni/x/tools/compiler"
+	"github.com/paganotoni/x/tools/packr"
+	"github.com/paganotoni/x/tools/webpack"
 )
 
 type cli struct {

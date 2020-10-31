@@ -1,4 +1,4 @@
-module github.com/paganotoni/ax
+module github.com/paganotoni/x
 
 go 1.15
 

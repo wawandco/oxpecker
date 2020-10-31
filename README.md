@@ -1,6 +1,6 @@
-# AX
+# X
 
-AX is a CLI for the Buffalo framework. The overall goal is to build a simple and opinionated CLI for the Buffalo framework for the tooling that I use everyday, with the possibility to extend to other purposes like plugin system and so on. This source code is heavily inspired by the work @markbates did in the buffalo-cli.
+X is a CLI for the Buffalo Framework. The overall goal is to build a simple and opinionated CLI for the Buffalo framework for the tooling that I use everyday, with the possibility to extend to other purposes like plugin system and so on. This source code is heavily inspired by the work @markbates did in the buffalo-cli.
 
 ## Design Constraints
 
