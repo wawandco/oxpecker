@@ -26,6 +26,7 @@ X is a CLI for the Buffalo Framework. The overall goal is to build a simple and 
 
 ## Things to cover
 
+- BeforeBuild should generate the `:root:/[name].go` file to allow Packr to pack correctly.
+- Fixer to move main to `cmd/name`.
 - Fixer for models.go and change `models.DB` to `models.DB()` across the app.
 - Fixer to translate database.go into `config/database.go` and add `config/constants.go`.
-

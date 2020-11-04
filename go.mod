@@ -3,6 +3,7 @@ module github.com/paganotoni/x
 go 1.15
 
 require (
+	github.com/gobuffalo/here v0.6.2
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/kr/pretty v0.2.0 // indirect
 	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9 // indirect

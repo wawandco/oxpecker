@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/paganotoni/x/commands/build"
 	"github.com/paganotoni/x/tools/compiler"
@@ -9,6 +10,9 @@ import (
 	"github.com/paganotoni/x/tools/webpack"
 )
 
+// cli is the CLI wrapper for our tool. It is in charge
+// for articulating different commands, finding it and also
+// taking care of the CLI iteraction.
 type cli struct {
 	commands []command
 }
@@ -27,13 +31,13 @@ func (c cli) findCommand(name string) command {
 
 func (c cli) Run(root string, args []string) error {
 	if len(args) < 2 {
-		//TODO: return error
+		fmt.Println("no command provided, please provide one")
 		return nil
 	}
 
 	command := c.findCommand(args[1])
 	if command == nil {
-		//TODO: return error
+		fmt.Printf("did not find %s command\n", args[1])
 		return nil
 	}
 

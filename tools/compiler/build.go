@@ -4,6 +4,8 @@ import (
 	"context"
 	"os"
 	"os/exec"
+
+	"github.com/paganotoni/x/tools"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the
@@ -11,6 +13,11 @@ import (
 //
 // IMPORTANT: it uses the static build flags.
 func (g Tool) Build(ctx context.Context, root string, args []string) error {
+	name, err := tools.BuildName()
+	if err != nil {
+		return err
+	}
+
 	buildArgs := []string{
 		"build",
 
@@ -22,7 +29,9 @@ func (g Tool) Build(ctx context.Context, root string, args []string) error {
 
 		//-o
 		"-o",
-		"bin/app",
+		"bin/" + name,
+
+		"./cmd/" + name,
 	}
 
 	cmd := exec.CommandContext(ctx, "go", buildArgs...)
