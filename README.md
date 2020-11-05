@@ -11,9 +11,9 @@ X is a CLI for the Buffalo Framework. The overall goal is to build a simple and 
 
 ## Commands
 
-- Build
+- Build [In progress]
+- Dev [In progress]
 - Test
-- Dev
 - Help
 - Fix
 

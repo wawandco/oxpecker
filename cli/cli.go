@@ -5,8 +5,10 @@ import (
 	"fmt"
 
 	"github.com/paganotoni/x/commands/build"
+	"github.com/paganotoni/x/commands/dev"
 	"github.com/paganotoni/x/tools/compiler"
 	"github.com/paganotoni/x/tools/packr"
+	"github.com/paganotoni/x/tools/refresh"
 	"github.com/paganotoni/x/tools/webpack"
 )
 
@@ -50,6 +52,7 @@ func NewCLI() cli {
 	// IMPORTANT: Order MATTERS here.
 	tools := []interface{}{
 		webpack.Tool{},
+		refresh.Tool{},
 		packr.Tool{},
 		compiler.Tool{},
 	}
@@ -57,6 +60,7 @@ func NewCLI() cli {
 	return cli{
 		commands: []command{
 			build.New(tools),
+			dev.New(tools),
 		},
 	}
 }
