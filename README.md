@@ -2,6 +2,14 @@
 
 X is a CLI for the Buffalo Framework. The overall goal is to build a simple and opinionated CLI for the Buffalo framework for the tooling that I use everyday, with the possibility to extend to other purposes like plugin system and so on. This source code is heavily inspired by the work @markbates did in the buffalo-cli.
 
+## Installation
+
+To install X you need to run the following command:
+
+```sh
+go install github.com/paganotoni/x/cmd/x
+```
+
 ## Design Constraints
 
 - Simple as possible
