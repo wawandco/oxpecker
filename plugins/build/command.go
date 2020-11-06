@@ -3,15 +3,19 @@ package build
 import (
 	"context"
 	"fmt"
+
+	"github.com/paganotoni/x/plugins"
 )
 
-type build struct {
-	builders       []builder
-	afterBuilders  []afterBuilder
-	beforeBuilders []beforeBuilder
+var _ plugins.Command = (*Command)(nil)
+
+type Command struct {
+	builders       []Builder
+	afterBuilders  []AfterBuilder
+	beforeBuilders []BeforeBuilder
 }
 
-func (b build) Name() string {
+func (b Command) Name() string {
 	return "build"
 }
 
@@ -22,7 +26,7 @@ func (b build) Name() string {
 // - Injects database.yml and inflections.
 // - Overrides main.go to add migrate
 // - Runs go build
-func (b build) Run(ctx context.Context, root string, args []string) error {
+func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 	var err error
 
@@ -64,23 +68,20 @@ func (b build) Run(ctx context.Context, root string, args []string) error {
 	return nil
 }
 
-func New(tools []interface{}) build {
-	command := build{}
+func (b *Command) Receive(plugins []plugins.Plugin) {
+	for _, plugin := range plugins {
+		fmt.Println(plugin)
 
-	for _, tool := range tools {
-
-		if ptool, ok := tool.(beforeBuilder); ok {
-			command.beforeBuilders = append(command.beforeBuilders, ptool)
+		if ptool, ok := plugin.(BeforeBuilder); ok {
+			b.beforeBuilders = append(b.beforeBuilders, ptool)
 		}
 
-		if ptool, ok := tool.(builder); ok {
-			command.builders = append(command.builders, ptool)
+		if ptool, ok := plugin.(Builder); ok {
+			b.builders = append(b.builders, ptool)
 		}
 
-		if ptool, ok := tool.(afterBuilder); ok {
-			command.afterBuilders = append(command.afterBuilders, ptool)
+		if ptool, ok := plugin.(AfterBuilder); ok {
+			b.afterBuilders = append(b.afterBuilders, ptool)
 		}
 	}
-
-	return command
 }

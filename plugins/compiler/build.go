@@ -4,8 +4,9 @@ import (
 	"context"
 	"os"
 	"os/exec"
+	"strings"
 
-	"github.com/paganotoni/x/tools"
+	"github.com/gobuffalo/here"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the
@@ -13,7 +14,8 @@ import (
 //
 // IMPORTANT: it uses the static build flags.
 func (g Tool) Build(ctx context.Context, root string, args []string) error {
-	name, err := tools.BuildName()
+	name, err := buildName()
+
 	if err != nil {
 		return err
 	}
@@ -40,4 +42,18 @@ func (g Tool) Build(ctx context.Context, root string, args []string) error {
 	cmd.Stdin = os.Stdin
 
 	return cmd.Run()
+}
+
+// buildName extracts the last part of the module by splitting on `/`
+// this last part is useful for name of the binary and other things.
+func buildName() (string, error) {
+	info, err := here.Current()
+	if err != nil {
+		return "", err
+	}
+
+	parts := strings.Split(info.Module.Path, "/")
+	name := parts[len(parts)-1]
+
+	return name, nil
 }

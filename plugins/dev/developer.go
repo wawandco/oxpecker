@@ -2,9 +2,9 @@ package dev
 
 import "context"
 
-// developer is a tool that will be invoked for development
+// Developer is a tool that will be invoked for development
 // purposes. Things like webpack with --watch and refresh.
-type developer interface {
+type Developer interface {
 	Name() string
 	Develop(context.Context, string) error
 }

@@ -3,6 +3,7 @@ module github.com/paganotoni/x
 go 1.15
 
 require (
+	github.com/gobuffalo/buffalo-cli v0.5.0
 	github.com/gobuffalo/here v0.6.2
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190

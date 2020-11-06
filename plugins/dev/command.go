@@ -4,26 +4,30 @@ import (
 	"context"
 	"fmt"
 	"sync"
+
+	"github.com/paganotoni/x/plugins"
 )
 
+var _ plugins.Command = (*Command)(nil)
+
 // dev is the dev command.
-type dev struct {
-	developers []developer
+type Command struct {
+	developers []Developer
 }
 
-func (d dev) Name() string {
+func (d Command) Name() string {
 	return "dev"
 }
 
 // Run calls NPM or yarn to start webpack watching the assets
 // Also starts refresh listening for the changes in Go files.
-func (d dev) Run(ctx context.Context, root string, args []string) error {
+func (d *Command) Run(ctx context.Context, root string, args []string) error {
 
 	var wg sync.WaitGroup
 	for _, tool := range d.developers {
 		wg.Add(1)
 		// TODO: This needs to be parallel.
-		go func(t developer) {
+		go func(t Developer) {
 			err := t.Develop(ctx, root)
 			if err != nil {
 				fmt.Println(err)
@@ -37,14 +41,13 @@ func (d dev) Run(ctx context.Context, root string, args []string) error {
 	return nil
 }
 
-func New(tools []interface{}) dev {
-	command := dev{}
-
-	for _, tool := range tools {
-		if ptool, ok := tool.(developer); ok {
-			command.developers = append(command.developers, ptool)
+func (d *Command) Receive(plugins []plugins.Plugin) {
+	for _, tool := range plugins {
+		ptool, ok := tool.(Developer)
+		if !ok {
+			continue
 		}
-	}
 
-	return command
+		d.developers = append(d.developers, ptool)
+	}
 }

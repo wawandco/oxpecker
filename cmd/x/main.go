@@ -8,20 +8,16 @@ import (
 )
 
 func main() {
-	cli := cli.NewCLI()
-
 	pwd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Modules must be ON
-	os.Setenv("GO111MODULE", "on")
+	os.Setenv("GO111MODULE", "on") // Modules must be ON
+	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
 
-	// CGO disabled
-	os.Setenv("CGO_ENABLED", "0")
-
-	err = cli.Run(pwd, os.Args)
+	cli := cli.NewWithRoot(pwd)
+	err = cli.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}

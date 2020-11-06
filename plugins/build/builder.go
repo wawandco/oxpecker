@@ -2,8 +2,8 @@ package build
 
 import "context"
 
-// builder interface allows to set the build steps to be run.
-type builder interface {
+// Builder interface allows to set the build steps to be run.
+type Builder interface {
 	Name() string
 	Build(context.Context, string, []string) error
 }
