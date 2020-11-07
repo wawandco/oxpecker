@@ -14,7 +14,7 @@ import (
 // Go executable installed and can be invoked with `go`.
 //
 // IMPORTANT: it uses the static build flags.
-func (g Tool) Build(ctx context.Context, root string, args []string) error {
+func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 	name, err := buildName()
 	if err != nil {
 		return err
