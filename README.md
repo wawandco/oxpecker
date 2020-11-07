@@ -20,10 +20,11 @@ go install github.com/paganotoni/x/cmd/x
 ## Commands
 
 - Build [In progress]
-- Dev [In progress]
-- Test
-- Help
-- Fix
+    - TODO: migrations after built
+- Dev [DONE]
+- Test [TODO]
+- Help [TODO]
+- Fix [TODO]
 
 ## Important 
 
