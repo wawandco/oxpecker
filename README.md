@@ -57,4 +57,5 @@ So I thought about building this CLI as a way to try out those ideas I and my te
 - Build is currently only doing the `--static` part. Should that be an option ?
 - CGO is disabled, should it be?
 - Should we include tasks? (grift/jim/other?)
+- Need to do integration testing for the CLI
 

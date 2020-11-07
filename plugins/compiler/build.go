@@ -2,11 +2,12 @@ package compiler
 
 import (
 	"context"
+	"io/ioutil"
 	"os"
 	"os/exec"
-	"strings"
+	"path/filepath"
 
-	"github.com/gobuffalo/here"
+	"golang.org/x/mod/modfile"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the
@@ -51,13 +52,13 @@ func (g Tool) Build(ctx context.Context, root string, args []string) error {
 // buildName extracts the last part of the module by splitting on `/`
 // this last part is useful for name of the binary and other things.
 func buildName() (string, error) {
-	info, err := here.Current()
+	content, err := ioutil.ReadFile("go.mod")
 	if err != nil {
 		return "", err
 	}
 
-	parts := strings.Split(info.Module.Path, "/")
-	name := parts[len(parts)-1]
+	path := modfile.ModulePath(content)
+	name := filepath.Base(path)
 
 	return name, nil
 }
