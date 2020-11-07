@@ -58,5 +58,3 @@ So I thought about building this CLI as a way to try out those ideas I and my te
 - CGO is disabled, should it be?
 - Should we include tasks? (grift/jim/other?)
 
-### Copyright
-
