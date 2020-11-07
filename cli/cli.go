@@ -112,3 +112,6 @@ func NewWithRoot(root string) *cli {
 		plugins: defaultPlugins,
 	}
 }
+
+// IMPORTANT: Incorporate the plugin system by taking a look at this.
+// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28

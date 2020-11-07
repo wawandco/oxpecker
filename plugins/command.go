@@ -12,5 +12,3 @@ type Command interface {
 	// Run the command with the passed context, root and args.
 	Run(context.Context, string, []string) error
 }
-
-// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28
