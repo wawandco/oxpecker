@@ -22,11 +22,10 @@ func (d Command) Name() string {
 // Run calls NPM or yarn to start webpack watching the assets
 // Also starts refresh listening for the changes in Go files.
 func (d *Command) Run(ctx context.Context, root string, args []string) error {
-
 	var wg sync.WaitGroup
 	for _, tool := range d.developers {
+		// Each of the tools runs in parallel
 		wg.Add(1)
-		// TODO: This needs to be parallel.
 		go func(t Developer) {
 			err := t.Develop(ctx, root)
 			if err != nil {
