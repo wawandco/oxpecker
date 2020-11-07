@@ -2,13 +2,13 @@ package refresh
 
 import (
 	"context"
+	"io/ioutil"
 	"os"
-	"path"
 	"path/filepath"
 	"time"
 
-	"github.com/gobuffalo/here"
 	"github.com/markbates/refresh/refresh"
+	"golang.org/x/mod/modfile"
 )
 
 func (w Tool) Develop(ctx context.Context, root string) error {
@@ -33,9 +33,9 @@ func (w Tool) config(root string) (*refresh.Configuration, error) {
 }
 
 func (w Tool) defaultConfig(root string) (*refresh.Configuration, error) {
-	info, err := here.Dir(root)
+	name, err := buildName()
 	if err != nil {
-		return &refresh.Configuration{}, err
+		return nil, err
 	}
 
 	config := &refresh.Configuration{
@@ -66,9 +66,23 @@ func (w Tool) defaultConfig(root string) (*refresh.Configuration, error) {
 		// BuildFlags:   bflags,
 
 		AppRoot:         root,
-		BinaryName:      path.Base(info.Module.Path) + "-build",
-		BuildTargetPath: filepath.Join(root, "cmd", path.Base(info.Module.Path)),
+		BinaryName:      name + "-build",
+		BuildTargetPath: filepath.Join(root, "cmd", name),
 	}
 
 	return config, nil
+}
+
+// buildName extracts the last part of the module by splitting on `/`
+// this last part is useful for name of the binary and other things.
+func buildName() (string, error) {
+	content, err := ioutil.ReadFile("go.mod")
+	if err != nil {
+		return "", err
+	}
+
+	path := modfile.ModulePath(content)
+	name := filepath.Base(path)
+
+	return name, nil
 }

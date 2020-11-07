@@ -21,7 +21,7 @@ var defaultPlugins = []plugins.Plugin{
 	&webpack.Tool{},
 	&refresh.Tool{},
 	&packr.Tool{},
-	&compiler.Tool{},
+	&compiler.Compiler{},
 
 	// Commands are plugins
 	&build.Command{},
