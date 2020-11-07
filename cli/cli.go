@@ -18,10 +18,10 @@ import (
 var defaultPlugins = []plugins.Plugin{
 
 	//IMPORTANT: order matters!
-	webpack.Tool{},
-	refresh.Tool{},
-	packr.Tool{},
-	compiler.Tool{},
+	&webpack.Tool{},
+	&refresh.Tool{},
+	&packr.Tool{},
+	&compiler.Tool{},
 
 	// Commands are plugins
 	&build.Command{},
@@ -38,7 +38,7 @@ type cli struct {
 
 // findCommand looks in the plugins for a command
 // with the passed name.
-func (c cli) findCommand(name string) plugins.Command {
+func (c *cli) findCommand(name string) plugins.Command {
 	for _, cm := range c.plugins {
 		command, ok := cm.(plugins.Command)
 		if !ok {
@@ -56,11 +56,13 @@ func (c cli) findCommand(name string) plugins.Command {
 }
 
 // Runs the CLI
-func (c cli) Run(args []string) error {
+func (c *cli) Run(args []string) error {
 	if len(args) < 2 {
 		fmt.Println("no command provided, please provide one")
 		return nil
 	}
+
+	c.parseFlags(args[1:])
 
 	command := c.findCommand(args[1])
 	if command == nil {
@@ -76,10 +78,27 @@ func (c cli) Run(args []string) error {
 	return command.Run(ctx, c.root, args[1:])
 }
 
+// parseFlags passes args to each of the plugins to
+// allow the plugin parse options passed through the CLI
+func (c *cli) parseFlags(args []string) {
+	for _, command := range c.plugins {
+		pr, ok := command.(plugins.FlagParser)
+		if !ok {
+			continue
+		}
+
+		err := pr.ParseFlags(args)
+		if err != nil {
+			fmt.Printf("error parsing flags for %s: %s\n", command.Name(), err)
+			continue
+		}
+	}
+}
+
 // New creates a CLI with the passed root and plugins. This becomes handy
 // when specifying your own plugins.
-func New(root string, plugins []plugins.Plugin) cli {
-	return cli{
+func New(root string, plugins []plugins.Plugin) *cli {
+	return &cli{
 		root:    root,
 		plugins: plugins,
 	}
@@ -87,8 +106,8 @@ func New(root string, plugins []plugins.Plugin) cli {
 
 // NewWithRoot creates a CLI with the root passed and
 // default set of plugins.
-func NewWithRoot(root string) cli {
-	return cli{
+func NewWithRoot(root string) *cli {
+	return &cli{
 		root:    root,
 		plugins: defaultPlugins,
 	}

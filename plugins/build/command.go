@@ -70,7 +70,6 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 func (b *Command) Receive(plugins []plugins.Plugin) {
 	for _, plugin := range plugins {
-		fmt.Println(plugin)
 
 		if ptool, ok := plugin.(BeforeBuilder); ok {
 			b.beforeBuilders = append(b.beforeBuilders, ptool)

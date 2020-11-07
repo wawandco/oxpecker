@@ -15,9 +15,13 @@ import (
 // IMPORTANT: it uses the static build flags.
 func (g Tool) Build(ctx context.Context, root string, args []string) error {
 	name, err := buildName()
-
 	if err != nil {
 		return err
+	}
+
+	output := "bin/" + name
+	if g.output != "" {
+		output = g.output
 	}
 
 	buildArgs := []string{
@@ -31,7 +35,7 @@ func (g Tool) Build(ctx context.Context, root string, args []string) error {
 
 		//-o
 		"-o",
-		"bin/" + name,
+		output,
 
 		"./cmd/" + name,
 	}
