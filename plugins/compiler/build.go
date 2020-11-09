@@ -18,11 +18,6 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 		return err
 	}
 
-	output := "bin/" + name
-	if g.output != "" {
-		output = g.output
-	}
-
 	buildArgs := []string{
 		"build",
 
@@ -34,7 +29,7 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 
 		//-o
 		"-o",
-		output,
+		g.binaryOutput(name),
 
 		"./cmd/" + name,
 	}
@@ -45,4 +40,15 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 	cmd.Stdin = os.Stdin
 
 	return cmd.Run()
+}
+
+// binaryOutput considers the output passed to
+// use it or default to bin/name.
+func (g Compiler) binaryOutput(name string) string {
+	output := "bin/" + name
+	if g.output != "" {
+		output = g.output
+	}
+
+	return output
 }
