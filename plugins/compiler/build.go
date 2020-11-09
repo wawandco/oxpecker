@@ -2,12 +2,10 @@ package compiler
 
 import (
 	"context"
-	"io/ioutil"
 	"os"
 	"os/exec"
-	"path/filepath"
 
-	"golang.org/x/mod/modfile"
+	"github.com/paganotoni/x/info"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the
@@ -15,7 +13,7 @@ import (
 //
 // IMPORTANT: it uses the static build flags.
 func (g Compiler) Build(ctx context.Context, root string, args []string) error {
-	name, err := buildName()
+	name, err := info.BuildName()
 	if err != nil {
 		return err
 	}
@@ -47,18 +45,4 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 	cmd.Stdin = os.Stdin
 
 	return cmd.Run()
-}
-
-// buildName extracts the last part of the module by splitting on `/`
-// this last part is useful for name of the binary and other things.
-func buildName() (string, error) {
-	content, err := ioutil.ReadFile("go.mod")
-	if err != nil {
-		return "", err
-	}
-
-	path := modfile.ModulePath(content)
-	name := filepath.Base(path)
-
-	return name, nil
 }
