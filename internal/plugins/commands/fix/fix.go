@@ -10,10 +10,8 @@ import (
 	"github.com/paganotoni/x/internal/plugins"
 )
 
-// Things to Fix:
-
-// 1. models/models.go has changed its structure not to use an init function to
-// set the database, it now provides a method to return the database connection
+var _ plugins.Command = (*Command)(nil)
+var _ plugins.FlagParser = (*Command)(nil)
 
 type Command struct {
 	fixers []Fixer
