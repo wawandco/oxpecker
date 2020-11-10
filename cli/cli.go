@@ -7,6 +7,7 @@ import (
 	"github.com/paganotoni/x/internal/plugins"
 	"github.com/paganotoni/x/internal/plugins/commands/build"
 	"github.com/paganotoni/x/internal/plugins/commands/dev"
+	"github.com/paganotoni/x/internal/plugins/commands/test"
 	"github.com/paganotoni/x/internal/plugins/compiler"
 	"github.com/paganotoni/x/internal/plugins/packr"
 	"github.com/paganotoni/x/internal/plugins/refresh"
@@ -26,6 +27,7 @@ var defaultPlugins = []plugins.Plugin{
 	// Commands are plugins
 	&build.Command{},
 	&dev.Command{},
+	&test.Command{},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge
