@@ -37,7 +37,7 @@ func (c *Command) Receive(plugins []plugins.Plugin) {
 	for _, plugin := range plugins {
 
 		if ptool, ok := plugin.(Fixer); ok {
-			b.fixers = append(b.fixers, ptool)
+			c.fixers = append(c.fixers, ptool)
 		}
 
 	}

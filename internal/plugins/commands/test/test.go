@@ -12,7 +12,7 @@ import (
 type Command struct {
 	beforeTesters []BeforeTester
 	testers       []Tester
-	afterTester   []AfterTester
+	afterTesters  []AfterTester
 }
 
 func (c Command) Name() string {
@@ -38,7 +38,7 @@ func (b *Command) Receive(plugins []plugins.Plugin) {
 		}
 
 		if ptool, ok := plugin.(AfterTester); ok {
-			b.afterTesters = append(b.afterTester, ptool)
+			b.afterTesters = append(b.afterTesters, ptool)
 		}
 	}
 }
