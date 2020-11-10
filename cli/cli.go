@@ -10,6 +10,7 @@ import (
 	"github.com/paganotoni/x/internal/plugins/commands/fix"
 	"github.com/paganotoni/x/internal/plugins/commands/test"
 	"github.com/paganotoni/x/internal/plugins/compiler"
+	"github.com/paganotoni/x/internal/plugins/environment"
 	"github.com/paganotoni/x/internal/plugins/packr"
 	"github.com/paganotoni/x/internal/plugins/refresh"
 	"github.com/paganotoni/x/internal/plugins/webpack"
@@ -24,6 +25,7 @@ var defaultPlugins = []plugins.Plugin{
 	&refresh.Tool{},
 	&packr.Tool{},
 	&compiler.Compiler{},
+	&environment.GoEnv{},
 
 	// Commands are plugins!
 	&build.Command{},

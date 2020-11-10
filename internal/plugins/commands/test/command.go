@@ -9,6 +9,9 @@ import (
 	"github.com/paganotoni/x/internal/plugins"
 )
 
+var _ plugins.Plugin = (*Command)(nil)
+var _ plugins.PluginReceiver = (*Command)(nil)
+
 type Command struct {
 	beforeTesters []BeforeTester
 	testers       []Tester
@@ -20,25 +23,32 @@ func (c Command) Name() string {
 }
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
-	// Run before tester until one fails
-	// Run testers
-	// Run after tester
-	return nil
-}
-
-func (b *Command) Receive(plugins []plugins.Plugin) {
-	for _, plugin := range plugins {
-
-		if ptool, ok := plugin.(BeforeTester); ok {
-			b.beforeTesters = append(b.beforeTesters, ptool)
-		}
-
-		if ptool, ok := plugin.(Tester); ok {
-			b.testers = append(b.testers, ptool)
-		}
-
-		if ptool, ok := plugin.(AfterTester); ok {
-			b.afterTesters = append(b.afterTesters, ptool)
+	var err error
+	for _, bt := range c.beforeTesters {
+		err = bt.RunBeforeTest(ctx, root, args)
+		if err != nil {
+			// TODO: log this
+			break
 		}
 	}
+
+	if err == nil {
+
+		for _, tt := range c.testers {
+			err = tt.RunTest(ctx, root, args)
+			if err != nil {
+				// TODO: log this
+				break
+			}
+		}
+	}
+
+	for _, at := range c.afterTesters {
+		err := at.RunAfterTest(ctx, root, args)
+		if err != nil {
+			// TODO: log this
+		}
+	}
+
+	return nil
 }

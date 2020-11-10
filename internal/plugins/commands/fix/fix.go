@@ -11,7 +11,7 @@ import (
 )
 
 var _ plugins.Command = (*Command)(nil)
-var _ plugins.FlagParser = (*Command)(nil)
+var _ plugins.PluginReceiver = (*Command)(nil)
 
 type Command struct {
 	fixers []Fixer
