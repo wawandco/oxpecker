@@ -1,6 +1,6 @@
 package compiler
 
-import "github.com/paganotoni/x/plugins"
+import "github.com/paganotoni/x/internal/plugins"
 
 var (
 	// These are the interfaces we know that this

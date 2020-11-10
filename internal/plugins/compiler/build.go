@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/paganotoni/x/info"
+	"github.com/paganotoni/x/internal/info"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the

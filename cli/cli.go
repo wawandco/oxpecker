@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/x/plugins"
-	"github.com/paganotoni/x/plugins/build"
-	"github.com/paganotoni/x/plugins/compiler"
-	"github.com/paganotoni/x/plugins/dev"
-	"github.com/paganotoni/x/plugins/packr"
-	"github.com/paganotoni/x/plugins/refresh"
-	"github.com/paganotoni/x/plugins/webpack"
+	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/x/internal/plugins/commands/build"
+	"github.com/paganotoni/x/internal/plugins/commands/dev"
+	"github.com/paganotoni/x/internal/plugins/compiler"
+	"github.com/paganotoni/x/internal/plugins/packr"
+	"github.com/paganotoni/x/internal/plugins/refresh"
+	"github.com/paganotoni/x/internal/plugins/webpack"
 )
 
 // defaultPlugins is the list of default plugins that will

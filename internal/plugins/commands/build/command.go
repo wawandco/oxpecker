@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/x/plugins"
+	"github.com/paganotoni/x/internal/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)

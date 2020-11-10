@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/markbates/refresh/refresh"
-	"github.com/paganotoni/x/info"
+	"github.com/paganotoni/x/internal/info"
 )
 
 func (w Tool) Develop(ctx context.Context, root string) error {
