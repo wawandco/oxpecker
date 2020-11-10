@@ -5,6 +5,7 @@ package test
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/paganotoni/x/internal/plugins"
 )
@@ -27,7 +28,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, bt := range c.beforeTesters {
 		err = bt.RunBeforeTest(ctx, root, args)
 		if err != nil {
-			// TODO: log this
+			fmt.Printf("Error running %v before tester: %v\n", bt.Name, err)
 			break
 		}
 	}
@@ -46,7 +47,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, at := range c.afterTesters {
 		err := at.RunAfterTest(ctx, root, args)
 		if err != nil {
-			// TODO: log this
+			fmt.Printf("Error running %v after tester: %v\n", at.Name, err)
 		}
 	}
 
