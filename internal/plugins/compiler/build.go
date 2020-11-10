@@ -31,6 +31,7 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 		"-o",
 		g.binaryOutput(name),
 
+		// The main we're going to build
 		"./cmd/" + name,
 	}
 
