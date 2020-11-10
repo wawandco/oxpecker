@@ -20,7 +20,7 @@ func (c Command) Name() string {
 }
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
-	// Run before tester
+	// Run before tester until one fails
 	// Run testers
 	// Run after tester
 	return nil
