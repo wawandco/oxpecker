@@ -34,7 +34,6 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	}
 
 	if err == nil {
-
 		for _, tt := range c.testers {
 			err = tt.Test(ctx, root, args[1:])
 			if err != nil {
