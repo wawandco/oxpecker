@@ -5,13 +5,10 @@ import (
 	"fmt"
 
 	"github.com/paganotoni/x/internal/plugins"
-	// Commands
-	"github.com/paganotoni/x/internal/plugins/commands/build"
-	"github.com/paganotoni/x/internal/plugins/commands/dev"
-	"github.com/paganotoni/x/internal/plugins/commands/fix"
-	"github.com/paganotoni/x/internal/plugins/commands/test"
-
-	// Tools
+	"github.com/paganotoni/x/internal/plugins/lifecycle/build"
+	"github.com/paganotoni/x/internal/plugins/lifecycle/dev"
+	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
+	"github.com/paganotoni/x/internal/plugins/lifecycle/test"
 	"github.com/paganotoni/x/internal/plugins/tools/packr"
 	"github.com/paganotoni/x/internal/plugins/tools/pop"
 	"github.com/paganotoni/x/internal/plugins/tools/refresh"
@@ -22,15 +19,15 @@ import (
 // defaultPlugins is the list of default plugins that will
 // be used by default.
 var defaultPlugins = []plugins.Plugin{
-
-	//IMPORTANT: order matters!
+	// IMPORTANT: order matters!
+	// Tools plugins.
 	&webpack.Plugin{},
 	&refresh.Plugin{},
 	&packr.Plugin{},
 	&pop.Plugin{},
 	&standard.Plugin{},
 
-	// Commands are plugins!
+	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
