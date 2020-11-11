@@ -22,7 +22,7 @@ func (p *Plugin) RunBeforeBuild(ctx context.Context, root string, args []string)
 		return err
 	}
 
-	return ioutil.WriteFile(filepath.Join("config", "database.yml"), []byte(content), 0600)
+	return ioutil.WriteFile(filepath.Join("config", "gen_database.go"), []byte(content), 0600)
 }
 
 func (p *Plugin) findConfig() ([]byte, error) {

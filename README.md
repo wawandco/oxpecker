@@ -56,7 +56,7 @@ So I thought about building this CLI as a way to try out those ideas I and my te
 ## Open Topics
 
 - Build is currently only doing the `--static` part. Should that be an option ?
-- CGO is disabled, should it be?
+- CGO is disabled, should it be? Does this means we are not supporting sqlite ?
 - Should we include tasks? (grift/jim/other?)
 - Need to do integration testing for the CLI
 
