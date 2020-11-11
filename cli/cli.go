@@ -14,6 +14,7 @@ import (
 	"github.com/paganotoni/x/internal/plugins/tools/refresh"
 	"github.com/paganotoni/x/internal/plugins/tools/standard"
 	"github.com/paganotoni/x/internal/plugins/tools/webpack"
+	"github.com/paganotoni/x/internal/plugins/tools/yarn"
 )
 
 // defaultPlugins is the list of default plugins that will
@@ -26,6 +27,7 @@ var defaultPlugins = []plugins.Plugin{
 	&packr.Plugin{},
 	&pop.Plugin{},
 	&standard.Plugin{},
+	&yarn.Plugin{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
