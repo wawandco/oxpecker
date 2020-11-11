@@ -10,7 +10,7 @@ import (
 	"github.com/paganotoni/x/internal/info"
 )
 
-func (w Tool) Develop(ctx context.Context, root string) error {
+func (w Plugin) Develop(ctx context.Context, root string) error {
 	config, err := w.config(root)
 	if err != nil {
 		return err
@@ -21,7 +21,7 @@ func (w Tool) Develop(ctx context.Context, root string) error {
 }
 
 // config tries to pull the config from .buffalo.dev.yml otherwise uses default config
-func (w Tool) config(root string) (*refresh.Configuration, error) {
+func (w Plugin) config(root string) (*refresh.Configuration, error) {
 	c := &refresh.Configuration{}
 	if _, err := os.Stat(".buffalo.dev.yml"); err == nil {
 		err = c.Load(".buffalo.dev.yml")
@@ -31,7 +31,7 @@ func (w Tool) config(root string) (*refresh.Configuration, error) {
 	return w.defaultConfig(root)
 }
 
-func (w Tool) defaultConfig(root string) (*refresh.Configuration, error) {
+func (w Plugin) defaultConfig(root string) (*refresh.Configuration, error) {
 	name, err := info.BuildName()
 	if err != nil {
 		return nil, err

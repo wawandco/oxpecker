@@ -26,9 +26,9 @@ func (c Command) Name() string {
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	var err error
 	for _, bt := range c.beforeTesters {
-		err = bt.RunBeforeTest(ctx, root, args)
+		err = bt.RunBeforeTest(ctx, root, args[1:])
 		if err != nil {
-			fmt.Printf("Error running %v before tester: %v\n", bt.Name, err)
+			fmt.Printf("Error running %v before tester: %v\n", bt.Name(), err)
 			break
 		}
 	}
@@ -36,18 +36,17 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	if err == nil {
 
 		for _, tt := range c.testers {
-			err = tt.RunTest(ctx, root, args)
+			err = tt.Test(ctx, root, args[1:])
 			if err != nil {
-				// TODO: log this
 				break
 			}
 		}
 	}
 
 	for _, at := range c.afterTesters {
-		err := at.RunAfterTest(ctx, root, args)
+		err := at.RunAfterTest(ctx, root, args[1:])
 		if err != nil {
-			fmt.Printf("Error running %v after tester: %v\n", at.Name, err)
+			fmt.Printf("error running %v after tester: %v\n", at.Name(), err)
 		}
 	}
 

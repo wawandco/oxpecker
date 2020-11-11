@@ -1,9 +1,9 @@
-package compiler
+package standard
 
 import "testing"
 
 func Test_binaryOutput(t *testing.T) {
-	c := &Compiler{}
+	c := &Plugin{}
 	output := c.binaryOutput("aaa")
 
 	if output != "bin/aaa" {

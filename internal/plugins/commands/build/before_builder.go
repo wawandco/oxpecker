@@ -1,10 +1,14 @@
 package build
 
-import "context"
+import (
+	"context"
+
+	"github.com/paganotoni/x/internal/plugins"
+)
 
 // BeforeBuilder interface allows to identify the things
 // that will run before the build process has started.
 type BeforeBuilder interface {
-	Name() string
-	BeforeBuild(context.Context, string, []string) error
+	plugins.Plugin
+	RunBeforeBuild(context.Context, string, []string) error
 }

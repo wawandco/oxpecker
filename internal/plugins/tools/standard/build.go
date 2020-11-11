@@ -1,4 +1,4 @@
-package compiler
+package standard
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 // Go executable installed and can be invoked with `go`.
 //
 // IMPORTANT: it uses the static build flags.
-func (g Compiler) Build(ctx context.Context, root string, args []string) error {
+func (g *Plugin) Build(ctx context.Context, root string, args []string) error {
 	name, err := info.BuildName()
 	if err != nil {
 		return err
@@ -45,7 +45,7 @@ func (g Compiler) Build(ctx context.Context, root string, args []string) error {
 
 // binaryOutput considers the output passed to
 // use it or default to bin/name.
-func (g Compiler) binaryOutput(name string) string {
+func (g *Plugin) binaryOutput(name string) string {
 	output := "bin/" + name
 	if g.output != "" {
 		output = g.output

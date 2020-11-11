@@ -34,7 +34,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, builder := range b.beforeBuilders {
 		fmt.Printf(">>> %v BeforeBuilder Running \n\n", builder.Name())
 
-		err = builder.BeforeBuild(ctx, root, args)
+		err = builder.RunBeforeBuild(ctx, root, args)
 		if err != nil {
 			fmt.Printf("[ERROR] %v\n", err.Error())
 			break
@@ -59,7 +59,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, afterBuilder := range b.afterBuilders {
 		fmt.Printf(">>> %v AfterBuilder Running \n\n", afterBuilder.Name())
 
-		err = afterBuilder.AfterBuild(root, args)
+		err = afterBuilder.RunAfterBuild(root, args)
 		if err != nil {
 			return err
 		}

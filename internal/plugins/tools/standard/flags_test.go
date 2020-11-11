@@ -1,9 +1,9 @@
-package compiler
+package standard
 
 import "testing"
 
 func Test_ParseFlags_Empty(t *testing.T) {
-	c := &Compiler{}
+	c := &Plugin{}
 	err := c.ParseFlags([]string{})
 	if err != nil {
 		t.Errorf("should not err on parseFlags empty")
@@ -15,7 +15,7 @@ func Test_ParseFlags_Empty(t *testing.T) {
 }
 
 func Test_ParseFlags_Value(t *testing.T) {
-	c := &Compiler{}
+	c := &Plugin{}
 	err := c.ParseFlags([]string{"-o", "something"})
 	if err != nil {
 		t.Errorf("should not err on parseFlags with value")

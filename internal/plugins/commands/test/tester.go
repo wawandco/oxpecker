@@ -8,5 +8,5 @@ import "context"
 // - Linting (gofmt/metalinter/milo)
 // - Yarn/NPM tests
 type Tester interface {
-	RunTest(context.Context, string, []string) error
+	Test(context.Context, string, []string) error
 }

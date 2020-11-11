@@ -5,15 +5,18 @@ import (
 	"fmt"
 
 	"github.com/paganotoni/x/internal/plugins"
+	// Commands
 	"github.com/paganotoni/x/internal/plugins/commands/build"
 	"github.com/paganotoni/x/internal/plugins/commands/dev"
 	"github.com/paganotoni/x/internal/plugins/commands/fix"
 	"github.com/paganotoni/x/internal/plugins/commands/test"
-	"github.com/paganotoni/x/internal/plugins/compiler"
-	"github.com/paganotoni/x/internal/plugins/environment"
-	"github.com/paganotoni/x/internal/plugins/packr"
-	"github.com/paganotoni/x/internal/plugins/refresh"
-	"github.com/paganotoni/x/internal/plugins/webpack"
+
+	// Tools
+	"github.com/paganotoni/x/internal/plugins/tools/packr"
+	"github.com/paganotoni/x/internal/plugins/tools/pop"
+	"github.com/paganotoni/x/internal/plugins/tools/refresh"
+	"github.com/paganotoni/x/internal/plugins/tools/standard"
+	"github.com/paganotoni/x/internal/plugins/tools/webpack"
 )
 
 // defaultPlugins is the list of default plugins that will
@@ -21,11 +24,11 @@ import (
 var defaultPlugins = []plugins.Plugin{
 
 	//IMPORTANT: order matters!
-	&webpack.Tool{},
-	&refresh.Tool{},
-	&packr.Tool{},
-	&compiler.Compiler{},
-	&environment.GoEnv{},
+	&webpack.Plugin{},
+	&refresh.Plugin{},
+	&packr.Plugin{},
+	&pop.Plugin{},
+	&standard.Plugin{},
 
 	// Commands are plugins!
 	&build.Command{},

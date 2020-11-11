@@ -7,7 +7,7 @@ import (
 	"os/exec"
 )
 
-func (w Tool) Develop(ctx context.Context, root string) error {
+func (w Plugin) Develop(ctx context.Context, root string) error {
 	var cmd *exec.Cmd
 
 	switch w.packageManagerType(root) {

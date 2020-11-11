@@ -26,8 +26,9 @@ These are the commands that the X CLI contains.
 - Packr needs to check that there is a go file in the root package otherwise it will not work (generate `:root:/[name].go` file to allow Packr to pack correctly).
 - Fixer to move main to `cmd/name`.
 - Fixer for models.go and change `models.DB` to `models.DB()` across the app.
-- Fixer to translate database.go into `config/database.go` and add `config/constants.go`.
+- Fixer to move database.yml to `config/database.yml`
 - [NICE TO HAVE] Plugin System.
+- Generator to add `config/constants.go`.
 
 
 ## Why another CLI?

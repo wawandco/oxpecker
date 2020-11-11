@@ -17,7 +17,7 @@ const (
 // packageManagerType returns yarn or npm depending on the files
 // found in the folder where the CLI is run. The first file found
 // will determine the Javascript package manager.
-func (w Tool) packageManagerType(root string) string {
+func (w Plugin) packageManagerType(root string) string {
 	info, err := os.Stat(filepath.Join(root, "yarn.lock"))
 	if err == nil && !info.IsDir() {
 		return javascriptPackageManagerYarn
@@ -39,7 +39,7 @@ func (w Tool) packageManagerType(root string) string {
 // [Important] it assumes:
 // - that there is a build script in package.json.
 // - that yarn or npm is installed in the system.
-func (w Tool) Build(ctx context.Context, root string, args []string) error {
+func (w Plugin) Build(ctx context.Context, root string, args []string) error {
 	var cmd *exec.Cmd
 
 	switch w.packageManagerType(root) {
