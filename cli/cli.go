@@ -3,6 +3,7 @@ package cli
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/paganotoni/x/internal/plugins"
 	"github.com/paganotoni/x/internal/plugins/lifecycle/build"
@@ -65,6 +66,16 @@ func (c *cli) findCommand(name string) plugins.Command {
 
 // Runs the CLI
 func (c *cli) Run(args []string) error {
+
+	// IMPORTANT: Incorporate the plugin system by taking a look at this.
+	// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28
+
+	// Not sure if we should do this here or somewhere
+	// else, these are some environment variables to be set
+	// and other things to check.
+	os.Setenv("GO111MODULE", "on") // Modules must be ON
+	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
+
 	if len(args) < 2 {
 		fmt.Println("no command provided, please provide one")
 		return nil
@@ -120,6 +131,3 @@ func NewWithRoot(root string) *cli {
 		plugins: defaultPlugins,
 	}
 }
-
-// IMPORTANT: Incorporate the plugin system by taking a look at this.
-// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28

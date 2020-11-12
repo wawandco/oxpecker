@@ -13,9 +13,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	os.Setenv("GO111MODULE", "on") // Modules must be ON
-	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
-
 	cli := cli.NewWithRoot(pwd)
 	err = cli.Run(os.Args)
 	if err != nil {
