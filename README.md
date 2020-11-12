@@ -10,30 +10,48 @@ To install X you need to run the following command:
 go install github.com/paganotoni/x/cmd/x
 ```
 
+Or using gobinaries with:
+
+```sh
+curl -sf https://gobinaries.com/paganotoni/x/cmd/x | sh
+```
+
 ## Commands
 
-These are the commands that the X CLI contains.
+Commands are loaded from plugins, instead of being a hardcoded list of commands plugins used in the CLI will provide the commands that will be available at the CLI runtime. CLI will identify those commands with the Command interface.
+
+## Included Plugins
+
+Developer Lifecycle
 
 - Dev [DONE]
-- Build [IN PROGRESS]
-- Test [TODO]
+- Test [DONE]
+- Build [DONE]
+- Fix [TODO]
 - Help [TODO]
-- Fix [TODO][NICE-TO-HAVE]
+
+Tools
+
+- Pop
+- Webpack
+- Yarn
+- Packr
+- Refresh
+- Standard (Go)
 
 ## Things to cover
 
 - [NEED FOR PRODUCTION] Migrations after built. Need to provide a way to run your migrations.
-- Packr needs to check that there is a go file in the root package otherwise it will not work (generate `:root:/[name].go` file to allow Packr to pack correctly).
-- Fixer to move main to `cmd/name`.
+- [IN PROGRESS] Plugin System.
+- Fixer to move main to `cmd/[name]`.
 - Fixer for models.go and change `models.DB` to `models.DB()` across the app.
 - Fixer to move database.yml to `config/database.yml`
-- [NICE TO HAVE] Plugin System.
 - Generator to add `config/constants.go`.
 
 
 ## Why another CLI?
 
-TLDR: Because I can! (And want to have this experience of designing and using a CLI for the stack that I and [my teams](https://wawand.co) work on everyday)
+TLDR: I want to. And in doing so want to avoid discussions about previous choices made in the v1 Buffalo CLI.
 
 **Long version**
 
