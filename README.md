@@ -46,7 +46,7 @@ Tools
 - Fixer to move main to `cmd/[name]`.
 - Fixer for models.go and change `models.DB` to `models.DB()` across the app.
 - Fixer to move database.yml to `config/database.yml`
-- Generator to add `config/constants.go`.
+- Fixer to generate `config/constants.go`.
 
 
 ## Why another CLI?
