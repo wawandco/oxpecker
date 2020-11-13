@@ -75,14 +75,14 @@ func (f Fixer) findModuleName() (string, error) {
 		return "", err
 	}
 
-	//re := regexp.MustCompile(`^module\s+(.*)`)
-	//mod := re.FindStringSubmatch(string(file))
 	base := filepath.Base(modfile.ModulePath(file))
 
 	if base != "." {
 		return base, nil
 	}
-
+	if base == "." {
+		return "", ErrModuleNameNotFound
+	}
 	return "", ErrModuleNameNotFound
 }
 
