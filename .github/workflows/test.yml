@@ -1,7 +1,6 @@
 name: Tests
 on: [push]
 jobs:
-
   tests:
     name: ${{matrix.os}} Tests
     runs-on: ${{ matrix.os }}
