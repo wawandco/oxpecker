@@ -7,7 +7,7 @@ import (
 )
 
 func Test_BuildName_Success(t *testing.T) {
-	td := t.TempDir()
+	td := os.TempDir()
 	err := os.Chdir(td)
 	if err != nil {
 		t.Fatal(err)

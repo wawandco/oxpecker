@@ -20,6 +20,4 @@ jobs:
 
     - name: Test
       run: |
-        go mod download
-        go mod tidy -v
-        go test ./...
+        go test --race ./...
