@@ -1,0 +1,14 @@
+name: Linter
+on: [push]
+jobs:
+  lint:
+    name: GolangCI Linter
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.29

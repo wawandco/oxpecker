@@ -17,7 +17,11 @@ func TestFix(t *testing.T) {
 		if err != nil {
 			t.Fatal("could not create file")
 		}
+
 		err = os.MkdirAll("config/", 0755)
+		if err != nil {
+			t.Fatal("could not create config folder")
+		}
 
 		f := Fixer{}
 		err = f.Fix()
@@ -82,7 +86,11 @@ func TestMoveFile(t *testing.T) {
 		if err != nil {
 			t.Fatal("could not create file")
 		}
+
 		err = os.MkdirAll("config/", 0755)
+		if err != nil {
+			t.Fatal("could not create config folder")
+		}
 
 		f := Fixer{}
 		err = f.moveFile()
@@ -97,6 +105,9 @@ func TestMoveFile(t *testing.T) {
 		}
 
 		err = os.MkdirAll("config/", 0755)
+		if err != nil {
+			t.Fatal("could not create config folder")
+		}
 
 		f := Fixer{}
 		err = f.moveFile()
