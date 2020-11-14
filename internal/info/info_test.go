@@ -9,8 +9,7 @@ import (
 func TestBuildName(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
-		td := os.TempDir()
-		err := os.Chdir(td)
+		err := os.Chdir(t.TempDir())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -32,8 +31,7 @@ func TestBuildName(t *testing.T) {
 	})
 
 	t.Run("Failed", func(t *testing.T) {
-		td := os.TempDir()
-		err := os.Chdir(td)
+		err := os.Chdir(t.TempDir())
 		if err != nil {
 			t.Fatal(err)
 		}
