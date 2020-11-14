@@ -9,13 +9,14 @@ import (
 func TestBuildName(t *testing.T) {
 
 	t.Run("Success", func(t *testing.T) {
-		err := os.Chdir(t.TempDir())
+		td := t.TempDir()
+		err := os.Chdir(td)
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		file := `module wawandco/something`
-		err = ioutil.WriteFile("go.mod", []byte(file), 0644)
+		err = ioutil.WriteFile("go.mod", []byte(file), 0444)
 		if err != nil {
 			t.Fatal(err)
 		}
