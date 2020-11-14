@@ -7,19 +7,26 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
     steps:
-    - name: Set up Go 1.15
-      uses: actions/setup-go@v1
+
+    - name: Set up Go 1.15.5
+      uses: actions/setup-go@v2
       with:
-        go-version: 1.15
+        go-version: 1.15.5
       id: go
+
+    - name: Cache Modules
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
 
     - name: Test
       run: |
-        go mod download
-        go mod tidy -v
-        go test -race ./...
+        go test --race ./...
