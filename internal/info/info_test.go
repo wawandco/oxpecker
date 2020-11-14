@@ -15,7 +15,7 @@ func TestBuildName(t *testing.T) {
 		}
 
 		file := `module wawandco/something`
-		err = ioutil.WriteFile("go.mod", []byte(file), 0600)
+		err = ioutil.WriteFile("go.mod", []byte(file), 0644)
 		if err != nil {
 			t.Fatal(err)
 		}

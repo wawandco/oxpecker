@@ -16,7 +16,7 @@ func TestRunBeforeBuild(t *testing.T) {
 			t.Error(err)
 		}
 
-		err = ioutil.WriteFile("go.mod", []byte("module sample/thing"), 0600)
+		err = ioutil.WriteFile("go.mod", []byte("module sample/thing"), 0644)
 		if err != nil {
 			t.Error(err)
 		}
@@ -49,12 +49,12 @@ func TestRunBeforeBuild(t *testing.T) {
 			t.Error(err)
 		}
 
-		err = ioutil.WriteFile("go.mod", []byte("module sample/thing"), 0600)
+		err = ioutil.WriteFile("go.mod", []byte("module sample/thing"), 0644)
 		if err != nil {
 			t.Error(err)
 		}
 
-		err = ioutil.WriteFile("thing.go", []byte("package other"), 0600)
+		err = ioutil.WriteFile("thing.go", []byte("package other"), 0644)
 		if err != nil {
 			t.Fatal(err)
 		}
