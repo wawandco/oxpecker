@@ -18,8 +18,7 @@ var (
 
 // Fixer is in charge of performing a Fix operation
 // that moves the main.go to cmd/[name-of-the-module]/main.go
-type Fixer struct {
-}
+type Fixer struct{}
 
 // Fix does the main.go magic
 // - Determine if the file exists
