@@ -10,7 +10,7 @@ import (
 
 func TestRunBeforeBuild(t *testing.T) {
 	t.Run("Empty", func(t *testing.T) {
-		dir := os.TempDir()
+		dir := t.TempDir()
 		err := os.Chdir(dir)
 		if err != nil {
 			t.Error(err)
@@ -43,7 +43,7 @@ func TestRunBeforeBuild(t *testing.T) {
 	})
 
 	t.Run("Exists", func(t *testing.T) {
-		dir := os.TempDir()
+		dir := t.TempDir()
 		err := os.Chdir(dir)
 		if err != nil {
 			t.Error(err)
