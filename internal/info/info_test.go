@@ -32,7 +32,7 @@ func TestBuildName(t *testing.T) {
 	})
 
 	t.Run("Failed", func(t *testing.T) {
-		td := t.TempDir()
+		td := os.TempDir()
 		err := os.Chdir(td)
 		if err != nil {
 			t.Fatal(err)
