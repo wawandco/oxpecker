@@ -36,6 +36,11 @@ func TestBuildName(t *testing.T) {
 			t.Fatal(err)
 		}
 
+		err = os.Remove("go.mod")
+		if err != nil && os.IsNotExist(err) {
+			t.Fatal(err)
+		}
+
 		name, err := BuildName()
 		if err == nil {
 			t.Fail()
