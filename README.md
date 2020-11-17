@@ -43,10 +43,10 @@ Tools
 
 - [NEED FOR PRODUCTION] Migrations after built. Need to provide a way to run your migrations.
 - [IN PROGRESS] Plugin System.
-- Fixer to move main to `cmd/[name]`.
-- Fixer for models.go and change `models.DB` to `models.DB()` across the app.
-- Fixer to move database.yml to `config/database.yml`
+- [DONE] Fixer to move main to `cmd/[name]`.
+- [DONE] Fixer to move database.yml to `config/database.yml`
 - Fixer to generate `config/constants.go`.
+- Fixer for models.go and change `models.DB` to `models.DB()` across the app.
 
 
 ## Why another CLI?

@@ -16,6 +16,7 @@ import (
 	"github.com/paganotoni/x/internal/plugins/tools/refresh"
 	"github.com/paganotoni/x/internal/plugins/tools/standard"
 	"github.com/paganotoni/x/internal/plugins/tools/webpack"
+	"github.com/paganotoni/x/internal/plugins/tools/x"
 	"github.com/paganotoni/x/internal/plugins/tools/yarn"
 )
 
@@ -31,6 +32,7 @@ var defaultPlugins = []plugins.Plugin{
 	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
+	&x.Fixer{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},

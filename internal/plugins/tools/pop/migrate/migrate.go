@@ -8,6 +8,7 @@ import (
 
 	"github.com/gobuffalo/pop/v5"
 	"github.com/paganotoni/x/internal/plugins"
+	"github.com/spf13/pflag"
 )
 
 var (
@@ -40,13 +41,15 @@ func (m *Plugin) SubcommandName() string {
 }
 
 func (m *Plugin) ParseFlags(args []string) error {
-	m.migrationPath = "migrations"
-	m.connectionName = "development"
-	m.direction = "UP"
-	m.configFile = "config/database.yml"
-	m.steps = 1
+	flags := pflag.NewFlagSet(m.Name(), pflag.ContinueOnError)
 
-	return nil
+	flags.StringVarP(&m.connectionName, "conn", "", "development", "the name of the connection to use")
+	flags.StringVarP(&m.migrationPath, "folder", "", "./migrations", "the path to the migrations")
+	flags.StringVarP(&m.direction, "direction", "", "", "direction to run the migrations to")
+	flags.StringVarP(&m.configFile, "config", "", "config/database.yml", "direction to run the migrations to")
+	flags.IntVarP(&m.steps, "steps", "s", 0, "how many migrations to run")
+
+	return flags.Parse(args)
 }
 
 // Run will run migrations on the current folder, it will look for the
@@ -74,7 +77,7 @@ func (m *Plugin) Run(ctx context.Context, root string, args []string) error {
 		return err
 	}
 
-	if m.direction == migrateUp {
+	if m.direction == migrateUp || m.direction == "" {
 		return mig.Up()
 	}
 
