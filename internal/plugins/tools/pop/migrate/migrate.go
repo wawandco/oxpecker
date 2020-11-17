@@ -15,12 +15,8 @@ var (
 	_ plugins.Subcommand = (*Plugin)(nil)
 	_ plugins.FlagParser = (*Plugin)(nil)
 
+	migrateUp                 = "UP"
 	ErrCouldNotFindConnection = errors.New("could not find connection by name")
-)
-
-const (
-	migrateUp   = "UP"
-	migrateDown = "DOWN"
 )
 
 type Plugin struct {
