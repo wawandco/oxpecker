@@ -12,3 +12,23 @@ type Command interface {
 	// Run the command with the passed context, root and args.
 	Run(context.Context, string, []string) error
 }
+
+// Command namer is an interface
+type CommandNamer interface {
+	Command
+
+	// Command name returns a specific name for the plugin to be
+	// used to identify the command.
+	CommandName() string
+}
+
+// SubcommandNamer allows to identify those commands that will not be added by
+// the CLI as top level commands but rather those top level commands will organize
+// as subcommands.
+type Subcommand interface {
+	// SubcommandName is the name for the
+	SubcommandName() string
+
+	// Run the command with the passed context, root and args.
+	Run(context.Context, string, []string) error
+}

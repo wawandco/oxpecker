@@ -12,6 +12,7 @@ import (
 	"github.com/paganotoni/x/internal/plugins/lifecycle/test"
 	"github.com/paganotoni/x/internal/plugins/tools/packr"
 	"github.com/paganotoni/x/internal/plugins/tools/pop"
+	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
 	"github.com/paganotoni/x/internal/plugins/tools/refresh"
 	"github.com/paganotoni/x/internal/plugins/tools/standard"
 	"github.com/paganotoni/x/internal/plugins/tools/webpack"
@@ -27,6 +28,7 @@ var defaultPlugins = []plugins.Plugin{
 	&refresh.Plugin{},
 	&packr.Plugin{},
 	&pop.Plugin{},
+	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
 
@@ -49,12 +51,24 @@ type cli struct {
 // with the passed name.
 func (c *cli) findCommand(name string) plugins.Command {
 	for _, cm := range c.plugins {
+		// We skip subcommands on this case
+		// those will be wired by the parent command implementing
+		// Receive.
+		if _, ok := cm.(plugins.Subcommand); ok {
+			continue
+		}
+
 		command, ok := cm.(plugins.Command)
 		if !ok {
 			continue
 		}
 
-		if command.Name() != name {
+		pluginName := command.Name()
+		if pn, ok := cm.(plugins.CommandNamer); ok {
+			pluginName = pn.CommandName()
+		}
+
+		if pluginName != name {
 			continue
 		}
 
