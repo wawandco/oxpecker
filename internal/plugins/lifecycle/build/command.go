@@ -32,7 +32,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 	fmt.Println("Before Build:")
 	for _, builder := range b.beforeBuilders {
-		fmt.Printf(">>> %v BeforeBuilder Running \n\n", builder.Name())
+		fmt.Printf(">>> %v BeforeBuilder Running \n", builder.Name())
 
 		err = builder.RunBeforeBuild(ctx, root, args)
 		if err != nil {
@@ -45,7 +45,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 		fmt.Println("Build:")
 
 		for _, builder := range b.builders {
-			fmt.Printf(">>> %v Builder Running \n\n", builder.Name())
+			fmt.Printf(">>> %v Builder Running \n", builder.Name())
 
 			err = builder.Build(ctx, root, args)
 			if err != nil {
@@ -57,7 +57,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 	fmt.Println("After Build:")
 	for _, afterBuilder := range b.afterBuilders {
-		fmt.Printf(">>> %v AfterBuilder Running \n\n", afterBuilder.Name())
+		fmt.Printf(">>> %v AfterBuilder Running \n", afterBuilder.Name())
 
 		err = afterBuilder.RunAfterBuild(root, args)
 		if err != nil {
@@ -83,4 +83,21 @@ func (b *Command) Receive(plugins []plugins.Plugin) {
 			b.afterBuilders = append(b.afterBuilders, ptool)
 		}
 	}
+}
+
+func (b *Command) ParseFlags(args []string) error {
+	// TODO: This needs to happen with all of the plugins
+	for _, plugin := range b.builders {
+		fp, ok := plugin.(plugins.FlagParser)
+		if !ok {
+			continue
+		}
+
+		err := fp.ParseFlags(args)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

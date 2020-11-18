@@ -41,7 +41,7 @@ Tools
 
 ## Things to cover
 
-- [NEED FOR PRODUCTION] Migrations after built. Need to provide a way to run your migrations.
+- [IN PROGRESS] Migrations after built. Need to provide a way to run your migrations.
 - [IN PROGRESS] Plugin System.
 - [DONE] Fixer to move main to `cmd/[name]`.
 - [DONE] Fixer to move database.yml to `config/database.yml`

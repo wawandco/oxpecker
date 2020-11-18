@@ -9,5 +9,5 @@ var (
 type Plugin struct{}
 
 func (p *Plugin) Name() string {
-	return "pop"
+	return "yarn"
 }

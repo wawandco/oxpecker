@@ -97,8 +97,6 @@ func (c *cli) Run(args []string) error {
 		return nil
 	}
 
-	c.parseFlags(args[1:])
-
 	command := c.findCommand(args[1])
 	if command == nil {
 		fmt.Printf("did not find %s command\n", args[1])
@@ -107,6 +105,13 @@ func (c *cli) Run(args []string) error {
 
 	if pr, ok := command.(plugins.PluginReceiver); ok {
 		pr.Receive(c.plugins)
+	}
+
+	if pf, ok := command.(plugins.FlagParser); ok {
+		err := pf.ParseFlags(args[1:])
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	ctx := context.Background()
