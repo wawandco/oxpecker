@@ -34,10 +34,8 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 
 func (c *Command) Receive(plugins []plugins.Plugin) {
 	for _, plugin := range plugins {
-
 		if ptool, ok := plugin.(Fixer); ok {
 			c.fixers = append(c.fixers, ptool)
 		}
-
 	}
 }
