@@ -3,7 +3,6 @@ package migrate
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
@@ -67,7 +66,6 @@ func (m *Plugin) Run(ctx context.Context, root string, args []string) error {
 	}
 
 	conn := pop.Connections[m.connectionName]
-	fmt.Println(m.connectionName)
 	if conn == nil {
 		return ErrCouldNotFindConnection
 	}
