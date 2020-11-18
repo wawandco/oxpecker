@@ -1,9 +1,16 @@
 package pop
 
 import (
+	"context"
 	"io/ioutil"
 	"os"
 	"testing"
+)
+
+var (
+	ctx  context.Context
+	str  string
+	args []string
 )
 
 func TestFix(t *testing.T) {
@@ -24,7 +31,7 @@ func TestFix(t *testing.T) {
 		}
 
 		f := Fixer{}
-		err = f.Fix()
+		err = f.Fix(ctx, str, args)
 		if err != nil {
 			t.Fatalf("error should be nill, got %v", err)
 		}
@@ -36,7 +43,7 @@ func TestFix(t *testing.T) {
 		}
 
 		f := Fixer{}
-		err = f.Fix()
+		err = f.Fix(ctx, str, args)
 		if err != ErrDatabaseNotExist {
 			t.Fatalf("error should be %v, got %v", ErrDatabaseNotExist, err)
 		}
