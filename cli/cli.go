@@ -118,23 +118,6 @@ func (c *cli) Run(args []string) error {
 	return command.Run(ctx, c.root, args[1:])
 }
 
-// parseFlags passes args to each of the plugins to
-// allow the plugin parse options passed through the CLI
-func (c *cli) parseFlags(args []string) {
-	for _, command := range c.plugins {
-		pr, ok := command.(plugins.FlagParser)
-		if !ok {
-			continue
-		}
-
-		err := pr.ParseFlags(args)
-		if err != nil {
-			fmt.Printf("error parsing flags for %s: %s\n", command.Name(), err)
-			continue
-		}
-	}
-}
-
 // New creates a CLI with the passed root and plugins. This becomes handy
 // when specifying your own plugins.
 func New(root string, plugins []plugins.Plugin) *cli {
