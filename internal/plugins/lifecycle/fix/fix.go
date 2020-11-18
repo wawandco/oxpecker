@@ -23,6 +23,7 @@ func (c Command) Name() string {
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	fmt.Println("Running [fix] command")
+
 	//Run each of the fixers registered.
 	for _, fixer := range c.fixers {
 		fmt.Printf("Fixer: %v\n", fixer.Name())
@@ -33,10 +34,8 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 
 func (c *Command) Receive(plugins []plugins.Plugin) {
 	for _, plugin := range plugins {
-
 		if ptool, ok := plugin.(Fixer); ok {
 			c.fixers = append(c.fixers, ptool)
 		}
-
 	}
 }

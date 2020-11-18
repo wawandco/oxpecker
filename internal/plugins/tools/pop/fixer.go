@@ -7,14 +7,13 @@ import (
 	"os"
 )
 
-// Fixer type ...
-type Fixer struct {
-}
-
 // Err..
 var (
 	ErrDatabaseNotExist = errors.New(" database.yml does not exist")
 )
+
+// Fixer type ...
+type Fixer struct{}
 
 // Fix moves the file "database.yml" to
 // "/config/database.yml". If the file

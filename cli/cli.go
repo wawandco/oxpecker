@@ -12,9 +12,11 @@ import (
 	"github.com/paganotoni/x/internal/plugins/lifecycle/test"
 	"github.com/paganotoni/x/internal/plugins/tools/packr"
 	"github.com/paganotoni/x/internal/plugins/tools/pop"
+	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
 	"github.com/paganotoni/x/internal/plugins/tools/refresh"
 	"github.com/paganotoni/x/internal/plugins/tools/standard"
 	"github.com/paganotoni/x/internal/plugins/tools/webpack"
+	"github.com/paganotoni/x/internal/plugins/tools/x"
 	"github.com/paganotoni/x/internal/plugins/tools/yarn"
 )
 
@@ -27,8 +29,10 @@ var defaultPlugins = []plugins.Plugin{
 	&refresh.Plugin{},
 	&packr.Plugin{},
 	&pop.Plugin{},
+	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
+	&x.Fixer{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
@@ -49,12 +53,24 @@ type cli struct {
 // with the passed name.
 func (c *cli) findCommand(name string) plugins.Command {
 	for _, cm := range c.plugins {
+		// We skip subcommands on this case
+		// those will be wired by the parent command implementing
+		// Receive.
+		if _, ok := cm.(plugins.Subcommand); ok {
+			continue
+		}
+
 		command, ok := cm.(plugins.Command)
 		if !ok {
 			continue
 		}
 
-		if command.Name() != name {
+		pluginName := command.Name()
+		if pn, ok := cm.(plugins.CommandNamer); ok {
+			pluginName = pn.CommandName()
+		}
+
+		if pluginName != name {
 			continue
 		}
 
@@ -81,8 +97,6 @@ func (c *cli) Run(args []string) error {
 		return nil
 	}
 
-	c.parseFlags(args[1:])
-
 	command := c.findCommand(args[1])
 	if command == nil {
 		fmt.Printf("did not find %s command\n", args[1])
@@ -93,25 +107,15 @@ func (c *cli) Run(args []string) error {
 		pr.Receive(c.plugins)
 	}
 
-	ctx := context.Background()
-	return command.Run(ctx, c.root, args[1:])
-}
-
-// parseFlags passes args to each of the plugins to
-// allow the plugin parse options passed through the CLI
-func (c *cli) parseFlags(args []string) {
-	for _, command := range c.plugins {
-		pr, ok := command.(plugins.FlagParser)
-		if !ok {
-			continue
-		}
-
-		err := pr.ParseFlags(args)
+	if pf, ok := command.(plugins.FlagParser); ok {
+		err := pf.ParseFlags(args[1:])
 		if err != nil {
-			fmt.Printf("error parsing flags for %s: %s\n", command.Name(), err)
-			continue
+			fmt.Println(err)
 		}
 	}
+
+	ctx := context.Background()
+	return command.Run(ctx, c.root, args[1:])
 }
 
 // New creates a CLI with the passed root and plugins. This becomes handy

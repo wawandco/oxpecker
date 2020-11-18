@@ -2,6 +2,7 @@ package x
 
 import (
 	"bytes"
+	"context"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -27,7 +28,7 @@ func TestFix(t *testing.T) {
 			t.Fatalf("could not create go.mod file: %v", err)
 		}
 		f := Fixer{}
-		err = f.Fix()
+		err = f.Fix(context.Background(), "", []string{})
 		if err != nil {
 			t.Fatalf("error should be nill, got %v", err)
 		}
@@ -40,7 +41,7 @@ func TestFix(t *testing.T) {
 		}
 
 		f := Fixer{}
-		err = f.Fix()
+		err = f.Fix(context.Background(), "", []string{})
 		if err != ErrFileMainNotExist {
 			t.Fatalf("error should be nill, got %v", err)
 		}
@@ -59,7 +60,7 @@ func TestFix(t *testing.T) {
 		}
 
 		f := Fixer{}
-		err = f.Fix()
+		err = f.Fix(context.Background(), "", []string{})
 		if err == nil {
 			t.Fatalf("error should be %v, got nil", err)
 		}

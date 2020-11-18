@@ -1,16 +1,22 @@
 package x
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 
+	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
 	"golang.org/x/mod/modfile"
 )
 
 var (
+	_ plugins.Plugin = (*Fixer)(nil)
+	_ fix.Fixer      = (*Fixer)(nil)
+
 	ErrModuleNameNeeded   = errors.New("module name needed")
 	ErrModuleNameNotFound = errors.New("module name not found")
 	ErrFileMainNotExist   = errors.New("main.go file does not exist")
@@ -20,13 +26,17 @@ var (
 // that moves the main.go to cmd/[name-of-the-module]/main.go
 type Fixer struct{}
 
+func (f Fixer) Name() string {
+	return "x"
+}
+
 // Fix does the main.go magic
 // - Determine if the file exists
 // - Determine if there is a go.mod
 // - Determine the name of the module (last part when slicing go.mod by /)
 // - Create folder
 // - Copy/move main.go to that folder
-func (f Fixer) Fix() error {
+func (f Fixer) Fix(ctx context.Context, root string, args []string) error {
 	_, err := f.fileExists()
 	if err != nil {
 		return err
