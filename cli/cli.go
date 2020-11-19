@@ -29,6 +29,7 @@ var defaultPlugins = []plugins.Plugin{
 	&refresh.Plugin{},
 	&packr.Plugin{},
 	&pop.Plugin{},
+	&pop.Fixer{},
 	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},

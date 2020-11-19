@@ -1,24 +1,35 @@
 package pop
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
 )
 
 // Err..
 var (
+	_ plugins.Plugin = (*Fixer)(nil)
+	_ fix.Fixer      = (*Fixer)(nil)
+
 	ErrDatabaseNotExist = errors.New(" database.yml does not exist")
 )
 
 // Fixer type ...
 type Fixer struct{}
 
+func (f Fixer) Name() string {
+	return "fix database"
+}
+
 // Fix moves the file "database.yml" to
 // "/config/database.yml". If the file
 // already exists it ignores the oparation
-func (f Fixer) Fix() error {
+func (f Fixer) Fix(ctx context.Context, root string, args []string) error {
 	//search for file
 	_, err := f.fileExists(".")
 	if err != nil {
