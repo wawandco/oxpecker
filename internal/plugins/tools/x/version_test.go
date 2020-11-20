@@ -23,7 +23,7 @@ func (tv testVersioner) Version() (string, error) {
 }
 
 func TestReceive(t *testing.T) {
-	vr := VersionCommand{}
+	vr := Version{}
 	vr.Receive([]plugins.Plugin{})
 
 	if vr.versioner != nil {

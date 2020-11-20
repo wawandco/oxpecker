@@ -35,7 +35,7 @@ var defaultPlugins = []plugins.Plugin{
 	&yarn.Plugin{},
 	&x.Fixer{},
 	&Versioner{},
-	&x.VersionCommand{},
+	&x.Version{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
