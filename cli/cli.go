@@ -40,7 +40,7 @@ var defaultPlugins = []plugins.Plugin{
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
-	&version.Command{Version: "1.1.1"},
+	&version.Command{Version: "v1.1.1"},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge
