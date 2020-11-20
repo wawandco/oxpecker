@@ -10,7 +10,6 @@ import (
 	"github.com/paganotoni/x/internal/plugins/lifecycle/dev"
 	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
 	"github.com/paganotoni/x/internal/plugins/lifecycle/test"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/version"
 	"github.com/paganotoni/x/internal/plugins/tools/packr"
 	"github.com/paganotoni/x/internal/plugins/tools/pop"
 	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
@@ -35,13 +34,14 @@ var defaultPlugins = []plugins.Plugin{
 	&standard.Plugin{},
 	&yarn.Plugin{},
 	&x.Fixer{},
+	&Versioner{},
+	&x.VersionCommand{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
-	&version.Command{Version: "v1.1.1"},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge
