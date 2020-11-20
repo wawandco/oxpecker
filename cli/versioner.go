@@ -2,7 +2,7 @@ package cli
 
 var (
 	// The version of the CLI
-	version = "v0.0.1"
+	version = "0.0.1"
 )
 
 // Versioner plugin provides the version of the X tool.
