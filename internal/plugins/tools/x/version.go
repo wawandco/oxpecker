@@ -11,6 +11,7 @@ var (
 	_ plugins.Command = (*VersionCommand)(nil)
 )
 
+// Version command will print X version.
 type VersionCommand struct {
 	versioner plugins.Versioner
 }
@@ -30,6 +31,8 @@ func (b *VersionCommand) Run(ctx context.Context, root string, args []string) er
 	return nil
 }
 
+// Receive the plugins and find a Versioner for the X tool
+// store it for later call to its Version function.
 func (b *VersionCommand) Receive(pl []plugins.Plugin) {
 	for _, plugin := range pl {
 		vr, ok := plugin.(plugins.Versioner)
