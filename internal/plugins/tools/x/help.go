@@ -20,6 +20,7 @@ func (h Help) HelpText() string {
 	return "prints commands help text"
 }
 
+// Run the help command
 func (h *Help) Run(ctx context.Context, root string, args []string) error {
 	fmt.Printf("X allows to build apps with ease\n\n")
 	fmt.Println("Usage:")
@@ -38,6 +39,7 @@ func (h *Help) Run(ctx context.Context, root string, args []string) error {
 	return nil
 }
 
+// Receives the commands
 func (h *Help) Receive(pl []plugins.Plugin) {
 	for _, plugin := range pl {
 
