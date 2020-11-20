@@ -39,7 +39,8 @@ func (h *Help) Run(ctx context.Context, root string, args []string) error {
 	return nil
 }
 
-// Receives the commands
+// Receives the plugins and stores the Commands for
+// later usage on the help text.
 func (h *Help) Receive(pl []plugins.Plugin) {
 	for _, plugin := range pl {
 
