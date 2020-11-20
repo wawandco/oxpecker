@@ -20,6 +20,8 @@ func (b VersionCommand) Name() string {
 	return "version"
 }
 
+// Run prints the version of the X cli by using the
+// Versioner in the command, one for the x tool.
 func (b *VersionCommand) Run(ctx context.Context, root string, args []string) error {
 	version, err := b.versioner.Version()
 	if err != nil {
