@@ -20,26 +20,9 @@ curl -sf https://gobinaries.com/paganotoni/x/cmd/x | sh
 
 Commands are loaded from plugins, instead of being a hardcoded list of commands plugins used in the CLI will provide the commands that will be available at the CLI runtime. CLI will identify those commands with the Command interface.
 
-## Included Plugins
+## Plugins
 
-Developer Lifecycle
-
-- Dev       [ DONE ]
-- Test      [ DONE ]
-- Build     [ DONE ]
-- Fix       [ IN PROGRESS ]
-- Help      [ TODO ]
-- New       [ TODO ]
-- Generate  [ TODO ]
-
-Tools
-
-- Pop
-- Webpack
-- Yarn
-- Packr
-- Refresh
-- Standard (Go)
+TODO: Explain how this will work.
 
 ## Why another CLI?
 

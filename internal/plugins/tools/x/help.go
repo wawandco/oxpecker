@@ -16,8 +16,9 @@ func (h Help) Name() string {
 	return "help"
 }
 
+// HelpText for the Help command
 func (h Help) HelpText() string {
-	return "prints commands help text"
+	return "prints help text for the commands registered"
 }
 
 // Run the help command
