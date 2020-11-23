@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 var _ plugins.Plugin = (*Command)(nil)
@@ -21,6 +21,10 @@ type Command struct {
 
 func (c Command) Name() string {
 	return "test"
+}
+
+func (c Command) HelpText() string {
+	return "provides the structure for test commands to run and be organized"
 }
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {

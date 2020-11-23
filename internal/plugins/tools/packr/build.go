@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/gobuffalo/packr/v2/jam"
-	"github.com/paganotoni/x/internal/info"
+	"github.com/paganotoni/oxpecker/internal/info"
 )
 
 // BeforeBuild pack

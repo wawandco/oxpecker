@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 	"github.com/spf13/pflag"
 )
 

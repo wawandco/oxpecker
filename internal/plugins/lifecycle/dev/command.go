@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)
@@ -17,6 +17,11 @@ type Command struct {
 
 func (d Command) Name() string {
 	return "dev"
+}
+
+//HelpText resturns the help Text of build function
+func (d Command) HelpText() string {
+	return "calls NPM or yarn to start webpack watching the assetst"
 }
 
 // Run calls NPM or yarn to start webpack watching the assets

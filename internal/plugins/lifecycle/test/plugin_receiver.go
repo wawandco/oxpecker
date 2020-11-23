@@ -1,6 +1,6 @@
 package test
 
-import "github.com/paganotoni/x/internal/plugins"
+import "github.com/paganotoni/oxpecker/internal/plugins"
 
 // Receive takes BeforeTesters, AfterTesters and Testers
 // from the passed list of pugins and save those in the

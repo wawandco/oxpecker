@@ -1,6 +1,6 @@
 package build
 
-import "github.com/paganotoni/x/internal/plugins"
+import "github.com/paganotoni/oxpecker/internal/plugins"
 
 // AfterBuilder interface allows to identify the things
 // that will run after the build process has ended, things

@@ -3,7 +3,7 @@ package x
 import (
 	"testing"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 type testVersioner struct {
@@ -31,7 +31,7 @@ func TestReceive(t *testing.T) {
 	}
 
 	vr.Receive([]plugins.Plugin{
-		testVersioner{tool: "x"},
+		testVersioner{tool: "ox"},
 	})
 
 	if vr.versioner == nil {
