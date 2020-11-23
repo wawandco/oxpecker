@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)

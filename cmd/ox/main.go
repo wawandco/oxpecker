@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/paganotoni/x/cli"
+	"github.com/paganotoni/oxpecker/cli"
 )
 
 func main() {

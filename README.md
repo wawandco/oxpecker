@@ -1,19 +1,19 @@
-# X
+# Oxpecker
 
-X is a CLI for web applications being build with Go and the Buffalo Framework. It aims to provide support for the everyday development using Go and the Buffalo stack.
+Oxpecker is a CLI for web applications being build with Go and the Buffalo Framework. It aims to provide support for the everyday development using Go and the Buffalo stack.
 
 ## Installation
 
-To install X you need to run the following command:
+To install Oxpecker you need to run the following command:
 
 ```sh
-go install github.com/paganotoni/x/cmd/x
+go install github.com/paganotoni/oxpecker/cmd/ox
 ```
 
 Or using gobinaries with:
 
 ```sh
-curl -sf https://gobinaries.com/paganotoni/x/cmd/x | sh
+curl -sf https://gobinaries.com/paganotoni/oxpecker/cmd/ox | sh
 ```
 
 ## Commands

@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 // AfterTester is suited for things that need to run after the tests

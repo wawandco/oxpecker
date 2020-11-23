@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/markbates/refresh/refresh"
-	"github.com/paganotoni/x/internal/info"
+	"github.com/paganotoni/oxpecker/internal/info"
 )
 
 func (w Plugin) Develop(ctx context.Context, root string) error {

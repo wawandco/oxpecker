@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 
-	"github.com/paganotoni/x/internal/plugins"
-	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
+	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
 )
 
 //HelpText resturns the help Text of build function
 func (b Plugin) HelpText() string {
-	return "does what it does "
+	return "provides commands for pop common tasks"
 }
 
 // Ensuring pop.Plugin is a command

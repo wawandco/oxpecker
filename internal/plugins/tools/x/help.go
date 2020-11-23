@@ -6,7 +6,7 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 // Help command that prints
@@ -25,9 +25,9 @@ func (h Help) HelpText() string {
 
 // Run the help command
 func (h *Help) Run(ctx context.Context, root string, args []string) error {
-	fmt.Printf("X allows to build apps with ease\n\n")
+	fmt.Printf("Oxpecker allows to build apps with ease\n\n")
 	fmt.Println("Usage:")
-	fmt.Printf("  x [command]\n\n")
+	fmt.Printf("  ox [command]\n\n")
 
 	w := new(tabwriter.Writer)
 	defer w.Flush()

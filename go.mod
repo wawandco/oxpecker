@@ -1,4 +1,4 @@
-module github.com/paganotoni/x
+module github.com/paganotoni/oxpecker
 
 go 1.15
 
