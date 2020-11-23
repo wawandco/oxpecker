@@ -23,6 +23,10 @@ func (c Command) Name() string {
 	return "test"
 }
 
+func (c Command) HelpText() string {
+	return "provides the structure for test commands to run and be organized"
+}
+
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	var err error
 	for _, bt := range c.beforeTesters {

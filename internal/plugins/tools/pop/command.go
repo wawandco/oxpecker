@@ -8,6 +8,11 @@ import (
 	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
 )
 
+//HelpText resturns the help Text of build function
+func (b Plugin) HelpText() string {
+	return "does what it does "
+}
+
 // Ensuring pop.Plugin is a command
 var _ plugins.Command = (*Plugin)(nil)
 

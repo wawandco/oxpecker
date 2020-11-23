@@ -19,6 +19,11 @@ func (d Command) Name() string {
 	return "dev"
 }
 
+//HelpText resturns the help Text of build function
+func (d Command) HelpText() string {
+	return "calls NPM or yarn to start webpack watching the assetst"
+}
+
 // Run calls NPM or yarn to start webpack watching the assets
 // Also starts refresh listening for the changes in Go files.
 func (d *Command) Run(ctx context.Context, root string, args []string) error {
