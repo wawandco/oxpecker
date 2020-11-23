@@ -16,6 +16,12 @@ Or using gobinaries with:
 curl -sf https://gobinaries.com/paganotoni/oxpecker/cmd/ox | sh
 ```
 
+## Usage
+
+```
+ox [command]
+```
+
 ## Commands
 
 Commands are loaded from plugins, instead of being a hardcoded list of commands plugins used in the CLI will provide the commands that will be available at the CLI runtime. CLI will identify those commands with the Command interface.
