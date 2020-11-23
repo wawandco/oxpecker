@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/paganotoni/oxpecker/cli/internal/fixer"
+	"github.com/paganotoni/oxpecker/cli/internal/help"
+	"github.com/paganotoni/oxpecker/cli/internal/version"
+
 	"github.com/paganotoni/oxpecker/internal/plugins"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/build"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/dev"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/test"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/oxpecker"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/packr"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
@@ -29,20 +32,21 @@ var defaultPlugins = []plugins.Plugin{
 	&refresh.Plugin{},
 	&packr.Plugin{},
 	&pop.Plugin{},
-	&pop.Fixer{},
 	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
-	&oxpecker.Fixer{},
-	&oxpecker.Version{},
-	&Versioner{},
+
+	// Fixers
+	&pop.Fixer{},
+	&fixer.Fixer{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
-	&oxpecker.Help{},
+	&help.Help{},
+	&version.Version{},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge

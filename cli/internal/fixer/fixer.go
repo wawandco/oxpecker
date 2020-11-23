@@ -1,4 +1,4 @@
-package oxpecker
+package fixer
 
 import (
 	"context"
