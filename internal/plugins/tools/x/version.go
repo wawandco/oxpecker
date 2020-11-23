@@ -20,7 +20,7 @@ func (b VersionCommand) Name() string {
 	return "version"
 }
 func (b VersionCommand) HelpText() string {
-	return "retuns the curren version of oxpecker CLI"
+	return "retuns the curren version of Oxpecker CLI"
 }
 
 // Run prints the version of the X cli by using the

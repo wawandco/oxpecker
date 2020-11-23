@@ -10,7 +10,7 @@ import (
 
 //HelpText resturns the help Text of build function
 func (b Plugin) HelpText() string {
-	return "does what it does "
+	return "provides commands for pop common tasks"
 }
 
 // Ensuring pop.Plugin is a command
