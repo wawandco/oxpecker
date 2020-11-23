@@ -3,7 +3,7 @@ package fix
 import (
 	"context"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 // Fixer interface is created for those commands that fill fix certain

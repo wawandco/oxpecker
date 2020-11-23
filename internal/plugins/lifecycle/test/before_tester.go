@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 // BeforeTester interface is suited for those tasks that need to happen

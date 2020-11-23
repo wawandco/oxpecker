@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)

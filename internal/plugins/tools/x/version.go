@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 var (
@@ -20,7 +20,7 @@ func (b VersionCommand) Name() string {
 	return "version"
 }
 func (b VersionCommand) HelpText() string {
-	return "retuns the curren version of Ox CLI"
+	return "retuns the curren version of oxpecker CLI"
 }
 
 // Run prints the version of the X cli by using the

@@ -3,7 +3,7 @@ package x
 import (
 	"testing"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 type testVersioner struct {

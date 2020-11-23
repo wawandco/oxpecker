@@ -3,7 +3,7 @@
 // the base `go` prefixed commands.
 package standard
 
-import "github.com/paganotoni/x/internal/plugins"
+import "github.com/paganotoni/oxpecker/internal/plugins"
 
 var (
 	// These are the interfaces we know that this
