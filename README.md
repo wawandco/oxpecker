@@ -20,6 +20,11 @@ curl -sf https://gobinaries.com/paganotoni/oxpecker/cmd/ox | sh
 
 ```
 ox [command]
+
+p.e 
+ox dev
+ox build
+ox test
 ```
 
 ## Commands
