@@ -1,4 +1,4 @@
-package x
+package oxpecker
 
 import (
 	"context"
@@ -20,7 +20,7 @@ type Version struct {
 func (b Version) Name() string {
 	return "version"
 }
-func (b VersionCommand) HelpText() string {
+func (b Version) HelpText() string {
 	return "retuns the curren version of Oxpecker CLI"
 }
 

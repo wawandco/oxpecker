@@ -10,13 +10,13 @@ import (
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/dev"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/test"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/oxpecker"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/packr"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/refresh"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/standard"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/webpack"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/x"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/yarn"
 )
 
@@ -33,16 +33,16 @@ var defaultPlugins = []plugins.Plugin{
 	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
-	&x.Fixer{},
+	&oxpecker.Fixer{},
+	&oxpecker.Version{},
 	&Versioner{},
-	&x.Version{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
-	&x.Help{},
+	&oxpecker.Help{},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge
