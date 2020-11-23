@@ -13,7 +13,7 @@ func (v Versioner) Name() string {
 }
 
 func (v Versioner) ToolName() string {
-	return "Oxpecker"
+	return "ox"
 }
 
 func (v Versioner) Version() (string, error) {
