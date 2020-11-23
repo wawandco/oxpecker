@@ -1,6 +1,6 @@
 # X
 
-X is a CLI for web applications being build with Go and the Buffalo Framework. It aims to provide support for the everyday operations of developers using that stack.
+X is a CLI for web applications being build with Go and the Buffalo Framework. It aims to provide support for the everyday development using Go and the Buffalo stack.
 
 ## Installation
 
@@ -20,34 +20,9 @@ curl -sf https://gobinaries.com/paganotoni/x/cmd/x | sh
 
 Commands are loaded from plugins, instead of being a hardcoded list of commands plugins used in the CLI will provide the commands that will be available at the CLI runtime. CLI will identify those commands with the Command interface.
 
-## Included Plugins
+## Plugins
 
-Developer Lifecycle
-
-- Dev [DONE]
-- Test [DONE]
-- Build [DONE]
-- Fix [TODO]
-- Help [TODO]
-
-Tools
-
-- Pop
-- Webpack
-- Yarn
-- Packr
-- Refresh
-- Standard (Go)
-
-## Things to cover
-
-- [IN PROGRESS] Migrations after built. Need to provide a way to run your migrations.
-- [IN PROGRESS] Plugin System.
-- [DONE] Fixer to move main to `cmd/[name]`.
-- [DONE] Fixer to move database.yml to `config/database.yml`
-- Fixer to generate `config/constants.go`.
-- Fixer for models.go and change `models.DB` to `models.DB()` across the app.
-
+TODO: Explain how this will work.
 
 ## Why another CLI?
 
