@@ -10,6 +10,8 @@ import (
 	"github.com/paganotoni/x/internal/plugins"
 )
 
+//HelpText resturns the help Text of build function
+
 var _ plugins.Command = (*Command)(nil)
 var _ plugins.PluginReceiver = (*Command)(nil)
 
@@ -19,6 +21,9 @@ type Command struct {
 
 func (c Command) Name() string {
 	return "fix"
+}
+func (c Command) HelpText() string {
+	return "adapts the source code to comply with newer versions of the CLI"
 }
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {

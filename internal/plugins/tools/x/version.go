@@ -19,6 +19,9 @@ type VersionCommand struct {
 func (b VersionCommand) Name() string {
 	return "version"
 }
+func (b VersionCommand) HelpText() string {
+	return "retuns the curren version of Ox CLI"
+}
 
 // Run prints the version of the X cli by using the
 // Versioner in the command, one for the x tool.

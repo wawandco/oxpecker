@@ -19,8 +19,13 @@ func (b Command) Name() string {
 	return "build"
 }
 
+//HelpText resturns the help Text of build function
+func (b Command) HelpText() string {
+	return "builds a buffalo app from within the root folder of the project"
+}
+
 // Run builds a buffalo app from within the root folder of the project
-// To do so, It:
+// To do so, It:x
 // - Runs NPM or YARN depending on what if finds
 // - Runs Packr, Pkger or Other Packing tool
 // - Injects database.yml and inflections.
