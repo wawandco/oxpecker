@@ -3,7 +3,10 @@
 // the base `go` prefixed commands.
 package standard
 
-import "github.com/paganotoni/oxpecker/internal/plugins"
+import (
+	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/spf13/pflag"
+)
 
 var (
 	// These are the interfaces we know that this
@@ -16,6 +19,7 @@ var (
 // the last steps when we have done other phases of the build process.
 type Plugin struct {
 	output string
+	flags  *pflag.FlagSet
 }
 
 func (g Plugin) Name() string {

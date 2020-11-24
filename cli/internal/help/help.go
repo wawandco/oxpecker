@@ -2,9 +2,6 @@ package help
 
 import (
 	"context"
-	"fmt"
-	"os"
-	"text/tabwriter"
 
 	"github.com/paganotoni/oxpecker/internal/plugins"
 )
@@ -25,27 +22,33 @@ func (h Help) HelpText() string {
 
 // Run the help command
 func (h *Help) Run(ctx context.Context, root string, args []string) error {
-	fmt.Printf("Oxpecker allows to build apps with ease\n\n")
-	fmt.Println("Usage:")
-	fmt.Printf("  ox [command]\n\n")
-
-	w := new(tabwriter.Writer)
-	defer w.Flush()
-
-	// minwidth, tabwidth, padding, padchar, flags
-	w.Init(os.Stdout, 8, 8, 3, '\t', 0)
-	fmt.Println("Commands:")
-
-	for _, plugin := range h.commands {
-		helpText := ""
-		if ht, ok := plugin.(plugins.HelpTexter); ok {
-			helpText = ht.HelpText()
-		}
-
-		fmt.Fprintf(w, "  %v\t%v\n", plugin.Name(), helpText)
+	command := h.findCommand(args)
+	if command == nil {
+		h.printTopLevel()
+		return nil
 	}
 
+	h.printSingle(command)
 	return nil
+}
+
+func (h *Help) findCommand(args []string) plugins.Plugin {
+	if len(args) < 2 {
+		return nil
+	}
+
+	var command plugins.Plugin
+	name := args[1]
+	for _, c := range h.commands {
+		if c.Name() != name {
+			continue
+		}
+
+		command = c
+		break
+	}
+
+	return command
 }
 
 // Receives the plugins and stores the Commands for

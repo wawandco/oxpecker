@@ -6,8 +6,13 @@ import (
 
 // ParseFlags
 func (b *Plugin) ParseFlags(args []string) error {
-	flags := pflag.NewFlagSet(b.Name(), pflag.ContinueOnError)
-	flags.StringVarP(&b.output, "output", "o", "", "the path the model will be created in")
+	b.flags = pflag.NewFlagSet(b.Name(), pflag.ContinueOnError)
+	b.flags.StringVarP(&b.output, "output", "o", "", "the path the binary will be generated at")
 
-	return flags.Parse(args)
+	return b.flags.Parse(args)
+}
+
+// ParseFlags
+func (b *Plugin) Flags() *pflag.FlagSet {
+	return b.flags
 }

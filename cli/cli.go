@@ -105,21 +105,27 @@ func (c *cli) Run(args []string) error {
 		return nil
 	}
 
+	// Passing args and plugins to those plugins that require them
+	for _, plugin := range c.plugins {
+		pf, ok := plugin.(plugins.FlagParser)
+		if ok {
+			err := pf.ParseFlags(args[1:])
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+
+		pr, ok := plugin.(plugins.PluginReceiver)
+		if ok {
+			pr.Receive(c.plugins)
+		}
+	}
+
 	command := c.findCommand(args[1])
 	if command == nil {
+		// TODO: print help ?
 		fmt.Printf("did not find %s command\n", args[1])
 		return nil
-	}
-
-	if pr, ok := command.(plugins.PluginReceiver); ok {
-		pr.Receive(c.plugins)
-	}
-
-	if pf, ok := command.(plugins.FlagParser); ok {
-		err := pf.ParseFlags(args[1:])
-		if err != nil {
-			fmt.Println(err)
-		}
 	}
 
 	ctx := context.Background()
