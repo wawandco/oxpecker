@@ -49,3 +49,7 @@ func (b *Plugin) Run(ctx context.Context, root string, args []string) error {
 
 	return nil //migrate.Run(ctx, root, args[1:])
 }
+
+func (b *Plugin) Subcommands() []plugins.Subcommand {
+	return b.subcommands
+}

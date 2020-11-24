@@ -26,9 +26,17 @@ type CommandNamer interface {
 // the CLI as top level commands but rather those top level commands will organize
 // as subcommands.
 type Subcommand interface {
+	Plugin
 	// SubcommandName is the name for the
 	SubcommandName() string
 
 	// Run the command with the passed context, root and args.
 	Run(context.Context, string, []string) error
+}
+
+// Subcommander allows a plugin to say which are its subcommands.
+type Subcommander interface {
+	Command
+
+	Subcommands() []Subcommand
 }
