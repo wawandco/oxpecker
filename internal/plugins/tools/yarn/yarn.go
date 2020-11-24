@@ -1,6 +1,6 @@
 package yarn
 
-import "github.com/paganotoni/x/internal/plugins"
+import "github.com/paganotoni/oxpecker/internal/plugins"
 
 var (
 	_ plugins.Plugin = (*Plugin)(nil)

@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 	"github.com/spf13/pflag"
 )
 
@@ -29,6 +29,8 @@ type Plugin struct {
 
 	// steps is the number of migrations to apply
 	steps int
+
+	flags *pflag.FlagSet
 }
 
 func (m *Plugin) Name() string {
@@ -37,18 +39,6 @@ func (m *Plugin) Name() string {
 
 func (m *Plugin) SubcommandName() string {
 	return "migrate"
-}
-
-func (m *Plugin) ParseFlags(args []string) error {
-	flags := pflag.NewFlagSet(m.Name(), pflag.ContinueOnError)
-
-	flags.StringVarP(&m.connectionName, "conn", "", "development", "the name of the connection to use")
-	flags.StringVarP(&m.migrationPath, "folder", "", "./migrations", "the path to the migrations")
-	flags.StringVarP(&m.direction, "direction", "", "", "direction to run the migrations to")
-	flags.StringVarP(&m.configFile, "config", "", "config/database.yml", "direction to run the migrations to")
-	flags.IntVarP(&m.steps, "steps", "s", 0, "how many migrations to run")
-
-	return flags.Parse(args)
 }
 
 // Run will run migrations on the current folder, it will look for the

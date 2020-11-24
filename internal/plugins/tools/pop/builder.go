@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/paganotoni/x/internal/plugins/tools/pop/templates"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/templates"
 )
 
 func (p *Plugin) RunBeforeBuild(ctx context.Context, root string, args []string) error {

@@ -5,19 +5,22 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/paganotoni/x/internal/plugins"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/build"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/dev"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/test"
-	"github.com/paganotoni/x/internal/plugins/tools/packr"
-	"github.com/paganotoni/x/internal/plugins/tools/pop"
-	"github.com/paganotoni/x/internal/plugins/tools/pop/migrate"
-	"github.com/paganotoni/x/internal/plugins/tools/refresh"
-	"github.com/paganotoni/x/internal/plugins/tools/standard"
-	"github.com/paganotoni/x/internal/plugins/tools/webpack"
-	"github.com/paganotoni/x/internal/plugins/tools/x"
-	"github.com/paganotoni/x/internal/plugins/tools/yarn"
+	"github.com/paganotoni/oxpecker/cli/internal/fixer"
+	"github.com/paganotoni/oxpecker/cli/internal/help"
+	"github.com/paganotoni/oxpecker/cli/internal/version"
+
+	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/build"
+	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/dev"
+	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
+	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/test"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/packr"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/refresh"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/standard"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/webpack"
+	"github.com/paganotoni/oxpecker/internal/plugins/tools/yarn"
 )
 
 // defaultPlugins is the list of default plugins that will
@@ -32,13 +35,18 @@ var defaultPlugins = []plugins.Plugin{
 	&migrate.Plugin{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
-	&x.Fixer{},
+
+	// Fixers
+	&pop.Fixer{},
+	&fixer.Fixer{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
+	&help.Help{},
+	&version.Version{},
 }
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -97,21 +105,27 @@ func (c *cli) Run(args []string) error {
 		return nil
 	}
 
+	// Passing args and plugins to those plugins that require them
+	for _, plugin := range c.plugins {
+		pf, ok := plugin.(plugins.FlagParser)
+		if ok {
+			err := pf.ParseFlags(args[1:])
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+
+		pr, ok := plugin.(plugins.PluginReceiver)
+		if ok {
+			pr.Receive(c.plugins)
+		}
+	}
+
 	command := c.findCommand(args[1])
 	if command == nil {
+		// TODO: print help ?
 		fmt.Printf("did not find %s command\n", args[1])
 		return nil
-	}
-
-	if pr, ok := command.(plugins.PluginReceiver); ok {
-		pr.Receive(c.plugins)
-	}
-
-	if pf, ok := command.(plugins.FlagParser); ok {
-		err := pf.ParseFlags(args[1:])
-		if err != nil {
-			fmt.Println(err)
-		}
 	}
 
 	ctx := context.Background()

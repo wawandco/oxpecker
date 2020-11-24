@@ -1,4 +1,4 @@
-package x
+package fixer
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/paganotoni/x/internal/plugins"
-	"github.com/paganotoni/x/internal/plugins/lifecycle/fix"
+	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
 	"golang.org/x/mod/modfile"
 )
 

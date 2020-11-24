@@ -3,7 +3,7 @@ package build
 import (
 	"context"
 
-	"github.com/paganotoni/x/internal/plugins"
+	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
 // BeforeBuilder interface allows to identify the things
