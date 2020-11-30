@@ -18,8 +18,10 @@ var (
 // Compiler takes care of compiling the go binary, this might be one of
 // the last steps when we have done other phases of the build process.
 type Plugin struct {
-	output string
-	flags  *pflag.FlagSet
+	output    string
+	buildTags []string
+	static    bool
+	flags     *pflag.FlagSet
 }
 
 func (g Plugin) Name() string {

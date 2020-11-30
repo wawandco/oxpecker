@@ -13,26 +13,9 @@ import (
 //
 // IMPORTANT: it uses the static build flags.
 func (g *Plugin) Build(ctx context.Context, root string, args []string) error {
-	name, err := info.BuildName()
+	buildArgs, err := g.composeBuildArgs()
 	if err != nil {
 		return err
-	}
-
-	buildArgs := []string{
-		"build",
-
-		//--static
-		"--ldflags",
-		"-linkmode external",
-		"--ldflags",
-		`-extldflags "-static"`,
-
-		//-o
-		"-o",
-		g.binaryOutput(name),
-
-		// The main we're going to build
-		"./cmd/" + name,
 	}
 
 	cmd := exec.CommandContext(ctx, "go", buildArgs...)
@@ -41,6 +24,50 @@ func (g *Plugin) Build(ctx context.Context, root string, args []string) error {
 	cmd.Stdin = os.Stdin
 
 	return cmd.Run()
+}
+
+func (g *Plugin) composeBuildArgs() ([]string, error) {
+	name, err := info.BuildName()
+	if err != nil {
+		return []string{}, err
+	}
+
+	buildArgs := []string{
+		"build",
+	}
+	//static
+	static := []string{
+		"--ldflags",
+		"-linkmode external",
+		"--ldflags",
+		`-extldflags "-static"`,
+	}
+	if g.static {
+		for _, st := range static {
+			buildArgs = append(buildArgs, st)
+		}
+	}
+	//o
+	o := []string{
+		"-o",
+		g.binaryOutput(name),
+	}
+	for _, oline := range o {
+		buildArgs = append(buildArgs, oline)
+	}
+
+	// add the build
+
+	if len(g.buildTags) != 0 {
+		buildArgs = append(buildArgs, "-tags")
+		for _, tag := range g.buildTags {
+			buildArgs = append(buildArgs, tag)
+		}
+	}
+
+	buildArgs = append(buildArgs, "./cmd/"+name)
+
+	return buildArgs, nil
 }
 
 // binaryOutput considers the output passed to
