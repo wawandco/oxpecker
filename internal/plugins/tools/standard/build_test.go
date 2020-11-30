@@ -19,6 +19,9 @@ func TestBinaryOutput(t *testing.T) {
 func TestComposeBuildArgs(t *testing.T) {
 	td := t.TempDir()
 	err := os.Chdir(td)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	file := `module wawandco/app`
 	err = ioutil.WriteFile("go.mod", []byte(file), 0444)

@@ -43,26 +43,20 @@ func (g *Plugin) composeBuildArgs() ([]string, error) {
 		`-extldflags "-static"`,
 	}
 	if g.static {
-		for _, st := range static {
-			buildArgs = append(buildArgs, st)
-		}
+		buildArgs = append(buildArgs, static...)
 	}
 	//o
 	o := []string{
 		"-o",
 		g.binaryOutput(name),
 	}
-	for _, oline := range o {
-		buildArgs = append(buildArgs, oline)
-	}
+	buildArgs = append(buildArgs, o...)
 
 	// add the build
 
 	if len(g.buildTags) != 0 {
 		buildArgs = append(buildArgs, "-tags")
-		for _, tag := range g.buildTags {
-			buildArgs = append(buildArgs, tag)
-		}
+		buildArgs = append(buildArgs, g.buildTags...)
 	}
 
 	buildArgs = append(buildArgs, "./cmd/"+name)
