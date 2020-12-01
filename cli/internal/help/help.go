@@ -2,6 +2,8 @@ package help
 
 import (
 	"context"
+	"errors"
+	"log"
 
 	"github.com/paganotoni/oxpecker/internal/plugins"
 )
@@ -10,6 +12,8 @@ import (
 type Help struct {
 	commands []plugins.Plugin
 }
+
+var ErrSubCommandNotFound = errors.New("Subcommand not found")
 
 func (h Help) Name() string {
 	return "help"
@@ -27,8 +31,16 @@ func (h *Help) Run(ctx context.Context, root string, args []string) error {
 		h.printTopLevel()
 		return nil
 	}
+	if len(args) > 2 {
+		subcommand, err := h.findSubCommand(command, args)
+		if err != nil {
+			log.Fatal(err)
+		}
+		h.printDouble(command, subcommand)
+	} else {
+		h.printSingle(command)
+	}
 
-	h.printSingle(command)
 	return nil
 }
 
@@ -49,6 +61,21 @@ func (h *Help) findCommand(args []string) plugins.Plugin {
 	}
 
 	return command
+}
+
+func (h *Help) findSubCommand(command plugins.Plugin, args []string) (plugins.Subcommand, error) {
+	th, isSubcommander := command.(plugins.Subcommander)
+	SubName := args[2]
+	if isSubcommander {
+		for _, scmd := range th.Subcommands() {
+			if SubName == scmd.SubcommandName() {
+				return scmd, nil
+			}
+
+		}
+
+	}
+	return nil, ErrSubCommandNotFound
 }
 
 // Receives the plugins and stores the Commands for
