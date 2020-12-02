@@ -26,7 +26,7 @@ type CommandNamer interface {
 // the CLI as top level commands but rather those top level commands will organize
 // as subcommands.
 type Subcommand interface {
-	Plugin
+	Command
 	// SubcommandName is the name for the
 	SubcommandName() string
 

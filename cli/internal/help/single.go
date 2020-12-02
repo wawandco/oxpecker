@@ -3,6 +3,7 @@ package help
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/tabwriter"
 
 	"github.com/paganotoni/oxpecker/internal/plugins"
@@ -10,7 +11,7 @@ import (
 
 // printSingle prints help details for a passed plugin
 // Usage, Subcommands and Flags.
-func (h *Help) printSingle(command plugins.Plugin) {
+func (h *Help) printSingle(command plugins.Plugin, names []string) {
 
 	if th, ok := command.(plugins.HelpTexter); ok {
 		fmt.Printf("%v\n\n", th.HelpText())
@@ -19,6 +20,11 @@ func (h *Help) printSingle(command plugins.Plugin) {
 	fmt.Println("Usage:")
 	usage := fmt.Sprintf("  ox %v \n", command.Name())
 	th, isSubcommander := command.(plugins.Subcommander)
+
+	_, isSubcommand := command.(plugins.Subcommand)
+	if isSubcommand {
+		usage = fmt.Sprintf("  ox %v \n", strings.Join(names, " "))
+	}
 
 	if isSubcommander {
 		usage = fmt.Sprintf("  ox %v [subcommand]\n", command.Name())
@@ -34,12 +40,17 @@ func (h *Help) printSingle(command plugins.Plugin) {
 		fmt.Println("Subcommands:")
 
 		for _, scomm := range th.Subcommands() {
+			sc, ok := scomm.(plugins.Subcommand)
+			if !ok {
+				continue
+			}
+
 			helpText := ""
 			if ht, ok := scomm.(plugins.HelpTexter); ok {
 				helpText = ht.HelpText()
 			}
 
-			fmt.Fprintf(w, "  %v\t%v\n", scomm.SubcommandName(), helpText)
+			fmt.Fprintf(w, "  %v\t%v\n", sc.SubcommandName(), helpText)
 		}
 	}
 
@@ -49,7 +60,9 @@ func (h *Help) printSingle(command plugins.Plugin) {
 		flags := th.Flags()
 		flags.SetOutput(os.Stderr)
 		flags.PrintDefaults()
+		fmt.Println("")
 
 		return
 	}
+
 }
