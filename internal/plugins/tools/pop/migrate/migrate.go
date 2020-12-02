@@ -33,8 +33,13 @@ type Plugin struct {
 	flags *pflag.FlagSet
 }
 
+//HelpText resturns the help Text of build function
+func (m Plugin) HelpText() string {
+	return "Runs migrations on the current folder"
+}
+
 func (m *Plugin) Name() string {
-	return "pop/migrate"
+	return "migrate"
 }
 
 func (m *Plugin) SubcommandName() string {

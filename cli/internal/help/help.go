@@ -2,13 +2,17 @@ package help
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/paganotoni/oxpecker/internal/plugins"
 )
 
+var ErrSubCommandNotFound = errors.New("Subcommand not found")
+
 // Help command that prints
 type Help struct {
-	commands []plugins.Plugin
+	commands []plugins.Command
 }
 
 func (h Help) Name() string {
@@ -22,36 +26,61 @@ func (h Help) HelpText() string {
 
 // Run the help command
 func (h *Help) Run(ctx context.Context, root string, args []string) error {
-	command := h.findCommand(args)
+	command, names := h.findCommand(args)
 	if command == nil {
 		h.printTopLevel()
 		return nil
 	}
+	fmt.Println(names)
+	h.printSingle(command, names)
 
-	h.printSingle(command)
 	return nil
 }
 
-func (h *Help) findCommand(args []string) plugins.Plugin {
+func (h *Help) findCommand(args []string) (plugins.Plugin, []string) {
 	if len(args) < 2 {
-		return nil
+		return nil, nil
 	}
 
+	var commands = h.commands
 	var command plugins.Plugin
-	name := args[1]
-	for _, c := range h.commands {
-		if c.Name() != name {
-			continue
+	var argIndex = 1
+	var fndNames []string
+
+	for {
+		var name = args[argIndex]
+		for _, c := range commands {
+			// TODO: If its a subcommand check also the SubcommandName
+			if c.Name() != name {
+				continue
+			}
+			fndNames = append(fndNames, c.Name())
+			command = c
+			break
 		}
 
-		command = c
-		break
+		argIndex++
+		if argIndex >= len(args) {
+			break
+		}
+
+		sc, ok := command.(plugins.Subcommander)
+		if !ok {
+			break
+		}
+
+		var sbcm []plugins.Command
+		for _, subc := range sc.Subcommands() {
+			sbcm = append(sbcm, subc.(plugins.Command))
+		}
+
+		commands = sbcm
 	}
 
-	return command
+	return command, fndNames
 }
 
-// Receives the plugins and stores the Commands for
+// Receive the plugins and stores the Commands for
 // later usage on the help text.
 func (h *Help) Receive(pl []plugins.Plugin) {
 	for _, plugin := range pl {
