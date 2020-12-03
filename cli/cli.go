@@ -38,8 +38,6 @@ func (c *cli) findCommand(name string) plugins.Command {
 			continue
 		}
 
-		fmt.Println("Added: ", command.Name())
-
 		return command
 	}
 
