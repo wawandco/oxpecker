@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/paganotoni/oxpecker/internal/plugins"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
+	"github.com/paganotoni/oxpecker/plugins"
 	"golang.org/x/mod/modfile"
 )
 

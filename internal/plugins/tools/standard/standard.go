@@ -4,7 +4,7 @@
 package standard
 
 import (
-	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/plugins"
 	"github.com/spf13/pflag"
 )
 

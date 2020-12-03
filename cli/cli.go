@@ -5,62 +5,24 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/paganotoni/oxpecker/cli/internal/fixer"
-	"github.com/paganotoni/oxpecker/cli/internal/help"
-	"github.com/paganotoni/oxpecker/cli/internal/version"
-
-	"github.com/paganotoni/oxpecker/internal/plugins"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/build"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/dev"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/test"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/packr"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/refresh"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/standard"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/webpack"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/yarn"
+	"github.com/paganotoni/oxpecker/plugins"
+	"github.com/paganotoni/oxpecker/plugins/cli/fixer"
+	"github.com/paganotoni/oxpecker/plugins/cli/help"
+	"github.com/paganotoni/oxpecker/plugins/cli/version"
 )
-
-// defaultPlugins is the list of default plugins that will
-// be used by default.
-var defaultPlugins = []plugins.Plugin{
-	// IMPORTANT: order matters!
-	// Tools plugins.
-	&webpack.Plugin{},
-	&refresh.Plugin{},
-	&packr.Plugin{},
-	&pop.Plugin{},
-	&migrate.Plugin{},
-	&standard.Plugin{},
-	&yarn.Plugin{},
-
-	// Fixers
-	&pop.Fixer{},
-	&fixer.Fixer{},
-
-	// Developer Lifecycle plugins
-	&build.Command{},
-	&dev.Command{},
-	&test.Command{},
-	&fix.Command{},
-	&help.Help{},
-	&version.Version{},
-}
 
 // cli is the CLI wrapper for our tool. It is in charge
 // for articulating different commands, finding it and also
 // taking care of the CLI iteraction.
 type cli struct {
 	root    string
-	plugins []plugins.Plugin
+	Plugins []plugins.Plugin
 }
 
 // findCommand looks in the plugins for a command
 // with the passed name.
 func (c *cli) findCommand(name string) plugins.Command {
-	for _, cm := range c.plugins {
+	for _, cm := range c.Plugins {
 		// We skip subcommands on this case
 		// those will be wired by the parent command implementing
 		// Receive.
@@ -89,7 +51,7 @@ func (c *cli) findCommand(name string) plugins.Command {
 }
 
 // Runs the CLI
-func (c *cli) Run(args []string) error {
+func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 
 	// IMPORTANT: Incorporate the plugin system by taking a look at this.
 	// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28
@@ -106,7 +68,7 @@ func (c *cli) Run(args []string) error {
 	}
 
 	// Passing args and plugins to those plugins that require them
-	for _, plugin := range c.plugins {
+	for _, plugin := range c.Plugins {
 		pf, ok := plugin.(plugins.FlagParser)
 		if ok {
 			err := pf.ParseFlags(args[1:])
@@ -117,7 +79,7 @@ func (c *cli) Run(args []string) error {
 
 		pr, ok := plugin.(plugins.PluginReceiver)
 		if ok {
-			pr.Receive(c.plugins)
+			pr.Receive(c.Plugins)
 		}
 	}
 
@@ -128,24 +90,19 @@ func (c *cli) Run(args []string) error {
 		return nil
 	}
 
-	ctx := context.Background()
 	return command.Run(ctx, c.root, args[1:])
 }
 
 // New creates a CLI with the passed root and plugins. This becomes handy
 // when specifying your own plugins.
-func New(root string, plugins []plugins.Plugin) *cli {
-	return &cli{
-		root:    root,
-		plugins: plugins,
+func New() *cli {
+	c := &cli{
+		Plugins: []plugins.Plugin{
+			&help.Help{},
+			&version.Version{},
+			&fixer.Fixer{},
+		},
 	}
-}
 
-// NewWithRoot creates a CLI with the root passed and
-// default set of plugins.
-func NewWithRoot(root string) *cli {
-	return &cli{
-		root:    root,
-		plugins: defaultPlugins,
-	}
+	return c
 }

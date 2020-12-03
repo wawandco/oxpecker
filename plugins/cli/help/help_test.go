@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paganotoni/oxpecker/cli/internal/version"
-	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/plugins/cli/version"
+	"github.com/paganotoni/oxpecker/plugins"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
 	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
 )
