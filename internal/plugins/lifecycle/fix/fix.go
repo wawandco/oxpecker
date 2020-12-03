@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/paganotoni/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/plugins"
 )
 
 //HelpText resturns the help Text of build function

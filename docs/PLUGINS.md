@@ -36,7 +36,7 @@ func main() {
     
 	ox := cli.New()
 	// append your plugins here
-	// ox.Plugins = append(buffalo.Plugins, ...)
+	// ox.Plugins = append(wawandco.Plugins, ...)
     
     err = ox.Run(ctx, pwd, os.Args[1:])
 	if err != nil {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
-	"github.com/paganotoni/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/pop/migrate"
+	"github.com/wawandco/oxpecker/plugins"
 )
 
 //HelpText resturns the help Text of build function

@@ -4,11 +4,12 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
-	"github.com/paganotoni/oxpecker/plugins"
-	"github.com/paganotoni/oxpecker/plugins/cli/fixer"
-	"github.com/paganotoni/oxpecker/plugins/cli/help"
-	"github.com/paganotoni/oxpecker/plugins/cli/version"
+	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/plugins/cli/fixer"
+	"github.com/wawandco/oxpecker/plugins/cli/help"
+	"github.com/wawandco/oxpecker/plugins/cli/version"
 )
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -52,10 +53,17 @@ func (c *cli) findCommand(name string) plugins.Command {
 
 // Runs the CLI
 func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
+	path := filepath.Join("cmd", "ox", "main.go")
+	if _, err := os.Stat(path); err == nil {
+		
 
-	// IMPORTANT: Incorporate the plugin system by taking a look at this.
-	// https://github.com/gobuffalo/buffalo-cli/blob/81f172713e1182412f27a0b128160386e04cd39b/internal/garlic/run.go#L28
+		return nil
+	}
 
+	return c.run(ctx, c.root, args[1:])
+}
+
+func (c *cli) run(ctx context.Context, pwd string, args []string) error {
 	// Not sure if we should do this here or somewhere
 	// else, these are some environment variables to be set
 	// and other things to check.

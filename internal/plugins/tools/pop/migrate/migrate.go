@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
-	"github.com/paganotoni/oxpecker/plugins"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/plugins"
 )
 
 var (
