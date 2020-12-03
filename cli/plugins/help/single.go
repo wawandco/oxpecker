@@ -20,7 +20,7 @@ func (h *Help) printSingle(command plugins.Command, names []string) {
 	fmt.Println("Usage:")
 	usage := fmt.Sprintf("  ox %v \n", command.Name())
 
-	if command.ParentName() == "" {
+	if command.ParentName() != "" {
 		usage = fmt.Sprintf("  ox %v \n", strings.Join(names, " "))
 	}
 
