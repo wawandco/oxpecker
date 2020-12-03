@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/gobuffalo/plugins/plugio"
+	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/plugins"
 
 	"github.com/wawandco/oxpecker/cli/plugins/help"
@@ -52,21 +53,31 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	os.Setenv("GO111MODULE", "on") // Modules must be ON
 	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
 
-	path := filepath.Join("cmd", "ox", "main.go")
-	if _, err := os.Stat(path); err == nil {
-		bargs := []string{"run", path}
-		bargs = append(bargs, args...)
-
-		cmd := exec.CommandContext(ctx, "go", bargs...)
-		cmd.Stdin = plugio.Stdin()
-		cmd.Stdout = plugio.Stdout()
-		cmd.Stderr = plugio.Stderr()
-
-		return cmd.Run()
+	name, err := info.ModuleName()
+	if err != nil {
+		return err
 	}
 
-	fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
-	return c.run(ctx, c.root, args)
+	if name == "github.com/wawandco/oxpecker" {
+		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
+		return c.run(ctx, c.root, args)
+	}
+
+	path := filepath.Join("cmd", "ox", "main.go")
+	if _, err := os.Stat(path); err != nil {
+		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
+		return c.run(ctx, c.root, args)
+	}
+
+	bargs := []string{"run", path}
+	bargs = append(bargs, args...)
+
+	cmd := exec.CommandContext(ctx, "go", bargs...)
+	cmd.Stdin = plugio.Stdin()
+	cmd.Stdout = plugio.Stdout()
+	cmd.Stderr = plugio.Stderr()
+
+	return cmd.Run()
 }
 
 func (c *cli) run(ctx context.Context, pwd string, args []string) error {

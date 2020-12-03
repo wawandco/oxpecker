@@ -27,3 +27,15 @@ func BuildName() (string, error) {
 
 	return name, nil
 }
+
+// ModuleName returns the full module name
+// from go.mod
+func ModuleName() (string, error) {
+	content, err := ioutil.ReadFile("go.mod")
+	if err != nil {
+		return "", err
+	}
+
+	path := modfile.ModulePath(content)
+	return path, nil
+}
