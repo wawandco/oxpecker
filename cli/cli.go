@@ -9,9 +9,9 @@ import (
 
 	"github.com/gobuffalo/plugins/plugio"
 	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/plugins/cli/fixer"
-	"github.com/wawandco/oxpecker/plugins/cli/help"
-	"github.com/wawandco/oxpecker/plugins/cli/version"
+
+	"github.com/wawandco/oxpecker/cli/plugins/help"
+	"github.com/wawandco/oxpecker/cli/plugins/version"
 )
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -118,7 +118,6 @@ func New() *cli {
 		Plugins: []plugins.Plugin{
 			&help.Help{},
 			&version.Version{},
-			&fixer.Fixer{},
 		},
 	}
 

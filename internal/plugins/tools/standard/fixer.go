@@ -1,4 +1,4 @@
-package fixer
+package standard
 
 import (
 	"context"

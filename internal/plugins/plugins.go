@@ -29,6 +29,7 @@ var All = []plugins.Plugin{
 
 	// Fixers
 	&pop.Fixer{},
+	&standard.Fixer{},
 
 	// Developer Lifecycle plugins
 	&build.Command{},
