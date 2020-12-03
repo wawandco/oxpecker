@@ -11,9 +11,13 @@ var (
 type Plugin struct {
 	// subcommands we will invoke depending on parameters
 	// these are filled when Receive is called.
-	subcommands []plugins.Subcommand
+	subcommands []plugins.Command
 }
 
 func (p *Plugin) Name() string {
 	return "pop"
+}
+
+func (p *Plugin) ParentName() string {
+	return ""
 }

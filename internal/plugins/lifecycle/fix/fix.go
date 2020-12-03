@@ -22,6 +22,11 @@ type Command struct {
 func (c Command) Name() string {
 	return "fix"
 }
+
+func (c Command) ParentName() string {
+	return ""
+}
+
 func (c Command) HelpText() string {
 	return "adapts the source code to comply with newer versions of the CLI"
 }

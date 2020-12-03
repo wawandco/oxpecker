@@ -8,13 +8,13 @@ import (
 	"github.com/wawandco/oxpecker/plugins"
 )
 
+// Ensuring pop.Plugin is a command
+var _ plugins.Command = (*Plugin)(nil)
+
 //HelpText resturns the help Text of build function
 func (b Plugin) HelpText() string {
 	return "provides commands for pop common tasks"
 }
-
-// Ensuring pop.Plugin is a command
-var _ plugins.Command = (*Plugin)(nil)
 
 func (b *Plugin) Receive(plugins []plugins.Plugin) {
 	for _, plugin := range plugins {
@@ -33,7 +33,7 @@ func (b *Plugin) Run(ctx context.Context, root string, args []string) error {
 	}
 
 	for _, cm := range b.subcommands {
-		if cm.SubcommandName() != args[1] {
+		if cm.Name() != args[1] {
 			continue
 		}
 
@@ -47,9 +47,9 @@ func (b *Plugin) Run(ctx context.Context, root string, args []string) error {
 		return cm.Run(ctx, root, args[1:])
 	}
 
-	return nil //migrate.Run(ctx, root, args[1:])
+	return nil
 }
 
-func (b *Plugin) Subcommands() []plugins.Subcommand {
+func (b *Plugin) Subcommands() []plugins.Command {
 	return b.subcommands
 }

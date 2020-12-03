@@ -29,23 +29,16 @@ func (c *cli) findCommand(name string) plugins.Command {
 		// We skip subcommands on this case
 		// those will be wired by the parent command implementing
 		// Receive.
-		if _, ok := cm.(plugins.Subcommand); ok {
-			continue
-		}
-
 		command, ok := cm.(plugins.Command)
-		if !ok {
+		if !ok || command.ParentName() != "" {
 			continue
 		}
 
-		pluginName := command.Name()
-		if pn, ok := cm.(plugins.CommandNamer); ok {
-			pluginName = pn.CommandName()
-		}
-
-		if pluginName != name {
+		if command.Name() != name {
 			continue
 		}
+
+		fmt.Println("Added: ", command.Name())
 
 		return command
 	}

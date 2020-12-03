@@ -4,7 +4,9 @@ import (
 	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/build"
 	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/dev"
 	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/fix"
+	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/generate"
 	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/test"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/ox"
 	"github.com/wawandco/oxpecker/internal/plugins/tools/packr"
 	"github.com/wawandco/oxpecker/internal/plugins/tools/pop"
 	"github.com/wawandco/oxpecker/internal/plugins/tools/pop/migrate"
@@ -31,9 +33,13 @@ var All = []plugins.Plugin{
 	&pop.Fixer{},
 	&standard.Fixer{},
 
+	// Generators
+	&ox.Generator{},
+
 	// Developer Lifecycle plugins
 	&build.Command{},
 	&dev.Command{},
 	&test.Command{},
 	&fix.Command{},
+	&generate.Command{},
 }

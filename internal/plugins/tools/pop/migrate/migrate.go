@@ -12,7 +12,6 @@ import (
 
 var (
 	_ plugins.Command    = (*Plugin)(nil)
-	_ plugins.Subcommand = (*Plugin)(nil)
 	_ plugins.FlagParser = (*Plugin)(nil)
 
 	migrateUp                 = "UP"
@@ -40,6 +39,10 @@ func (m Plugin) HelpText() string {
 
 func (m *Plugin) Name() string {
 	return "migrate"
+}
+
+func (m *Plugin) ParentName() string {
+	return "pop"
 }
 
 func (m *Plugin) SubcommandName() string {

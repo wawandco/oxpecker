@@ -11,7 +11,7 @@ import (
 
 // printSingle prints help details for a passed plugin
 // Usage, Subcommands and Flags.
-func (h *Help) printSingle(command plugins.Plugin, names []string) {
+func (h *Help) printSingle(command plugins.Command, names []string) {
 
 	if th, ok := command.(plugins.HelpTexter); ok {
 		fmt.Printf("%v\n\n", th.HelpText())
@@ -19,13 +19,12 @@ func (h *Help) printSingle(command plugins.Plugin, names []string) {
 
 	fmt.Println("Usage:")
 	usage := fmt.Sprintf("  ox %v \n", command.Name())
-	th, isSubcommander := command.(plugins.Subcommander)
 
-	_, isSubcommand := command.(plugins.Subcommand)
-	if isSubcommand {
+	if command.ParentName() == "" {
 		usage = fmt.Sprintf("  ox %v \n", strings.Join(names, " "))
 	}
 
+	th, isSubcommander := command.(plugins.Subcommander)
 	if isSubcommander {
 		usage = fmt.Sprintf("  ox %v [subcommand]\n", command.Name())
 	}
@@ -40,8 +39,7 @@ func (h *Help) printSingle(command plugins.Plugin, names []string) {
 		fmt.Println("Subcommands:")
 
 		for _, scomm := range th.Subcommands() {
-			sc, ok := scomm.(plugins.Subcommand)
-			if !ok {
+			if scomm.ParentName() == "" {
 				continue
 			}
 
@@ -50,7 +48,7 @@ func (h *Help) printSingle(command plugins.Plugin, names []string) {
 				helpText = ht.HelpText()
 			}
 
-			fmt.Fprintf(w, "  %v\t%v\n", sc.SubcommandName(), helpText)
+			fmt.Fprintf(w, "  %v\t%v\n", scomm.Name(), helpText)
 		}
 	}
 

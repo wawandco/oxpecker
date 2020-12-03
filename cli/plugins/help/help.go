@@ -8,7 +8,12 @@ import (
 	"github.com/wawandco/oxpecker/plugins"
 )
 
-var ErrSubCommandNotFound = errors.New("Subcommand not found")
+var (
+	// Help is a Command
+	_ plugins.Command = (*Help)(nil)
+
+	ErrSubCommandNotFound = errors.New("Subcommand not found")
+)
 
 // Help command that prints
 type Help struct {
@@ -17,6 +22,10 @@ type Help struct {
 
 func (h Help) Name() string {
 	return "help"
+}
+
+func (h Help) ParentName() string {
+	return ""
 }
 
 // HelpText for the Help command
@@ -31,19 +40,20 @@ func (h *Help) Run(ctx context.Context, root string, args []string) error {
 		h.printTopLevel()
 		return nil
 	}
+
 	fmt.Println(names)
 	h.printSingle(command, names)
 
 	return nil
 }
 
-func (h *Help) findCommand(args []string) (plugins.Plugin, []string) {
+func (h *Help) findCommand(args []string) (plugins.Command, []string) {
 	if len(args) < 2 {
 		return nil, nil
 	}
 
 	var commands = h.commands
-	var command plugins.Plugin
+	var command plugins.Command
 	var argIndex = 1
 	var fndNames []string
 
@@ -84,12 +94,8 @@ func (h *Help) findCommand(args []string) (plugins.Plugin, []string) {
 // later usage on the help text.
 func (h *Help) Receive(pl []plugins.Plugin) {
 	for _, plugin := range pl {
-
-		if _, ok := plugin.(plugins.Subcommand); ok {
-			continue
-		}
-
-		if ht, ok := plugin.(plugins.Command); ok {
+		ht, ok := plugin.(plugins.Command)
+		if ok && ht.ParentName() == "" {
 			h.commands = append(h.commands, ht)
 		}
 	}
