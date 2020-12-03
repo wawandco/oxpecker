@@ -8,7 +8,6 @@ require (
 	github.com/gobuffalo/flect v0.2.2 // indirect
 	github.com/gobuffalo/nulls v0.4.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.8.0
-	github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190
 	github.com/gobuffalo/pop/v5 v5.2.0
 	github.com/gofrs/uuid v3.3.0+incompatible // indirect
 	github.com/lib/pq v1.8.0 // indirect
