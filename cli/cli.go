@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 
+	"github.com/gobuffalo/plugins/plugio"
 	"github.com/wawandco/oxpecker/plugins"
 	"github.com/wawandco/oxpecker/plugins/cli/fixer"
 	"github.com/wawandco/oxpecker/plugins/cli/help"
@@ -53,22 +55,29 @@ func (c *cli) findCommand(name string) plugins.Command {
 
 // Runs the CLI
 func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
+	// Not sure if we should do this here or somewhere
+	// else, these are some environment variables to be set
+	// and other things to check.
+	os.Setenv("GO111MODULE", "on") // Modules must be ON
+	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
+
 	path := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(path); err == nil {
-		
+		bargs := []string{"run", "-v", path}
+		bargs = append(bargs, args...)
 
-		return nil
+		cmd := exec.CommandContext(ctx, "go", bargs...)
+		cmd.Stdin = plugio.Stdin()
+		cmd.Stdout = plugio.Stdout()
+		cmd.Stderr = plugio.Stderr()
+
+		return cmd.Run()
 	}
 
 	return c.run(ctx, c.root, args[1:])
 }
 
 func (c *cli) run(ctx context.Context, pwd string, args []string) error {
-	// Not sure if we should do this here or somewhere
-	// else, these are some environment variables to be set
-	// and other things to check.
-	os.Setenv("GO111MODULE", "on") // Modules must be ON
-	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
 
 	if len(args) < 2 {
 		fmt.Println("no command provided, please provide one")
