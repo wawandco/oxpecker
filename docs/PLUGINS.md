@@ -8,7 +8,7 @@ In order to provide customization capabilities for your app, Ox (Oxpecker) shoul
 
 To make this work the CLI once started looks for `cmd/ox` folder, if it finds the folder will attempt to run `main.go` in there, otherwise it will run default plugins that the CLI ships with.
 
-![CLI execution](images/cli-execution.png)
+![CLI execution](docs/images/cli-execution.png)
 
 ## Exploring cmd/ox/main
 
