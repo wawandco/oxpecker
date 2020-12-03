@@ -7,7 +7,7 @@ Oxpecker is a CLI for web applications being build with Go and the Buffalo Frame
 To install Oxpecker you need to run the following command:
 
 ```sh
-go install github.com/paganotoni/oxpecker/cmd/ox
+GO111MODULE=on go install github.com/paganotoni/oxpecker/cmd/ox
 ```
 
 Or using gobinaries with:
