@@ -15,11 +15,3 @@ type Command interface {
 	// Run the command with the passed context, root and args.
 	Run(context.Context, string, []string) error
 }
-
-// Subcommander allows a plugin to say which are its subcommands.
-type Subcommander interface {
-	Command
-	PluginReceiver
-
-	Subcommands() []Command
-}
