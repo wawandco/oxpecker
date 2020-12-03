@@ -33,7 +33,7 @@ Commands are loaded from plugins, instead of being a hardcoded list of commands 
 
 ## Plugins
 
-TODO: Explain how this will work.
+Ox provides a plugin architecture to allow teams to define and built their own tooling in Go. For more details see the [Plugins doc](docs/PLUGINS.md).
 
 ## Principles
 
