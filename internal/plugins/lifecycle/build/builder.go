@@ -3,7 +3,7 @@ package build
 import (
 	"context"
 
-	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/plugins"
 )
 
 // Builder interface allows to set the build steps to be run.

@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/paganotoni/oxpecker/internal/plugins"
 	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
+	"github.com/paganotoni/oxpecker/plugins"
 )
 
 // Err..

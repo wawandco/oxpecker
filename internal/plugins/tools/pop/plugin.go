@@ -1,7 +1,7 @@
 package pop
 
 import (
-	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/paganotoni/oxpecker/plugins"
 )
 
 var (
