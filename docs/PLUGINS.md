@@ -103,7 +103,7 @@ The mechanics of how a plugin works and what it does depend on other interfaces 
 
 ## But how to?
 
-Even tho plugins are intended to have independence across them, there are some key interfaces that plugins need to meet to be wired in the CLI.
+Even tho plugins are intended to have independence, there are some key interfaces that plugins need to meet to be wired with the CLI.
 
 #### [Command]()
 
