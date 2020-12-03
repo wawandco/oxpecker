@@ -35,6 +35,7 @@ func (g *Plugin) composeBuildArgs() ([]string, error) {
 	buildArgs := []string{
 		"build",
 	}
+
 	//static
 	static := []string{
 		"--ldflags",
@@ -42,6 +43,7 @@ func (g *Plugin) composeBuildArgs() ([]string, error) {
 		"--ldflags",
 		`-extldflags "-static"`,
 	}
+
 	if g.static {
 		buildArgs = append(buildArgs, static...)
 	}
