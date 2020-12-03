@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/wawandco/oxpecker/plugins/cli/version"
+	"github.com/wawandco/oxpecker/cli/plugins/version"
 	"github.com/wawandco/oxpecker/plugins"
 	"github.com/wawandco/oxpecker/internal/plugins/tools/pop"
 	"github.com/wawandco/oxpecker/internal/plugins/tools/pop/migrate"

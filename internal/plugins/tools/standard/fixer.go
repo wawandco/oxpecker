@@ -27,7 +27,7 @@ var (
 type Fixer struct{}
 
 func (f Fixer) Name() string {
-	return "x"
+	return "main"
 }
 
 // Fix does the main.go magic
