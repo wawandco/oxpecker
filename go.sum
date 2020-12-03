@@ -74,8 +74,6 @@ github.com/gobuffalo/packd v1.0.0/go.mod h1:6VTc4htmJRFB7u1m/4LeMTWjFoYrUiBkU9Fd
 github.com/gobuffalo/packr/v2 v2.7.1/go.mod h1:qYEvAazPaVxy7Y7KR0W8qYEE+RymX74kETFqjFoFlOc=
 github.com/gobuffalo/packr/v2 v2.8.0 h1:IULGd15bQL59ijXLxEvA5wlMxsmx/ZkQv9T282zNVIY=
 github.com/gobuffalo/packr/v2 v2.8.0/go.mod h1:PDk2k3vGevNE3SwVyVRgQCCXETC9SaONCNSXT1Q8M1g=
-github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190 h1:Pjfz8mHnSeu1uwVDMfH6IIgEmWqjzmDjgdax6LYsM0E=
-github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190/go.mod h1:1aWlp/V+4urGPMZLjzWv5YSvMUyegqSTmm2xIYNOdNg=
 github.com/gobuffalo/plush/v4 v4.0.0 h1:ZHdmfr2R7DQ77XzWZK2PGKJOXm9NRy21EZ6Rw7FhuNw=
 github.com/gobuffalo/plush/v4 v4.0.0/go.mod h1:ErFS3UxKqEb8fpFJT7lYErfN/Nw6vHGiDMTjxpk5bQ0=
 github.com/gobuffalo/pop/v5 v5.2.0 h1:b5WDmlv5ZnOj0ZQ6SShBpwrolPCdbOXHM+SzRE//Nzs=
