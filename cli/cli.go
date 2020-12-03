@@ -63,7 +63,7 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 
 	path := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(path); err == nil {
-		bargs := []string{"run", "-v", path}
+		bargs := []string{"run", path}
 		bargs = append(bargs, args...)
 
 		cmd := exec.CommandContext(ctx, "go", bargs...)
@@ -74,7 +74,8 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 		return cmd.Run()
 	}
 
-	return c.run(ctx, c.root, args[1:])
+	fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
+	return c.run(ctx, c.root, args)
 }
 
 func (c *cli) run(ctx context.Context, pwd string, args []string) error {
