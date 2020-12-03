@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/paganotoni/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/info"
 )
 
 // Build runs the Go compiler to generate the desired binary. Assuming the

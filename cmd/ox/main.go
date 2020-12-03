@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/paganotoni/oxpecker/cli"
-	"github.com/paganotoni/oxpecker/internal/plugins"
+	"github.com/wawandco/oxpecker/cli"
+	"github.com/wawandco/oxpecker/internal/plugins"
 )
 
 func main() {

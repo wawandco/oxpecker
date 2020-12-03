@@ -1,18 +1,18 @@
 package plugins
 
 import (
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/build"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/dev"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/fix"
-	"github.com/paganotoni/oxpecker/internal/plugins/lifecycle/test"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/packr"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/pop/migrate"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/refresh"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/standard"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/webpack"
-	"github.com/paganotoni/oxpecker/internal/plugins/tools/yarn"
-	"github.com/paganotoni/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/build"
+	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/dev"
+	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/fix"
+	"github.com/wawandco/oxpecker/internal/plugins/lifecycle/test"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/packr"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/pop"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/pop/migrate"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/refresh"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/standard"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/webpack"
+	"github.com/wawandco/oxpecker/internal/plugins/tools/yarn"
+	"github.com/wawandco/oxpecker/plugins"
 )
 
 // All plugins in this package
