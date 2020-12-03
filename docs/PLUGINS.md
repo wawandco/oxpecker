@@ -26,13 +26,13 @@ import (
 )
 
 func main() {
-    fmt.Print("~~~~ Using app/cmd/ox ~~~\n\n")
+  	fmt.Print("~~~~ Using app/cmd/ox ~~~\n\n")
 	ctx := context.Background()
     
-    pwd, err := os.Getwd()
+  	pwd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
-    }
+  	}
     
 	ox := cli.New()
 	// append your plugins here
