@@ -18,7 +18,7 @@ func main() {
 	cli := cli.New()
 	cli.Plugins = append(cli.Plugins, plugins.All...)
 
-	err = cli.Run(context.Background(), pwd, os.Args)
+	err = cli.Wrap(context.Background(), pwd, os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}

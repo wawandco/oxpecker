@@ -27,7 +27,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 
 	if _, err := os.Stat(file); err != nil {
 		//Folder does not exist, we proceed to create it
-		err = os.MkdirAll(filepath.Dir(file), 0644)
+		err = os.MkdirAll(filepath.Dir(file), 0755)
 		if err != nil {
 			return err
 		}
@@ -54,5 +54,5 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	return ioutil.WriteFile(file, tpl.Bytes(), 0644)
+	return ioutil.WriteFile(file, tpl.Bytes(), 0655)
 }

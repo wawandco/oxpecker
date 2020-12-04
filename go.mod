@@ -3,6 +3,7 @@ module github.com/wawandco/oxpecker
 go 1.15
 
 require (
+	github.com/gobuffalo/buffalo-cli v0.5.0
 	github.com/gobuffalo/envy v1.9.0 // indirect
 	github.com/gobuffalo/fizz v1.13.0 // indirect
 	github.com/gobuffalo/flect v0.2.2 // indirect

@@ -45,8 +45,8 @@ func (c *cli) findCommand(name string) plugins.Command {
 	return nil
 }
 
-// Runs the CLI
-func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
+// Runs the CLI or cmd/ox/main.go
+func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	// Not sure if we should do this here or somewhere
 	// else, these are some environment variables to be set
 	// and other things to check.
@@ -60,13 +60,13 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 
 	if name == "github.com/wawandco/oxpecker" {
 		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
-		return c.run(ctx, c.root, args)
+		return c.Run(ctx, c.root, args)
 	}
 
 	path := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(path); err != nil {
 		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
-		return c.run(ctx, c.root, args)
+		return c.Run(ctx, c.root, args)
 	}
 
 	bargs := []string{"run", path}
@@ -80,8 +80,7 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	return cmd.Run()
 }
 
-func (c *cli) run(ctx context.Context, pwd string, args []string) error {
-
+func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	if len(args) < 2 {
 		fmt.Println("no command provided, please provide one")
 		return nil
