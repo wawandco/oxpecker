@@ -10,7 +10,7 @@ func (m *Plugin) ParseFlags(args []string) {
 	m.flags.StringVarP(&m.direction, "direction", "", "", "direction to run the migrations to")
 	m.flags.StringVarP(&m.configFile, "config", "", "config/database.yml", "direction to run the migrations to")
 	m.flags.IntVarP(&m.steps, "steps", "s", 0, "how many migrations to run")
-	m.flags.Parse(args)
+	m.flags.Parse(args) //nolint:errcheck,we don't care hence the flag
 }
 
 func (m *Plugin) Flags() *pflag.FlagSet {

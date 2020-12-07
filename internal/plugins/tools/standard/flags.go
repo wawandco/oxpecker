@@ -10,7 +10,7 @@ func (b *Plugin) ParseFlags(args []string) {
 	b.flags.StringVarP(&b.output, "output", "o", "", "the path the binary will be generated at")
 	b.flags.StringSliceVarP(&b.buildTags, "tags", "", []string{}, "tags to pass the go build command")
 	b.flags.BoolVar(&b.static, "static", true, `build a static binary using  --ldflags '-linkmode external -extldflags "-static"'`)
-	b.flags.Parse(args)
+	b.flags.Parse(args) //nolint:errcheck,we don't care hence the flag
 }
 
 // ParseFlags
