@@ -38,10 +38,7 @@ func (b *Plugin) Run(ctx context.Context, root string, args []string) error {
 		}
 
 		if fp, ok := cm.(plugins.FlagParser); ok {
-			err := fp.ParseFlags(args[1:])
-			if err != nil {
-				return err
-			}
+			fp.ParseFlags(args[1:])
 		}
 
 		return cm.Run(ctx, root, args[1:])

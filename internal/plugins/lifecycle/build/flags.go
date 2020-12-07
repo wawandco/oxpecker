@@ -5,21 +5,15 @@ import (
 	"github.com/wawandco/oxpecker/plugins"
 )
 
-func (b *Command) ParseFlags(args []string) error {
-	// TODO: This needs to happen with all of the plugins
+func (b *Command) ParseFlags(args []string) {
 	for _, plugin := range b.builders {
 		fp, ok := plugin.(plugins.FlagParser)
 		if !ok {
 			continue
 		}
 
-		err := fp.ParseFlags(args)
-		if err != nil {
-			return err
-		}
+		fp.ParseFlags(args)
 	}
-
-	return nil
 }
 
 func (b *Command) Flags() *pflag.FlagSet {

@@ -7,6 +7,6 @@ import "github.com/spf13/pflag"
 type FlagParser interface {
 	Plugin
 
-	ParseFlags([]string) error
+	ParseFlags([]string)
 	Flags() *pflag.FlagSet
 }

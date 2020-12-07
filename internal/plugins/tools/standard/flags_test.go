@@ -4,10 +4,7 @@ import "testing"
 
 func Test_ParseFlags_Empty(t *testing.T) {
 	c := &Plugin{}
-	err := c.ParseFlags([]string{})
-	if err != nil {
-		t.Errorf("should not err on parseFlags empty")
-	}
+	c.ParseFlags([]string{})
 
 	if c.output != "" {
 		t.Errorf("output should be empty, was `%s`", c.output)
@@ -16,10 +13,7 @@ func Test_ParseFlags_Empty(t *testing.T) {
 
 func Test_ParseFlags_Value(t *testing.T) {
 	c := &Plugin{}
-	err := c.ParseFlags([]string{"-o", "something"})
-	if err != nil {
-		t.Errorf("should not err on parseFlags with value")
-	}
+	c.ParseFlags([]string{"-o", "something"})
 
 	expected := "something"
 	if c.output != expected {

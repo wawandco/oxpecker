@@ -90,10 +90,7 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	for _, plugin := range c.Plugins {
 		pf, ok := plugin.(plugins.FlagParser)
 		if ok {
-			err := pf.ParseFlags(args[1:])
-			if err != nil {
-				fmt.Println(err)
-			}
+			pf.ParseFlags(args[1:])
 		}
 
 		pr, ok := plugin.(plugins.PluginReceiver)
