@@ -49,4 +49,4 @@ Flags:
 
 ## Acknowledgements
 
-While this tool was written from the ground up, most of the architectural ideas come from the Buffalo-cli repo and @markbates, Without his guidance and designs for the buffalo-cli oxpecker would not exists. thanks Mark!
+While this tool was written from the ground up, most of the architectural ideas come from the Buffalo-cli repo and particularly to [@markbates](https://twitter.com/markbates). Without his guidance and designs for the buffalo-cli oxpecker would not exists. thanks Mark!
