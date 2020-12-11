@@ -1,6 +1,6 @@
 # Oxpecker
 
-Oxpecker is a CLI for web applications being build with Go and the Buffalo Framework. It aims to provide support for the everyday development using Go and the Buffalo stack.
+Oxpecker is a CLI system we use at Wawandco to wire the plugins we use in our day-to-day development tasks, the functionalities are built into plugins we store in a different repository, this tools allows us to wire those plugins depending on the needs of the project.
 
 ## Installation
 
@@ -10,50 +10,13 @@ Assuming you have the Go tooling installed and `GOPATH/bin` in your PATH you can
 GO111MODULE=on go install github.com/wawandco/oxpecker/cmd/ox
 ```
 
-Or using gobinaries with:
-
-```sh
-curl -sf https://gobinaries.com/paganotoni/oxpecker/cmd/ox | sh
-```
-
 ## Usage
 
-```
-ox [command]
+After installing Ox defaults to have all the plugins in the wawandco/oxpecker-plugins repository, those are based on how we generate/build things. If you want to use your own plugins or pick and choose from that list you can generate cmd/ox/main.go with 
 
-p.e 
-ox dev
-ox build
-ox test
+```
+ox generate ox
 ```
 
-## Commands
-
-Commands are loaded from plugins, instead of being a hardcoded list of commands plugins used in the CLI will provide the commands that will be available at the CLI runtime. CLI will identify those commands with the Command interface.
-
-## Plugins
-
-Ox provides a plugin architecture to allow teams to define and built their own tooling in Go. For more details see the [Plugins doc](docs/PLUGINS.md).
-
-## Principles
-
-- Guided by experience (Extracting is preferred over Imagining).
-- Prefer Go: 
-    - Want to use the Go standard library as much as possible
-    - Avoid YML/TOML/Other and other markup languages for configuration.
-    - Embrace Go modules and require it
-- Keep it simple.
-- Convention over configuration.
-
-## Why another CLI?
-
-TLDR: I want to. And in doing so want to avoid discussions about previous choices made in the v1 Buffalo CLI.
-
-**Long version**
-
-To explain the Why of this CLI tool I have to mention that there is a new CLI for buffalo that's being developed, I personally have been working on it.
-
-While Working on Buffalo-cli I learnt a lot of things that are done and took a lot of ideas for the design/implementation of this CLI tool. I also noticed that there are some patterns that repeat in the Go/Buffalo code-bases I work that would like to incorporate into the CLI, but I could not do that with the Buffalo-cli because I don't have the freedom to break everybody's code there.
-
-So I thought about building this CLI as a way to try out those ideas I and my team have had by incorporating some of the lessons learned on both the Buffalo-cli [LINK] and the current Buffalo cli.
+Inside that file you can specify the plugins you want to use. You can take a deeper read at how that works in the [plugins docs](docs/PLUGINS.md).
 
