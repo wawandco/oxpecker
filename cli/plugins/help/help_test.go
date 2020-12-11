@@ -4,10 +4,10 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/wawandco/oxpecker-plugins/tools/pop"
+	"github.com/wawandco/oxpecker-plugins/tools/pop/migrate"
 	"github.com/wawandco/oxpecker/cli/plugins/version"
 	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/internal/plugins/tools/pop"
-	"github.com/wawandco/oxpecker/internal/plugins/tools/pop/migrate"
 )
 
 func TestFindCommand(t *testing.T) {
