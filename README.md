@@ -1,6 +1,7 @@
 # Oxpecker
 
-Oxpecker is a CLI system we use at Wawandco to wire the plugins we use in our day-to-day development tasks, the functionalities are built into plugins we store in a different repository, this tools allows us to wire those plugins depending on the needs of the project.
+Oxpecker is a CLI system we use at Wawandco to wire the plugins we use in our day-to-day development tasks, the functionalities are built inside Plugins. 
+We store our regular plugins in the [wawandco/oxpecker-plugins](https://github.com/wawandco/oxpecker-plugins) repo. This tools allows us to wire those plugins depending on the needs of the project we're working on.
 
 ## Installation
 
