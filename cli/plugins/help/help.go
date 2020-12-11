@@ -3,7 +3,6 @@ package help
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -41,7 +40,6 @@ func (h *Help) Run(ctx context.Context, root string, args []string) error {
 		return nil
 	}
 
-	fmt.Println(names)
 	h.printSingle(command, names)
 
 	return nil
