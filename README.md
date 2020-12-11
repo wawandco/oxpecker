@@ -20,3 +20,28 @@ ox generate ox
 
 Inside that file you can specify the plugins you want to use. You can take a deeper read at how that works in the [plugins docs](docs/PLUGINS.md).
 
+### Help
+
+The help command ships with Oxpecker and allows to get help for a command or subcommand with it. You can invoke it with:
+
+```
+ox help [command]
+```
+
+For example, `ox help build` displays info about the build command.
+
+```
+$ ox help build      
+~~~~ Using wawandco/oxpecker/cmd/ox ~~~
+
+[build]
+builds a buffalo app from within the root folder of the project
+
+Usage:
+  ox build 
+
+Flags:
+  -o, --output string   the path the binary will be generated at
+      --static          build a static binary using  --ldflags '-linkmode external -extldflags "-static"' (default true)
+      --tags strings    tags to pass the go build command
+```
