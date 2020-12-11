@@ -35,7 +35,6 @@ For example, `ox help build` displays info about the build command.
 $ ox help build      
 ~~~~ Using wawandco/oxpecker/cmd/ox ~~~
 
-[build]
 builds a buffalo app from within the root folder of the project
 
 Usage:
