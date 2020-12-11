@@ -13,7 +13,7 @@ GO111MODULE=on go install github.com/wawandco/oxpecker/cmd/ox
 
 ## Usage
 
-After installing Ox defaults to have all the plugins in the wawandco/oxpecker-plugins repository, those are based on how we generate/build things. If you want to use your own plugins or pick and choose from that list you can generate cmd/ox/main.go with 
+After installing Ox defaults to have all the plugins in the [wawandco/oxpecker-plugins](https://github.com/wawandco/oxpecker-plugins) repository, those are based on the ways we do things at Wawandco, the tools and elements of our development practices. If you want to use your own plugins or pick and choose from that list you can generate `cmd/ox/main.go` with 
 
 ```
 ox generate ox
@@ -35,7 +35,6 @@ For example, `ox help build` displays info about the build command.
 $ ox help build      
 ~~~~ Using wawandco/oxpecker/cmd/ox ~~~
 
-[build]
 builds a buffalo app from within the root folder of the project
 
 Usage:
