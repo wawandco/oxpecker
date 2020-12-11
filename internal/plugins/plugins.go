@@ -26,6 +26,8 @@ var All = []plugins.Plugin{
 	&packr.Plugin{},
 	&pop.Plugin{},
 	&migrate.Plugin{},
+	&migrate.MigrateUp{},
+	&migrate.MigrateDown{},
 	&standard.Plugin{},
 	&yarn.Plugin{},
 

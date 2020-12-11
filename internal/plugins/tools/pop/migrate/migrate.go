@@ -3,33 +3,20 @@ package migrate
 import (
 	"context"
 	"errors"
-	"os"
 
-	"github.com/gobuffalo/pop/v5"
-	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
 var (
-	_ plugins.Command    = (*Plugin)(nil)
-	_ plugins.FlagParser = (*Plugin)(nil)
+	_ plugins.Command = (*Plugin)(nil)
 
-	migrateUp                 = "UP"
 	ErrCouldNotFindConnection = errors.New("could not find connection by name")
+	ErrNotEnoughArgs          = errors.New("not enough args, please specify direction p.e ox pop migrate up")
+	ErrInvalidInstruction     = errors.New("invalid instruction for migrate command")
 )
 
 type Plugin struct {
-	migrationPath  string
-	connectionName string
-	configFile     string
-
-	// direction could be UP or DOWN, defaults to UP
-	direction string
-
-	// steps is the number of migrations to apply
-	steps int
-
-	flags *pflag.FlagSet
+	migrators []Migrator
 }
 
 //HelpText resturns the help Text of build function
@@ -49,33 +36,31 @@ func (m *Plugin) SubcommandName() string {
 	return "migrate"
 }
 
-// Run will run migrations on the current folder, it will look for the
-// migrations folder and attempt to run the migrations using internal
-// pop tooling
 func (m *Plugin) Run(ctx context.Context, root string, args []string) error {
-	cb, err := os.OpenFile(m.configFile, os.O_RDWR|os.O_CREATE, 0755)
-	if err != nil {
-		return err
+
+	if len(args) < 2 {
+		return ErrNotEnoughArgs
 	}
 
-	err = pop.LoadFrom(cb)
-	if err != nil {
-		return err
+	name := args[1]
+	for _, mig := range m.migrators {
+		if mig.CommandName() != name {
+			continue
+		}
+
+		return mig.RunMigrations(ctx, root, args)
 	}
 
-	conn := pop.Connections[m.connectionName]
-	if conn == nil {
-		return ErrCouldNotFindConnection
-	}
+	return ErrInvalidInstruction
+}
 
-	mig, err := pop.NewFileMigrator(m.migrationPath, conn)
-	if err != nil {
-		return err
-	}
+func (m *Plugin) Receive(plugins []plugins.Plugin) {
+	for _, plugin := range plugins {
+		pl, ok := plugin.(Migrator)
+		if !ok {
+			continue
+		}
 
-	if m.direction == migrateUp || m.direction == "" {
-		return mig.Up()
+		m.migrators = append(m.migrators, pl)
 	}
-
-	return mig.Down(m.steps)
 }
