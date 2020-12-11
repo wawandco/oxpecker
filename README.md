@@ -46,3 +46,7 @@ Flags:
       --static          build a static binary using  --ldflags '-linkmode external -extldflags "-static"' (default true)
       --tags strings    tags to pass the go build command
 ```
+
+## Acknowledgements
+
+While this tool was written from the ground up, most of the architectural ideas come from the Buffalo-cli repo and @markbates, Without his guidance and designs for the buffalo-cli oxpecker would not exists. thanks Mark!
