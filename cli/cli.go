@@ -7,7 +7,6 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/gobuffalo/plugins/plugio"
 	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/plugins"
 
@@ -55,17 +54,17 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 
 	name, err := info.ModuleName()
 	if err != nil {
-		return err
+		fmt.Printf("[info] could not determine module name: %v\n", err)
 	}
 
 	if name == "github.com/wawandco/oxpecker" {
-		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
+		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
 
 	path := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(path); err != nil {
-		fmt.Print("~~~~ Using wawandco/oxpecker/cmd/ox ~~~\n\n")
+		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
 
@@ -73,9 +72,9 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	bargs = append(bargs, args...)
 
 	cmd := exec.CommandContext(ctx, "go", bargs...)
-	cmd.Stdin = plugio.Stdin()
-	cmd.Stdout = plugio.Stdout()
-	cmd.Stderr = plugio.Stderr()
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
 	return cmd.Run()
 }
