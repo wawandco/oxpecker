@@ -57,7 +57,7 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 		fmt.Printf("[info] could not determine module name: %v\n", err)
 	}
 
-	if name == "github.com/wawandco/oxpecker" {
+	if name == "github.com/wawandco/oxpecker" || name == "" {
 		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
