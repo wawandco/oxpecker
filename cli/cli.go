@@ -69,7 +69,7 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	}
 
 	bargs := []string{"run", path}
-	bargs = append(bargs, args...)
+	bargs = append(bargs, args[1:]...)
 
 	cmd := exec.CommandContext(ctx, "go", bargs...)
 	cmd.Stdin = os.Stdin
