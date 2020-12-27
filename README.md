@@ -1,7 +1,7 @@
 # Oxpecker
 
 Oxpecker is a CLI system we use at Wawandco to wire the plugins we use in our day-to-day development tasks, the functionalities are built inside Plugins. 
-We store our regular plugins in the [wawandco/oxpecker-plugins](https://github.com/wawandco/oxpecker-plugins) repo. This tools allows us to wire those plugins depending on the needs of the project we're working on.
+We store our regular plugins in the [wawandco/oxplugins](https://github.com/wawandco/oxplugins) repo. This tools allows us to wire those plugins depending on the needs of the project we're working on.
 
 ## Installation
 
@@ -13,7 +13,7 @@ GO111MODULE=on go install github.com/wawandco/oxpecker/cmd/ox
 
 ## Usage
 
-After installing Ox defaults to have all the plugins in the [wawandco/oxpecker-plugins](https://github.com/wawandco/oxpecker-plugins) repository, those are based on the ways we do things at Wawandco, the tools and elements of our development practices. If you want to use your own plugins or pick and choose from that list you can generate `cmd/ox/main.go` with 
+After installing Ox defaults to have all the plugins in the [wawandco/oxplugins](https://github.com/wawandco/oxplugins) repository, those are based on the ways we do things at Wawandco, the tools and elements of our development practices. If you want to use your own plugins or pick and choose from that list you can generate `cmd/ox/main.go` with 
 
 ```
 ox generate ox

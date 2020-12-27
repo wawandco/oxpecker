@@ -916,8 +916,8 @@ github.com/unrolled/secure v0.0.0-20181005190816-ff9db2ff917f/go.mod h1:mnPT77IA
 github.com/unrolled/secure v0.0.0-20181022170031-4b6b7cf51606/go.mod h1:mnPT77IAdsi/kV7+Es7y+pXALeV3h7G6dQF6mNYjcLA=
 github.com/unrolled/secure v0.0.0-20190103195806-76e6d4e9b90c/go.mod h1:mnPT77IAdsi/kV7+Es7y+pXALeV3h7G6dQF6mNYjcLA=
 github.com/wawandco/oxpecker v0.0.0-20201211140827-ae7f4f32f756/go.mod h1:EukXIpVjY1pNGPAEt0r/N8CcJPdR0grzHYqUbWVTKO0=
-github.com/wawandco/oxpecker-plugins v0.1.0 h1:YdjkQ5lHMkCa9BZOP7AsoiICS3I3ule4oIjC/0gbXoQ=
-github.com/wawandco/oxpecker-plugins v0.1.0/go.mod h1:u5DMxc7c27QBqu9KAU3kuBeUsvtMTx5HUgBH6Yf9wFI=
+github.com/wawandco/oxplugins v0.2.1 h1:fqjaOE4nm676KZHd3QZi/jiCodP6jcrtb9MxvdcTnVo=
+github.com/wawandco/oxplugins v0.2.1/go.mod h1:St1HNqhfC/Ms1WkPgtAAqnppHOs7V7g9U0hkMJZ/XoQ=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 github.com/zenazn/goji v0.9.0/go.mod h1:7S9M489iMyHBNxwZnk9/EHS098H4/F6TATF2mIxtB1Q=
