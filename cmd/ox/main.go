@@ -16,7 +16,7 @@ func main() {
 	}
 
 	cli := cli.New()
-	cli.Plugins = append(cli.Plugins, oxplugins.All...)
+	cli.Plugins = append(cli.Plugins, oxplugins.Base...)
 
 	err = cli.Wrap(context.Background(), pwd, os.Args)
 	if err != nil {
