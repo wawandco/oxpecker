@@ -17,8 +17,8 @@ func TestFindCommand(t *testing.T) {
 		},
 	}
 
-	migrate := &migrate.Plugin{}
-	pop := &pop.Plugin{}
+	migrate := &migrate.Command{}
+	pop := &pop.Command{}
 	pop.Receive([]plugins.Plugin{
 		migrate,
 	})
