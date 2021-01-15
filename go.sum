@@ -29,6 +29,7 @@ github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMe
 github.com/cockroachdb/cockroach-go v0.0.0-20181001143604-e0a95dfd547c/go.mod h1:XGLbWH/ujMcbPbhZq52Nv6UrCghb1yGn//133kEsvDk=
 github.com/cockroachdb/cockroach-go v0.0.0-20190916165215-ad57a61cc915 h1:QX2Zc22B15gdWwDCwS7BXmbeD/SWdcRK12gOfZ5BsIs=
 github.com/cockroachdb/cockroach-go v0.0.0-20190916165215-ad57a61cc915/go.mod h1:XGLbWH/ujMcbPbhZq52Nv6UrCghb1yGn//133kEsvDk=
+github.com/cockroachdb/cockroach-go v0.0.0-20190925194419-606b3d062051/go.mod h1:XGLbWH/ujMcbPbhZq52Nv6UrCghb1yGn//133kEsvDk=
 github.com/codegangsta/negroni v1.0.0/go.mod h1:v0y3T5G7Y1UlFfyxFn/QLRU4a2EuNau2iZY63YTKWo0=
 github.com/coreos/bbolt v1.3.2/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
@@ -429,6 +430,7 @@ github.com/gobuffalo/packr/v2 v2.7.1/go.mod h1:qYEvAazPaVxy7Y7KR0W8qYEE+RymX74kE
 github.com/gobuffalo/packr/v2 v2.8.0/go.mod h1:PDk2k3vGevNE3SwVyVRgQCCXETC9SaONCNSXT1Q8M1g=
 github.com/gobuffalo/packr/v2 v2.8.1 h1:tkQpju6i3EtMXJ9uoF5GT6kB+LMTimDWD8Xvbz6zDVA=
 github.com/gobuffalo/packr/v2 v2.8.1/go.mod h1:c/PLlOuTU+p3SybaJATW3H6lX/iK7xEz5OeMf+NnJpg=
+github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190 h1:Pjfz8mHnSeu1uwVDMfH6IIgEmWqjzmDjgdax6LYsM0E=
 github.com/gobuffalo/plugins v0.0.0-20200405155620-289cda9b5190/go.mod h1:1aWlp/V+4urGPMZLjzWv5YSvMUyegqSTmm2xIYNOdNg=
 github.com/gobuffalo/plush v3.7.16+incompatible/go.mod h1:rQ4zdtUUyZNqULlc6bqd5scsPfLKfT0+TGMChgduDvI=
 github.com/gobuffalo/plush v3.7.20+incompatible/go.mod h1:rQ4zdtUUyZNqULlc6bqd5scsPfLKfT0+TGMChgduDvI=
@@ -477,6 +479,7 @@ github.com/gobuffalo/pop v4.12.0+incompatible/go.mod h1:DwBz3SD5SsHpTZiTubcsFWcV
 github.com/gobuffalo/pop v4.12.1+incompatible/go.mod h1:DwBz3SD5SsHpTZiTubcsFWcVDpJWGsxjVjMPnkiThWg=
 github.com/gobuffalo/pop v4.12.2+incompatible h1:WFHMzzHbVLulZnEium1VlYRnWkzHz39FzVLov6rZdDI=
 github.com/gobuffalo/pop v4.12.2+incompatible/go.mod h1:DwBz3SD5SsHpTZiTubcsFWcVDpJWGsxjVjMPnkiThWg=
+github.com/gobuffalo/pop v4.13.1+incompatible/go.mod h1:DwBz3SD5SsHpTZiTubcsFWcVDpJWGsxjVjMPnkiThWg=
 github.com/gobuffalo/pop/v5 v5.2.0/go.mod h1:Hj586Cr7FoTFNmvzyNdUcajv3r0A+W+bkil4RIX/zKo=
 github.com/gobuffalo/pop/v5 v5.3.1/go.mod h1:vcEDhh6cJ3WVENqJDFt/6z7zNb7lLnlN8vj3n5G9rYA=
 github.com/gobuffalo/release v1.0.35/go.mod h1:VtHFAKs61vO3wboCec5xr9JPTjYyWYcvaM3lclkc4x4=
@@ -880,8 +883,12 @@ github.com/unrolled/secure v0.0.0-20181005190816-ff9db2ff917f/go.mod h1:mnPT77IA
 github.com/unrolled/secure v0.0.0-20181022170031-4b6b7cf51606/go.mod h1:mnPT77IAdsi/kV7+Es7y+pXALeV3h7G6dQF6mNYjcLA=
 github.com/unrolled/secure v0.0.0-20190103195806-76e6d4e9b90c/go.mod h1:mnPT77IAdsi/kV7+Es7y+pXALeV3h7G6dQF6mNYjcLA=
 github.com/wawandco/oxpecker v0.0.0-20201211140827-ae7f4f32f756/go.mod h1:EukXIpVjY1pNGPAEt0r/N8CcJPdR0grzHYqUbWVTKO0=
+github.com/wawandco/oxpecker v1.2.3/go.mod h1:ICDftjQEYo7TCe5fQy2TbZd2IEnaDFtU/faNfR64+wc=
+github.com/wawandco/oxplugins v0.4.4/go.mod h1:84IiSMelvyvE4B9lroOXJXLLU2W3mO3V1c8z9R346SA=
 github.com/wawandco/oxplugins v0.6.3 h1:xhnbUtaF4lD0qUebi5TUR+w92BjWfEr9M2u2NHF+E9s=
 github.com/wawandco/oxplugins v0.6.3/go.mod h1:eUB3v2ZfcL8oJU3iOOcUeMmrIiI7ubQ8+aubDU3NMuA=
+github.com/wawandco/oxplugins v0.6.4-0.20210115181204-4493e757be6e h1:Rll22jjkcUG9AY/5tDc6OVU2E0tSgl6EvRjgsQczXGs=
+github.com/wawandco/oxplugins v0.6.4-0.20210115181204-4493e757be6e/go.mod h1:tmqRwOY99zQw3v65Oew6jD6rmUrCbXBgEpdQZ1XqqTU=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 github.com/zenazn/goji v0.9.0/go.mod h1:7S9M489iMyHBNxwZnk9/EHS098H4/F6TATF2mIxtB1Q=
