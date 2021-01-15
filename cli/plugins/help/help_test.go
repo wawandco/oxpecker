@@ -1,13 +1,13 @@
 package help
 
 import (
+	"context"
+	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/wawandco/oxpecker/cli/plugins/version"
 	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxplugins/tools/pop"
-	"github.com/wawandco/oxplugins/tools/pop/migrate"
 )
 
 func TestFindCommand(t *testing.T) {
@@ -17,8 +17,8 @@ func TestFindCommand(t *testing.T) {
 		},
 	}
 
-	migrate := &migrate.Command{}
-	pop := &pop.Command{}
+	migrate := &subPl{}
+	pop := &testPlugin{}
 	pop.Receive([]plugins.Plugin{
 		migrate,
 	})
@@ -48,7 +48,9 @@ func TestFindCommand(t *testing.T) {
 			"pop",
 			"migrate",
 		}
+
 		ht, ok := result.(plugins.HelpTexter)
+		fmt.Println(ok, result.Name())
 		if result.Name() != "migrate" || !ok || ht.HelpText() != migrate.HelpText() || strings.Join(names, " ") != strings.Join(expected, " ") {
 			t.Fatal("didn't find our guy")
 		}
@@ -66,4 +68,59 @@ func TestFindCommand(t *testing.T) {
 		}
 	})
 
+}
+
+type testPlugin struct {
+	subcommands []plugins.Command
+}
+
+func (tp testPlugin) Name() string {
+	return "pop"
+}
+
+func (tp testPlugin) ParentName() string {
+	return ""
+}
+
+func (tp testPlugin) HelpText() string {
+	return "pop help text"
+}
+
+func (tp *testPlugin) Run(ctx context.Context, root string, args []string) error {
+	return nil
+}
+
+func (tp *testPlugin) Receive(pls []plugins.Plugin) {
+	for _, pl := range pls {
+		c, ok := pl.(plugins.Command)
+		if !ok || c.ParentName() != tp.Name() {
+			continue
+		}
+
+		tp.subcommands = append(tp.subcommands, c)
+	}
+
+	fmt.Println(tp.subcommands)
+}
+
+func (tp *testPlugin) Subcommands() []plugins.Command {
+	return tp.subcommands
+}
+
+type subPl struct{}
+
+func (tp subPl) Name() string {
+	return "migrate"
+}
+
+func (tp subPl) ParentName() string {
+	return "pop"
+}
+
+func (tp subPl) HelpText() string {
+	return "migrate help text"
+}
+
+func (tp subPl) Run(ctx context.Context, root string, args []string) error {
+	return nil
 }
