@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxplugins"
 	"github.com/wawandco/oxplugins/plugins"
+	"github.com/wawandco/oxplugins/tools/cli/help"
 )
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -110,7 +110,9 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 // when specifying your own plugins.
 func New() *cli {
 	c := &cli{
-		Plugins: oxplugins.Default,
+		Plugins: []plugins.Plugin{
+			help.Command{},
+		},
 	}
 
 	return c
