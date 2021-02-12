@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxplugins/plugins"
-	"github.com/wawandco/oxplugins/tools/cli/help"
+	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/tools/cli/help"
 )
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -89,7 +89,6 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 		if ok {
 			pf.ParseFlags(args[1:])
 		}
-
 		pr, ok := plugin.(plugins.PluginReceiver)
 		if ok {
 			pr.Receive(c.Plugins)
