@@ -16,6 +16,7 @@ import (
 
 	"github.com/wawandco/oxpecker/cli"
 	"github.com/wawandco/oxpecker"
+	"github.com/wawandco/oxpecker/tools"
 	"github.com/wawandco/oxpecker/tools/pop/migrate"
 )
 
@@ -33,7 +34,7 @@ func main() {
     
 	cl := cli.New()
 	// append your plugins here
-	cl.Plugins = append(cl.Plugins, oxpecker.Base...)
+	cl.Plugins = append(cl.Plugins, tools.Base...)
 	cl.Plugins = append(cl.Plugins, migrate.Plugins()...)
     
     err = cl.Run(ctx, pwd, os.Args)
