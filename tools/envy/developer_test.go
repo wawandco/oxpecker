@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/gobuffalo/envy"
-	envypl "github.com/wawandco/oxplugins/tools/envy"
+	envypl "github.com/wawandco/oxpecker/tools/envy"
 )
 
 func TestDeveloper(t *testing.T) {

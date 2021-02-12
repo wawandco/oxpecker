@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/wawandco/oxpecker/lifecycle/new"
 	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxplugins/lifecycle/new"
 )
 
 func TestRun(t *testing.T) {

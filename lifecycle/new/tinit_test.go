@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxplugins/lifecycle/new"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var _ new.Initializer = (*Tinit)(nil)

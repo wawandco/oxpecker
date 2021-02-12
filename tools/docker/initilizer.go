@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/wawandco/oxplugins/internal/info"
+	"github.com/wawandco/oxpecker/internal/info"
 )
 
 type Initializer struct{}

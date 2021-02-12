@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/wawandco/oxpecker/lifecycle/dev"
 	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxplugins/lifecycle/dev"
 )
 
 type (
