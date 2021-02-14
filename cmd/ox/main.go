@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/wawandco/oxpecker/cli"
-	"github.com/wawandco/oxplugins"
+	"github.com/wawandco/oxpecker/tools"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	}
 
 	cli := cli.New()
-	cli.Plugins = append(cli.Plugins, oxplugins.Base...)
+	cli.Plugins = append(cli.Plugins, tools.Base...)
 
 	err = cli.Wrap(context.Background(), pwd, os.Args)
 	if err != nil {
