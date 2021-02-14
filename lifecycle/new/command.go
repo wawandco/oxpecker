@@ -3,8 +3,8 @@ package new
 import (
 	"context"
 	"errors"
-	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -32,29 +32,30 @@ func (d Command) HelpText() string {
 	return "Generates a new app with registered plugins"
 }
 
-// Run calls NPM or yarn to start webpack watching the assets
-// Also starts refresh listening for the changes in Go files.
+// Run
 func (d *Command) Run(ctx context.Context, root string, args []string) error {
-	if len(args) == 0 {
+	if len(args) < 2 {
 		return ErrNoNameProvided
 	}
 
-	name := d.FolderName(args)
-	path := filepath.Join(root, name)
-	err := os.MkdirAll(path, 0777)
-	if err != nil {
-		return err
-	}
+	name := d.AppName(args)
+
+	var dx sync.Map
+	dx.Store("args", args)
+	dx.Store("root", root)
+	dx.Store("folder", filepath.Join(root, name))
+	dx.Store("name", name)
+	dx.Store("module", args[1])
 
 	for _, ini := range d.initializers {
-		err := ini.Initialize(ctx, path, args)
+		err := ini.Initialize(ctx, &dx)
 		if err != nil {
 			return err
 		}
 	}
 
 	for _, aini := range d.afterInitializers {
-		err := aini.AfterInitialize(ctx, path, args)
+		err := aini.AfterInitialize(ctx, root, args)
 		if err != nil {
 			return err
 		}
@@ -77,6 +78,6 @@ func (d *Command) Receive(plugins []plugins.Plugin) {
 		}
 	}
 }
-func (d *Command) FolderName(args []string) string {
-	return filepath.Base(args[0])
+func (d *Command) AppName(args []string) string {
+	return filepath.Base(args[1])
 }

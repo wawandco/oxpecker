@@ -2,8 +2,22 @@ package refresh
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"os"
+	"path/filepath"
+	"sync"
+	"time"
+
+	"github.com/markbates/refresh/refresh"
+	"github.com/spf13/pflag"
+)
+
+var (
+	// the filename we will use for the generated yml.
+	filename = `.buffalo.dev.yml`
+
+	ErrNameRequired   = errors.New("name argument is required")
+	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
 type Initializer struct{}
@@ -12,66 +26,53 @@ func (i Initializer) Name() string {
 	return "refresh/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, root string, args []string) error {
-	// check for database.dev.yml file in root location
-	rootYml := root + "/.buffalo.dev.yml"
-
-	content := `app_root: .
-	build_target_path : ./cmd/app
-	ignored_folders:
-	- vendor
-	- log
-	- logs
-	- assets
-	- public
-	- grifts
-	- tmp
-	- bin
-	- node_modules
-	- .sass-cache
-	included_extensions:
-	- .go
-	- .env
-	build_path: bin
-	build_delay: 200ns
-	binary_name: tmp-build
-	command_flags: []
-	enable_colors: true
-	log_name: ox`
-
-	_, err := os.Stat(rootYml)
-	if err == nil {
-
-		fmt.Println(".buffalo.dev.yml file already exist")
-		return nil
-
+func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
+	n, ok := dx.Load("name")
+	if !ok {
+		return ErrNameRequired
 	}
-	if os.IsNotExist(err) {
 
-		// create file if it does not exist
-		file, err := os.Create(rootYml)
-
-		if err != nil {
-			fmt.Println("alo alo")
-			return (err)
-		}
-
-		_, err = os.OpenFile(rootYml, os.O_RDWR, 0644)
-		if err != nil {
-			fmt.Println("alo alo")
-			return (err)
-		}
-
-		_, err = file.WriteString(content)
-		if err != nil {
-			return (err)
-		}
-
-		file.Close()
-
-		return nil
-
+	folder, ok := dx.Load("folder")
+	if !ok {
+		return ErrNameRequired
 	}
-	return err
 
+	rootYML := filepath.Join(folder.(string), filename)
+	name := n.(string)
+
+	config := refresh.Configuration{
+		AppRoot:         ".",
+		BuildTargetPath: filepath.Join(".", "cmd", name),
+		BuildPath:       "bin",
+		BuildDelay:      200 * time.Nanosecond,
+		BinaryName:      fmt.Sprintf("tmp-%v-build", name),
+		IgnoredFolders: []string{
+			"vendor",
+			"log",
+			"logs",
+			"assets",
+			"public",
+			"grifts",
+			"tmp",
+			"bin",
+			"node_modules",
+			".sass-cache",
+		},
+
+		IncludedExtensions: []string{".go", ".env"},
+		EnableColors:       true,
+		LogName:            "ox",
+	}
+
+	err := config.Dump(rootYML)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (i *Initializer) ParseFlags([]string) {}
+func (i *Initializer) Flags() *pflag.FlagSet {
+	return pflag.NewFlagSet("refresh-initializer", pflag.ContinueOnError)
 }

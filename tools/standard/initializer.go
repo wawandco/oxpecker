@@ -2,6 +2,7 @@ package standard
 
 import (
 	"context"
+	"sync"
 
 	"github.com/spf13/pflag"
 )
@@ -12,9 +13,8 @@ func (i Initializer) Name() string {
 	return "standard/initializer"
 }
 
-// - Initializes module based on args[0]
-// - Creates cmd/name/main.go
-func (i *Initializer) AfterInitialize(ctx context.Context, root string, args []string) error {
+// Initialize the go module
+func (i *Initializer) Initialize(ctx context.Context, data *sync.Map) error {
 	return nil
 }
 

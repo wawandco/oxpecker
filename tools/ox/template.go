@@ -15,8 +15,7 @@ import (
 
 
 	"github.com/wawandco/oxpecker/cli"
-	"github.com/wawandco/oxpecker"
-	"github.com/wawandco/oxpecker/tools"
+	"github.com/wawandco/oxpecler/tools"
 	"github.com/wawandco/oxpecker/tools/pop/migrate"
 )
 
