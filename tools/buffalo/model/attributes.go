@@ -7,13 +7,13 @@ import (
 )
 
 type attr struct {
-	Name   name.Ident
-	goType string
+	Name       name.Ident
+	CommonType string
 }
 
 // GoType returns the Go type for an Attr based on its type
 func (a attr) GoType() string {
-	switch strings.ToLower(a.goType) {
+	switch strings.ToLower(a.CommonType) {
 	case "text":
 		return "string"
 	case "timestamp", "datetime", "date", "time":
@@ -45,7 +45,7 @@ func (a attr) GoType() string {
 	case "[]byte", "blob":
 		return "[]byte"
 	default:
-		return a.goType
+		return a.CommonType
 	}
 }
 
@@ -61,8 +61,8 @@ func buildAttrs(args []string) []attr {
 		}
 
 		attrs = append(attrs, attr{
-			Name:   name.New(slice[0]),
-			goType: strings.ToLower(slice[1]),
+			Name:       name.New(slice[0]),
+			CommonType: strings.ToLower(slice[1]),
 		})
 	}
 

@@ -15,12 +15,12 @@ func Test_BuildImports(t *testing.T) {
 	}{
 		{
 			testName: "With Default Attributes",
-			attrs:    []attr{{Name: name.New("id"), goType: "uuid"}, {Name: name.New("created_at"), goType: "timestamp"}, {Name: name.New("updated_at"), goType: "timestamp"}},
+			attrs:    []attr{{Name: name.New("id"), CommonType: "uuid"}, {Name: name.New("created_at"), CommonType: "timestamp"}, {Name: name.New("updated_at"), CommonType: "timestamp"}},
 			expected: []string{"fmt", "github.com/gofrs/uuid", "time"},
 		},
 		{
 			testName: "All Possible Attributes",
-			attrs:    []attr{{Name: name.New("id"), goType: "uuid"}, {Name: name.New("created_at"), goType: "timestamp"}, {Name: name.New("updated_at"), goType: "timestamp"}, {Name: name.New("description"), goType: "nulls.String"}, {Name: name.New("prices"), goType: "slices.Float"}},
+			attrs:    []attr{{Name: name.New("id"), CommonType: "uuid"}, {Name: name.New("created_at"), CommonType: "timestamp"}, {Name: name.New("updated_at"), CommonType: "timestamp"}, {Name: name.New("description"), CommonType: "nulls.String"}, {Name: name.New("prices"), CommonType: "slices.Float"}},
 			expected: []string{"fmt", "github.com/gobuffalo/nulls", "github.com/gobuffalo/pop/v5/slices", "github.com/gofrs/uuid", "time"},
 		},
 	}

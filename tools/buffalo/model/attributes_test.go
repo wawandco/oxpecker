@@ -8,7 +8,7 @@ import (
 )
 
 func Test_BuildAttrs(t *testing.T) {
-	defaults := []attr{{Name: name.New("id"), goType: "uuid"}, {Name: name.New("created_at"), goType: "timestamp"}, {Name: name.New("updated_at"), goType: "timestamp"}}
+	defaults := []attr{{Name: name.New("id"), CommonType: "uuid"}, {Name: name.New("created_at"), CommonType: "timestamp"}, {Name: name.New("updated_at"), CommonType: "timestamp"}}
 
 	cases := []struct {
 		args     []string
@@ -23,17 +23,17 @@ func Test_BuildAttrs(t *testing.T) {
 		{
 			testName: "Some Args Without Type",
 			args:     []string{"description:text", "title"},
-			expected: []attr{{Name: name.New("id"), goType: "uuid"}, {Name: name.New("created_at"), goType: "timestamp"}, {Name: name.New("updated_at"), goType: "timestamp"}, {Name: name.New("description"), goType: "text"}, {Name: name.New("title"), goType: "string"}},
+			expected: []attr{{Name: name.New("id"), CommonType: "uuid"}, {Name: name.New("created_at"), CommonType: "timestamp"}, {Name: name.New("updated_at"), CommonType: "timestamp"}, {Name: name.New("description"), CommonType: "text"}, {Name: name.New("title"), CommonType: "string"}},
 		},
 		{
 			testName: "Replacing Defaults",
 			args:     []string{"description:text", "id:int"},
-			expected: []attr{{Name: name.New("created_at"), goType: "timestamp"}, {Name: name.New("updated_at"), goType: "timestamp"}, {Name: name.New("description"), goType: "text"}, {Name: name.New("id"), goType: "int"}},
+			expected: []attr{{Name: name.New("created_at"), CommonType: "timestamp"}, {Name: name.New("updated_at"), CommonType: "timestamp"}, {Name: name.New("description"), CommonType: "text"}, {Name: name.New("id"), CommonType: "int"}},
 		},
 		{
 			testName: "Replacing Defaults 2",
 			args:     []string{"created_at:int", "description:text", "updated_at:int", "id:int"},
-			expected: []attr{{Name: name.New("created_at"), goType: "int"}, {Name: name.New("description"), goType: "text"}, {Name: name.New("updated_at"), goType: "int"}, {Name: name.New("id"), goType: "int"}},
+			expected: []attr{{Name: name.New("created_at"), CommonType: "int"}, {Name: name.New("description"), CommonType: "text"}, {Name: name.New("updated_at"), CommonType: "int"}, {Name: name.New("id"), CommonType: "int"}},
 		},
 	}
 
