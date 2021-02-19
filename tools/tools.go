@@ -11,6 +11,7 @@ import (
 	"github.com/wawandco/oxpecker/lifecycle/test"
 	"github.com/wawandco/oxpecker/plugins"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
+	"github.com/wawandco/oxpecker/tools/buffalo/resource"
 	"github.com/wawandco/oxpecker/tools/buffalo/template"
 	"github.com/wawandco/oxpecker/tools/cli/help"
 	"github.com/wawandco/oxpecker/tools/docker"
@@ -57,6 +58,7 @@ var Base = []plugins.Plugin{
 	&ox.Generator{},
 	&template.Generator{},
 	&model.Generator{},
+	&resource.Generator{},
 
 	// Initializer
 	&refresh.Initializer{},
