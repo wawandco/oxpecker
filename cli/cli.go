@@ -55,13 +55,9 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 		fmt.Printf("[info] could not determine module name: %v\n", err)
 	}
 
-	if name == "github.com/wawandco/oxpecker" || name == "" {
-		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
-		return c.Run(ctx, c.root, args)
-	}
-
+	exception := name == "github.com/wawandco/oxpecker" || name == ""
 	path := filepath.Join("cmd", "ox", "main.go")
-	if _, err := os.Stat(path); err != nil {
+	if _, err := os.Stat(path); err != nil || exception {
 		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
