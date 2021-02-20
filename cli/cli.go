@@ -56,8 +56,10 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	}
 
 	exception := name == "github.com/wawandco/oxpecker" || name == ""
+
 	path := filepath.Join("cmd", "ox", "main.go")
-	if _, err := os.Stat(path); err != nil || exception {
+	_, err = os.Stat(path)
+	if err != nil || exception {
 		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
