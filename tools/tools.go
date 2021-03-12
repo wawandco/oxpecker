@@ -10,7 +10,15 @@ import (
 	"github.com/wawandco/oxpecker/lifecycle/new"
 	"github.com/wawandco/oxpecker/lifecycle/test"
 	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/tools/buffalo/action"
+	"github.com/wawandco/oxpecker/tools/buffalo/app"
+	"github.com/wawandco/oxpecker/tools/buffalo/cmd"
+	"github.com/wawandco/oxpecker/tools/buffalo/config"
+	"github.com/wawandco/oxpecker/tools/buffalo/embedded"
+	"github.com/wawandco/oxpecker/tools/buffalo/folders"
+	"github.com/wawandco/oxpecker/tools/buffalo/middleware"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
+	"github.com/wawandco/oxpecker/tools/buffalo/render"
 	"github.com/wawandco/oxpecker/tools/buffalo/resource"
 	"github.com/wawandco/oxpecker/tools/buffalo/template"
 	"github.com/wawandco/oxpecker/tools/cli/help"
@@ -61,9 +69,20 @@ var Base = []plugins.Plugin{
 	&resource.Generator{},
 
 	// Initializer
+	&folders.Initializer{},
+	&embedded.Initializer{},
+	&model.Initializer{},
+	&render.Initializer{},
 	&refresh.Initializer{},
+	&template.Initializer{},
 	&flect.Initializer{},
 	&docker.Initializer{},
+	&action.Initializer{},
+	&middleware.Initializer{},
+	&cmd.Initializer{},
+	&config.Initializer{},
+	&docker.Initializer{},
+	&app.Initializer{},
 
 	// Testers
 	&standard.Tester{},
