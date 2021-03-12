@@ -34,7 +34,6 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return ErrModelDirNotFound
 	}
 
-	name := flect.Singularize(args[2])
 	filename := flect.Singularize(flect.Underscore(args[2]))
 
 	if g.exists(filepath.Join(dirPath, filename+".go")) {
@@ -46,7 +45,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return errors.Wrap(err, "creating models error")
 	}
 
-	fmt.Printf("[info] Model generated in: \n-- app/models/%s.go\n-- app/models/%s_test.go\n", name, name)
+	fmt.Printf("[info] Model generated in: \n-- app/models/%s.go\n-- app/models/%s_test.go\n", filename, filename)
 
 	return nil
 }
