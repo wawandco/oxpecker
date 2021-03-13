@@ -11,7 +11,7 @@ ENV PATH="$PATH:/root/.yarn/bin:/root/.config/yarn/global/node_modules"
 
 # Installing ox
 RUN go install github.com/wawandco/oxpecker/cmd/ox@latest
-WORKDIR /{{.Name}}
+WORKDIR /app
 ADD . .
 
 # Building the application binary in bin/app 
@@ -19,8 +19,16 @@ RUN ox build --static -o bin/app
 
 FROM alpine
 # Binaries
-COPY --from=builder /{{.Name}}/bin/* /bin/
+COPY --from=builder /app/bin/* /bin/
 
 # For migrations use 
 # CMD pop migrate up; app 
 CMD app`
+
+var ignoreTemplate = `.git
+node_modules/
+*.log
+vendor/
+public/assets
+tmp/
+bin`

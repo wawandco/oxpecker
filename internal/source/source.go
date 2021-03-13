@@ -2,10 +2,10 @@ package source
 
 import (
 	"bytes"
-	"html/template"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"text/template"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"

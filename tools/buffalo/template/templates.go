@@ -5,7 +5,7 @@ var layout = `
 <!DOCTYPE html>
 <html class="h-full">
 <head>
-  <title>{{.}}</title>
+  <title>{{ . }}</title>
   
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-param" content="authenticity_token" />

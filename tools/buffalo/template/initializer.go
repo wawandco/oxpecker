@@ -1,15 +1,11 @@
 package template
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"io/ioutil"
-	"os"
 	"path/filepath"
-	"text/template"
 
-	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 var (
@@ -34,48 +30,14 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	folder := filepath.Join(f.(string), "app", "templates", "home")
-	err := os.MkdirAll(folder, 0777)
+	filename := filepath.Join(f.(string), "app", "templates", "application.plush.html")
+	err := source.Build(filename, layout, n.(string))
 	if err != nil {
 		return err
 	}
 
-	tmpl, err := template.New("application.plush.html").Parse(layout)
-	if err != nil {
-		return err
-	}
+	filename = filepath.Join(f.(string), "app", "templates", "home", "index.plush.html")
+	err = source.Build(filename, home, n.(string))
 
-	sbf := bytes.NewBuffer([]byte{})
-	err = tmpl.Execute(sbf, n.(string))
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filepath.Join(f.(string), "app", "templates", "application.plush.html"), sbf.Bytes(), 0777)
-	if err != nil {
-		return err
-	}
-
-	tmpl, err = template.New("index.plush.html").Parse(home)
-	if err != nil {
-		return err
-	}
-
-	sbf = bytes.NewBuffer([]byte{})
-	err = tmpl.Execute(sbf, n.(string))
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filepath.Join(f.(string), "app", "templates", "home", "index.plush.html"), sbf.Bytes(), 0777)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (i *Initializer) ParseFlags([]string) {}
-func (i *Initializer) Flags() *pflag.FlagSet {
-	return pflag.NewFlagSet("buffalo-models-initializer", pflag.ContinueOnError)
+	return err
 }

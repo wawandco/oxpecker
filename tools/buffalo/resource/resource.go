@@ -1,11 +1,8 @@
 package resource
 
 import (
-	"bytes"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"text/template"
 
 	"github.com/gobuffalo/flect/name"
 	"github.com/pkg/errors"
@@ -128,18 +125,9 @@ func (r *Resource) GenerateTemplates() error {
 		filename := name + ".plush.html"
 		path := filepath.Join(dirPath, filename)
 
-		tmpl, err := template.New(filename).Parse(content)
+		err := source.Build(path, content, r)
 		if err != nil {
-			return errors.Wrap(err, "parsing new template error")
-		}
-
-		var tpl bytes.Buffer
-		if err = tmpl.Execute(&tpl, r); err != nil {
-			return errors.Wrap(err, "executing new template error")
-		}
-
-		if err = ioutil.WriteFile(path, tpl.Bytes(), 0655); err != nil {
-			return errors.Wrap(err, "writing new template error")
+			return err
 		}
 	}
 

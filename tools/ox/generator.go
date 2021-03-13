@@ -1,15 +1,13 @@
 package ox
 
 import (
-	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"text/template"
 
 	"github.com/wawandco/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 type Generator struct{}
@@ -21,21 +19,8 @@ func (g Generator) Name() string {
 func (g Generator) Generate(ctx context.Context, root string, args []string) error {
 	file := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(file); err == nil {
-		fmt.Println("file exists!")
+		fmt.Println("[info] skipping file generation because ox/main.go exists.")
 		return nil
-	}
-
-	if _, err := os.Stat(file); err != nil {
-		//Folder does not exist, we proceed to create it
-		err = os.MkdirAll(filepath.Dir(file), 0755)
-		if err != nil {
-			return err
-		}
-	}
-
-	tmpl, err := template.New("main.go").Parse(mainTemplate)
-	if err != nil {
-		return err
 	}
 
 	name, err := info.BuildName()
@@ -56,10 +41,6 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		Module: module,
 	}
 
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return err
-	}
-
-	return ioutil.WriteFile(file, tpl.Bytes(), 0655)
+	err = source.Build(file, mainTemplate, data)
+	return err
 }
