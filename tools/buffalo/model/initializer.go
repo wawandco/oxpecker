@@ -1,15 +1,12 @@
 package model
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"html/template"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 
-	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 var (
@@ -34,40 +31,17 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	folder := filepath.Join(f.(string), "app", "models")
-	err := os.MkdirAll(folder, 0777)
+	filename := filepath.Join(f.(string), "app", "models", "models.go")
+	err := source.Build(filename, modelsBaseTemplate, m.(string))
 	if err != nil {
 		return err
 	}
 
-	tmpl, err := template.New("models.go").Parse(modelsBaseTemplate)
-	if err != nil {
-		return err
-	}
-
-	sbf := bytes.NewBuffer([]byte{})
-	err = tmpl.Execute(sbf, struct{ Module string }{
-		Module: m.(string),
-	})
-
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filepath.Join(folder, "models.go"), sbf.Bytes(), 0777)
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filepath.Join(folder, "models_test.go"), []byte(modelsTestBaseTemplate), 0777)
+	filename = filepath.Join(f.(string), "app", "models", "models_test.go")
+	err = ioutil.WriteFile(filename, []byte(modelsTestBaseTemplate), 0777)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func (i *Initializer) ParseFlags([]string) {}
-func (i *Initializer) Flags() *pflag.FlagSet {
-	return pflag.NewFlagSet("buffalo-models-initializer", pflag.ContinueOnError)
 }

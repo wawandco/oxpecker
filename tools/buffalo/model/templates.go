@@ -35,7 +35,7 @@ var modelsBaseTemplate string = `package models
 import (
 	"bytes"
 	"log"
-	base "{{.Module}}"
+	base "{{.}}"
 	
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop/v5"

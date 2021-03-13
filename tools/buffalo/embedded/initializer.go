@@ -1,14 +1,11 @@
 package embedded
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"io/ioutil"
 	"path/filepath"
-	"text/template"
 
-	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 var (
@@ -33,27 +30,6 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	tmpl, err := template.New("models.go").Parse(embedGo)
-	if err != nil {
-		return err
-	}
-
-	sbf := bytes.NewBuffer([]byte{})
-	err = tmpl.Execute(sbf, n.(string))
-
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filepath.Join(f.(string), "embed.go"), sbf.Bytes(), 0777)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (i *Initializer) ParseFlags([]string) {}
-func (i *Initializer) Flags() *pflag.FlagSet {
-	return pflag.NewFlagSet("buffalo-models-initializer", pflag.ContinueOnError)
+	err := source.Build(filepath.Join(f.(string), "embed.go"), embedGo, n.(string))
+	return err
 }

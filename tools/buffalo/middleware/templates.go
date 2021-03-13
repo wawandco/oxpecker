@@ -6,7 +6,7 @@ var middlewareGo = `
 package middleware
 
 import (
-	"{{.Module}}/app/models"
+	"{{.}}/app/models"
 
 	tx "github.com/gobuffalo/buffalo-pop/v2/pop/popmw"
 	csrf "github.com/gobuffalo/mw-csrf"
