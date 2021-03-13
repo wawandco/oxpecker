@@ -1,15 +1,12 @@
 package render
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"html/template"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 var (
@@ -34,36 +31,10 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	folder := filepath.Join(f.(string), "app", "render")
-	err := os.MkdirAll(folder, 0777)
-	if err != nil {
-		return err
-	}
+	filename := filepath.Join(f.(string), "app", "render", "render.go")
+	err := source.Build(filename, renderGo, m.(string))
 
-	tmpl, err := template.New("render.go").Parse(renderGo)
-	if err != nil {
-		return err
-	}
-
-	var data = struct {
-		Module string
-	}{
-		Module: m.(string),
-	}
-
-	sbf := bytes.NewBuffer([]byte{})
-	err = tmpl.Execute(sbf, data)
-	if err != nil {
-		return err
-	}
-
-	path := filepath.Join(folder, "render.go")
-	err = ioutil.WriteFile(path, sbf.Bytes(), 0777)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (i *Initializer) ParseFlags([]string) {}

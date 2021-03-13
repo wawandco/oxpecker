@@ -11,6 +11,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/wawandco/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
 	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
 )
@@ -72,19 +73,9 @@ func (r *Resource) GenerateActions() error {
 	for name, content := range actions {
 		filename := name + ".go"
 		path := filepath.Join(dirPath, filename)
-
-		tmpl, err := template.New(filename).Parse(content)
+		err := source.Build(path, content, r)
 		if err != nil {
-			return errors.Wrap(err, "parsing new template error")
-		}
-
-		var tpl bytes.Buffer
-		if err = tmpl.Execute(&tpl, r); err != nil {
-			return errors.Wrap(err, "executing new template error")
-		}
-
-		if err = ioutil.WriteFile(path, tpl.Bytes(), 0655); err != nil {
-			return errors.Wrap(err, "writing new template error")
+			return err
 		}
 	}
 

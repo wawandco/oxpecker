@@ -4,7 +4,7 @@ var renderGo = `
 package render
 
 import (
-	base "{{.Module}}"
+	base "{{.}}"
 
 	"github.com/gobuffalo/buffalo/render"
 )

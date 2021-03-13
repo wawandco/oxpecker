@@ -1,14 +1,11 @@
 package model
 
 import (
-	"bytes"
-	"html/template"
-	"io/ioutil"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/flect/name"
-	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 type Model struct {
@@ -51,22 +48,8 @@ func (m Model) createModelFile() error {
 		Imports:  buildImports(m.Attrs),
 	}
 
-	tmpl, err := template.New(filename).Parse(modelTemplate)
-	if err != nil {
-		return errors.Wrap(err, "parsing new template error")
-	}
-
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return errors.Wrap(err, "executing new template error")
-	}
-
-	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
-	if err != nil {
-		return errors.Wrap(err, "writing new template error")
-	}
-
-	return nil
+	err := source.Build(path, modelTemplate, data)
+	return err
 }
 
 func (m Model) createModelTestFile() error {
@@ -77,20 +60,6 @@ func (m Model) createModelTestFile() error {
 		Name:     name.New(m.name),
 	}
 
-	tmpl, err := template.New(filename).Parse(modelTestTemplate)
-	if err != nil {
-		return errors.Wrap(err, "parsing new template error")
-	}
-
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return errors.Wrap(err, "executing new template error")
-	}
-
-	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
-	if err != nil {
-		return errors.Wrap(err, "writing new template error")
-	}
-
-	return nil
+	err := source.Build(path, modelTestTemplate, data)
+	return err
 }
