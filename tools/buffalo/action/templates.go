@@ -22,11 +22,32 @@ func Test_{{ capitalize .Name }}(t *testing.T) {
 	t.Fail("This test needs to be implemented!")
 }`
 
+var templateFuncs = template.FuncMap{
+	"capitalize": func(field string) string {
+		return flect.Capitalize(field)
+	},
+	"pascalize": func(field string) string {
+		return flect.Pascalize(field)
+	},
+	"pluralize": func(field string) string {
+		return flect.Pluralize(flect.Capitalize(field))
+	},
+	"properize": func(field string) string {
+		return flect.Capitalize(flect.Singularize(field))
+	},
+	"singularize": func(field string) string {
+		return flect.Singularize(field)
+	},
+	"underscore": func(field string) string {
+		return flect.Underscore(field)
+	},
+}
+
 var actionsGo = `
 package actions
 
 import(
-	"{{.Module}}/app/render"
+	"{{.}}/app/render"
 )
 
 var (
@@ -41,7 +62,7 @@ package actions_test
 
 import (
 	"testing"
-	"{{.Module}}/app"
+	"{{.}}/app"
 
 	"github.com/gobuffalo/suite/v3"
 )
@@ -66,7 +87,7 @@ var homeGo = `
 package home
 
 import (
-	"app/app/render"
+	"{{.}}/app/render"
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
@@ -82,24 +103,3 @@ func Show(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("home.plush.html"))
 }
 `
-
-var templateFuncs = template.FuncMap{
-	"capitalize": func(field string) string {
-		return flect.Capitalize(field)
-	},
-	"pascalize": func(field string) string {
-		return flect.Pascalize(field)
-	},
-	"pluralize": func(field string) string {
-		return flect.Pluralize(flect.Capitalize(field))
-	},
-	"properize": func(field string) string {
-		return flect.Capitalize(flect.Singularize(field))
-	},
-	"singularize": func(field string) string {
-		return flect.Singularize(field)
-	},
-	"underscore": func(field string) string {
-		return flect.Underscore(field)
-	},
-}
