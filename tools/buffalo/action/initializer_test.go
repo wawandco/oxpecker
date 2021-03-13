@@ -57,7 +57,7 @@ func TestInitializer(t *testing.T) {
 		for _, tcase := range tcases {
 			bm, err := ioutil.ReadFile(tcase.path)
 			if err != nil {
-				t.Fatal("should have created the file")
+				t.Fatal("should have created the file:", tcase.path)
 			}
 
 			for _, cnt := range tcase.content {

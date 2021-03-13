@@ -1,16 +1,14 @@
 package tasks
 
 import (
-	"bytes"
 	"context"
 	"fmt"
-	"html/template"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 type Generator struct {
@@ -54,30 +52,10 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 }
 
 func (g Generator) createTaskFile(args []string) error {
-	filename := g.filename + ".go"
-	path := filepath.Join(g.dir, filename)
-	data := struct {
-		Name string
-	}{
-		Name: g.name,
-	}
+	path := filepath.Join(g.dir, g.filename+".go")
+	err := source.Build(path, taskTemplate, g.name)
 
-	tmpl, err := template.New(filename).Funcs(templateFuncs).Parse(taskTemplate)
-	if err != nil {
-		return errors.Wrap(err, "parsing new template error")
-	}
-
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return errors.Wrap(err, "executing new template error")
-	}
-
-	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
-	if err != nil {
-		return errors.Wrap(err, "writing new template error")
-	}
-
-	return nil
+	return errors.Wrap(err, "parsing new template error")
 }
 
 func (g Generator) exists(path string) bool {

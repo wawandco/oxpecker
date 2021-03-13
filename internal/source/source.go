@@ -6,6 +6,32 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/gobuffalo/flect"
+	"github.com/pkg/errors"
+)
+
+var (
+	helpers = template.FuncMap{
+		"capitalize": func(field string) string {
+			return flect.Capitalize(field)
+		},
+		"pascalize": func(field string) string {
+			return flect.Pascalize(field)
+		},
+		"pluralize": func(field string) string {
+			return flect.Pluralize(flect.Capitalize(field))
+		},
+		"properize": func(field string) string {
+			return flect.Capitalize(flect.Singularize(field))
+		},
+		"singularize": func(field string) string {
+			return flect.Singularize(field)
+		},
+		"underscore": func(field string) string {
+			return flect.Underscore(field)
+		},
+	}
 )
 
 // TODO: https://pkg.go.dev/golang.org/x/tools/imports
@@ -20,21 +46,21 @@ func Build(filename, source string, data interface{}) error {
 		return err
 	}
 
-	tmpl, err := template.New(filename).Parse(source)
+	tmpl := template.New(filename).Funcs(helpers)
+	tmpl, err = tmpl.Parse(source)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "error intializing template")
 	}
 
 	sbf := bytes.NewBuffer([]byte{})
 	err = tmpl.Execute(sbf, data)
-
 	if err != nil {
-		return err
+		return errors.Wrap(err, "error executing template")
 	}
 
 	err = ioutil.WriteFile(filename, sbf.Bytes(), 0777)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "error writing file")
 	}
 	return nil
 }

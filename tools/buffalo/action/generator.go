@@ -1,16 +1,14 @@
 package action
 
 import (
-	"bytes"
 	"context"
 	"fmt"
-	"html/template"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/source"
 )
 
 type Generator struct {
@@ -66,57 +64,32 @@ func (g Generator) generateActionFiles(args []string) error {
 }
 
 func (g Generator) createActionFile(args []string) error {
-	filename := g.filename + ".go"
-	path := filepath.Join(g.dir, filename)
+	path := filepath.Join(g.dir, g.filename+".go")
 	data := struct {
 		Name string
 	}{
 		Name: g.name,
 	}
 
-	tmpl, err := template.New(filename).Funcs(templateFuncs).Parse(actionTemplate)
+	err := source.Build(path, actionTemplate, data)
 	if err != nil {
-		return errors.Wrap(err, "parsing new template error")
-	}
-
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return errors.Wrap(err, "executing new template error")
-	}
-
-	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
-	if err != nil {
-		return errors.Wrap(err, "writing new template error")
+		return errors.Wrap(err, "error generating action")
 	}
 
 	return nil
 }
 
 func (g Generator) createActionTestFile() error {
-	filename := g.filename + "_test.go"
-	path := filepath.Join(g.dir, filename)
+	path := filepath.Join(g.dir, g.filename+"_test.go")
 	data := struct {
 		Name string
 	}{
 		Name: g.name,
 	}
 
-	tmpl, err := template.New(filename).Funcs(templateFuncs).Parse(actionTestTemplate)
-	if err != nil {
-		return errors.Wrap(err, "parsing new template error")
-	}
+	err := source.Build(path, actionTestTemplate, data)
 
-	var tpl bytes.Buffer
-	if err := tmpl.Execute(&tpl, data); err != nil {
-		return errors.Wrap(err, "executing new template error")
-	}
-
-	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
-	if err != nil {
-		return errors.Wrap(err, "writing new template error")
-	}
-
-	return nil
+	return errors.Wrap(err, "error generating action tests")
 }
 
 func (g Generator) exists(path string) bool {
