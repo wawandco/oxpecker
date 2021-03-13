@@ -83,6 +83,9 @@ var Base = []plugins.Plugin{
 	&config.Initializer{},
 	&docker.Initializer{},
 	&app.Initializer{},
+	&standard.Initializer{},
+
+	&standard.AfterInitializer{},
 
 	// Testers
 	&standard.Tester{},

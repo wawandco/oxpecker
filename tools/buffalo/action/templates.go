@@ -62,6 +62,27 @@ func Test_ActionSuite(t *testing.T) {
 }
 `
 
+var homeGo = `
+package home
+
+import (
+	"app/app/render"
+	"net/http"
+
+	"github.com/gobuffalo/buffalo"
+)
+
+var (
+	// r is a buffalo/render Engine that will be used by actions
+	// on this package to render render HTML or any other formats.
+	r = render.Engine
+)
+
+func Show(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("home.plush.html"))
+}
+`
+
 var templateFuncs = template.FuncMap{
 	"capitalize": func(field string) string {
 		return flect.Capitalize(field)

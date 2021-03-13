@@ -50,16 +50,15 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	os.Setenv("GO111MODULE", "on") // Modules must be ON
 	os.Setenv("CGO_ENABLED", "0")  // CGO disabled
 
-	name, err := info.ModuleName()
+	path := filepath.Join("cmd", "ox", "main.go")
+	_, err := os.Stat(path)
 	if err != nil {
-		fmt.Printf("[info] could not determine module name: %v\n", err)
+		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
+		return c.Run(ctx, c.root, args)
 	}
 
-	exception := name == "github.com/wawandco/oxpecker" || name == ""
-
-	path := filepath.Join("cmd", "ox", "main.go")
-	_, err = os.Stat(path)
-	if err != nil || exception {
+	name, err := info.ModuleName()
+	if err == nil || name == "github.com/wawandco/oxpecker" {
 		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}

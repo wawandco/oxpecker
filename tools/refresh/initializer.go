@@ -42,7 +42,7 @@ func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
 
 	config := refresh.Configuration{
 		AppRoot:         ".",
-		BuildTargetPath: filepath.Join(".", "cmd", name),
+		BuildTargetPath: "." + string(filepath.Separator) + filepath.Join(".", "cmd", name),
 		BuildPath:       "bin",
 		BuildDelay:      200 * time.Nanosecond,
 		BinaryName:      fmt.Sprintf("tmp-%v-build", name),

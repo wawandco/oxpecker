@@ -55,7 +55,7 @@ func (d *Command) Run(ctx context.Context, root string, args []string) error {
 	}
 
 	for _, aini := range d.afterInitializers {
-		err := aini.AfterInitialize(ctx, root, args)
+		err := aini.AfterInitialize(ctx, filepath.Join(root, name), args)
 		if err != nil {
 			return err
 		}

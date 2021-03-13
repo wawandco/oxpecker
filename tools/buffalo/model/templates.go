@@ -36,7 +36,8 @@ import (
 	"bytes"
 	"log"
 	base "{{.Module}}"
-
+	
+	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop/v5"
 )
 
