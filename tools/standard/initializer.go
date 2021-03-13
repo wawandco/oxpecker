@@ -7,7 +7,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"path/filepath"
-	"sync"
 
 	"github.com/spf13/pflag"
 )
@@ -19,14 +18,14 @@ func (i Initializer) Name() string {
 }
 
 // Initialize the go module
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	m, ok := dx.Load("module")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	m := ctx.Value("module")
+	if m == nil {
 		return errors.New("incomplete")
 	}
 
-	f, ok := dx.Load("folder")
-	if !ok {
+	f := ctx.Value("folder")
+	if f == nil {
 		return errors.New("incomplete")
 	}
 

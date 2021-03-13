@@ -2,7 +2,6 @@ package new_test
 
 import (
 	"context"
-	"sync"
 
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/lifecycle/new"
@@ -22,27 +21,30 @@ type Tinit struct {
 
 func (t Tinit) Name() string { return "tinit" }
 
-func (t *Tinit) Initialize(ctx context.Context, dx *sync.Map) error {
+func (t *Tinit) Initialize(ctx context.Context) error {
 	t.called = true
 
-	if f, ok := dx.Load("root"); ok {
+	if f := ctx.Value("root"); f != nil {
 		t.folder = f.(string)
 	}
 
-	if f, ok := dx.Load("folder"); ok {
+	if f := ctx.Value("folder"); f != nil {
 		t.folder = f.(string)
 	}
 
-	if f, ok := dx.Load("name"); ok {
+	if f := ctx.Value("name"); f != nil {
 		t.name = f.(string)
 	}
 
 	return nil
 }
 
-func (t *Tinit) AfterInitialize(ctx context.Context, root string, args []string) error {
+func (t *Tinit) AfterInitialize(ctx context.Context) error {
 	t.afterCalled = true
-	t.root = root
+
+	if f := ctx.Value("root"); f != nil {
+		t.root = f.(string)
+	}
 
 	return nil
 }

@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sync"
 
 	"github.com/spf13/pflag"
 )
@@ -22,9 +21,9 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	f, ok := dx.Load("folder")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	f := ctx.Value("folder")
+	if f == nil {
 		return ErrIncompleteArgs
 	}
 

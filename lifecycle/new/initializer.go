@@ -2,7 +2,6 @@ package new
 
 import (
 	"context"
-	"sync"
 )
 
 // Initializer is intended to initialize applications,
@@ -10,5 +9,5 @@ import (
 type Initializer interface {
 	// Initialize receives the context and the root folder where
 	// the application is being initialized.
-	Initialize(context.Context, *sync.Map) error
+	Initialize(context.Context) error
 }

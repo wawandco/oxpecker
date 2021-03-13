@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
-	"sync"
 	"time"
 
 	"github.com/markbates/refresh/refresh"
@@ -26,14 +25,14 @@ func (i Initializer) Name() string {
 	return "refresh/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	n, ok := dx.Load("name")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	n := ctx.Value("name")
+	if n == nil {
 		return ErrNameRequired
 	}
 
-	folder, ok := dx.Load("folder")
-	if !ok {
+	folder := ctx.Value("folder")
+	if folder == nil {
 		return ErrNameRequired
 	}
 

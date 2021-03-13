@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"path/filepath"
-	"sync"
 
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -40,22 +39,21 @@ func (d *Command) Run(ctx context.Context, root string, args []string) error {
 
 	name := d.AppName(args)
 
-	var dx sync.Map
-	dx.Store("args", args)
-	dx.Store("root", root)
-	dx.Store("folder", filepath.Join(root, name))
-	dx.Store("name", name)
-	dx.Store("module", args[1])
+	ctx = context.WithValue(ctx, "args", args)
+	ctx = context.WithValue(ctx, "root", root)
+	ctx = context.WithValue(ctx, "folder", filepath.Join(root, name))
+	ctx = context.WithValue(ctx, "name", name)
+	ctx = context.WithValue(ctx, "module", args[1])
 
 	for _, ini := range d.initializers {
-		err := ini.Initialize(ctx, &dx)
+		err := ini.Initialize(ctx)
 		if err != nil {
 			return err
 		}
 	}
 
 	for _, aini := range d.afterInitializers {
-		err := aini.AfterInitialize(ctx, filepath.Join(root, name), args)
+		err := aini.AfterInitialize(ctx)
 		if err != nil {
 			return err
 		}

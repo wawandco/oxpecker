@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sync"
 	"testing"
 )
 
@@ -24,12 +23,12 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
-		var dx sync.Map
-		dx.Store("module", "oosss/myapp")
-		dx.Store("name", "myapp")
-		dx.Store("folder", filepath.Join(root, "myapp"))
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "module", "oosss/myapp")
+		ctx = context.WithValue(ctx, "name", "myapp")
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
 
-		err = i.Initialize(context.Background(), &dx)
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -44,7 +43,7 @@ func TestInitializer(t *testing.T) {
 		}
 
 		if !bytes.Contains(bm, []byte(`New() *buffalo.App {`)) {
-			t.Fatal("should use contain func signature")
+			t.Fatal("should contain func signature")
 		}
 
 		bm, err = ioutil.ReadFile(filepath.Join(root, "myapp", "app", "routes.go"))
@@ -56,7 +55,7 @@ func TestInitializer(t *testing.T) {
 			t.Fatal("should contain package name")
 		}
 
-		if !bytes.Contains(bm, []byte(`func setRoutes(app *buffalo.App) {`)) {
+		if !bytes.Contains(bm, []byte(`func setRoutes(root *buffalo.App) {`)) {
 			t.Fatal("should use contain func signature")
 		}
 
@@ -76,27 +75,27 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
-		var dx sync.Map
+		ctx := context.Background()
 
-		err = i.Initialize(context.Background(), &dx)
+		err = i.Initialize(ctx)
 		if err != ErrIncompleteArgs {
 			t.Fatalf("error should be `%v`, got `%v`", ErrIncompleteArgs, err)
 		}
 
-		dx.Store("folder", filepath.Join(root, "myapp"))
-		err = i.Initialize(context.Background(), &dx)
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
+		err = i.Initialize(ctx)
 		if err != ErrIncompleteArgs {
 			t.Fatalf("error should be `%v`, got `%v`", ErrIncompleteArgs, err)
 		}
 
-		dx.Store("module", "some/myapp")
-		err = i.Initialize(context.Background(), &dx)
+		ctx = context.WithValue(ctx, "module", "some/myapp")
+		err = i.Initialize(ctx)
 		if err != ErrIncompleteArgs {
 			t.Fatalf("error should be `%v`, got `%v`", ErrIncompleteArgs, err)
 		}
 
-		dx.Store("name", "myapp")
-		err = i.Initialize(context.Background(), &dx)
+		ctx = context.WithValue(ctx, "name", "myapp")
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be `%v`, got `%v`", nil, err)
 		}

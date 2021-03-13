@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sync"
 	"testing"
 )
 
@@ -25,12 +24,12 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
-		var dx sync.Map
-		dx.Store("args", []string{"new", "oosss/myapp"})
-		dx.Store("name", "myapp")
-		dx.Store("folder", filepath.Join(root, "myapp"))
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "args", []string{"new", "oosss/myapp"})
+		ctx = context.WithValue(ctx, "name", "myapp")
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
 
-		err = i.Initialize(context.Background(), &dx)
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -63,21 +62,21 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
-		var dx sync.Map
+		ctx := context.Background()
 
-		err = i.Initialize(context.Background(), &dx)
+		err = i.Initialize(ctx)
 		if err != ErrIncompleteArgs {
 			t.Fatalf("error should be `%v`, got `%v`", ErrIncompleteArgs, err)
 		}
 
-		dx.Store("folder", filepath.Join(root, "myapp"))
-		err = i.Initialize(context.Background(), &dx)
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
+		err = i.Initialize(ctx)
 		if err != ErrIncompleteArgs {
 			t.Fatalf("error should be `%v`, got `%v`", ErrIncompleteArgs, err)
 		}
 
-		dx.Store("name", "myapp")
-		err = i.Initialize(context.Background(), &dx)
+		ctx = context.WithValue(ctx, "name", "myapp")
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be `%v`, got `%v`", nil, err)
 		}

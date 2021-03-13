@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 
 	"github.com/spf13/pflag"
 )
@@ -60,19 +59,19 @@ func (i Initializer) Name() string {
 
 // Initialize the app by creating the needed folders. It will infer the name of the
 // folder from the args passed.
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	n, ok := dx.Load("name")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	n := ctx.Value("name")
+	if n == nil {
 		return ErrNameNeeded
 	}
 
-	r, ok := dx.Load("root")
-	if !ok {
+	r := ctx.Value("root")
+	if r == nil {
 		return ErrIncompleteArgs
 	}
 
-	b, ok := dx.Load("folder")
-	if !ok {
+	b := ctx.Value("folder")
+	if b == nil {
 		return ErrIncompleteArgs
 	}
 

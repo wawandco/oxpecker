@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sync"
 	"text/template"
 
 	"github.com/spf13/pflag"
@@ -24,14 +23,14 @@ func (i Initializer) Name() string {
 	return "middleware/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	m, ok := dx.Load("module")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	m := ctx.Value("module")
+	if m == nil {
 		return ErrIncompleteArgs
 	}
 
-	f, ok := dx.Load("folder")
-	if !ok {
+	f := ctx.Value("folder")
+	if f == nil {
 		return ErrIncompleteArgs
 	}
 

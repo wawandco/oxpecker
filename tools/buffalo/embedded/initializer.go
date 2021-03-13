@@ -6,7 +6,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"path/filepath"
-	"sync"
 	"text/template"
 
 	"github.com/spf13/pflag"
@@ -23,14 +22,14 @@ func (i Initializer) Name() string {
 	return "embedded/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, dx *sync.Map) error {
-	n, ok := dx.Load("name")
-	if !ok {
+func (i *Initializer) Initialize(ctx context.Context) error {
+	n := ctx.Value("name")
+	if n == nil {
 		return ErrIncompleteArgs
 	}
 
-	f, ok := dx.Load("folder")
-	if !ok {
+	f := ctx.Value("folder")
+	if f == nil {
 		return ErrIncompleteArgs
 	}
 

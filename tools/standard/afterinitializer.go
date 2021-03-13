@@ -2,11 +2,10 @@ package standard
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"os"
 	"os/exec"
 
-	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
@@ -19,10 +18,14 @@ func (i AfterInitializer) Name() string {
 }
 
 // Initialize the go module
-func (i *AfterInitializer) AfterInitialize(ctx context.Context, root string, args []string) error {
-	fmt.Println(root)
+func (i *AfterInitializer) AfterInitialize(ctx context.Context) error {
+	root := ctx.Value("folder")
+	if root == nil {
 
-	err := os.Chdir(root)
+		return errors.New("folder is needed")
+	}
+
+	err := os.Chdir(root.(string))
 	if err != nil {
 		return err
 	}
@@ -33,10 +36,4 @@ func (i *AfterInitializer) AfterInitialize(ctx context.Context, root string, arg
 	cmd.Stderr = os.Stderr
 
 	return cmd.Run()
-}
-
-func (i *AfterInitializer) ParseFlags(flags []string) {}
-
-func (i *AfterInitializer) Flags() *pflag.FlagSet {
-	return pflag.NewFlagSet("std/afterinit", pflag.ContinueOnError)
 }

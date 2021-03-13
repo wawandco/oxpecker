@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sync"
 	"testing"
 )
 
@@ -25,13 +24,14 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
-		var dx sync.Map
-		dx.Store("root", root)
-		dx.Store("name", "myapp")
-		dx.Store("args", []string{"new", "cool/myapp"})
-		dx.Store("folder", filepath.Join(root, "myapp"))
 
-		err = i.Initialize(context.Background(), &dx)
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "root", root)
+		ctx = context.WithValue(ctx, "name", "myapp")
+		ctx = context.WithValue(ctx, "args", []string{"new", "cool/myapp"})
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
+
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -70,15 +70,15 @@ func TestInitializer(t *testing.T) {
 			t.Fatalf("Problem creating file, %v", err)
 		}
 
-		var dx sync.Map
-		dx.Store("root", root)
-		dx.Store("name", "myapp")
-		dx.Store("args", []string{"new", "cool/myapp"})
-		dx.Store("folder", filepath.Join(root, "myapp"))
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "root", root)
+		ctx = context.WithValue(ctx, "name", "myapp")
+		ctx = context.WithValue(ctx, "args", []string{"new", "cool/myapp"})
+		ctx = context.WithValue(ctx, "folder", filepath.Join(root, "myapp"))
 
 		i := Initializer{}
 
-		err = i.Initialize(context.Background(), &dx)
+		err = i.Initialize(ctx)
 
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
