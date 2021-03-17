@@ -20,6 +20,11 @@ func (w Plugin) Develop(ctx context.Context, root string) error {
 		return nil
 	}
 
+	cmd.Env = append(
+		os.Environ(),
+		"NODE_ENV=development", // ignored
+	)
+
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
