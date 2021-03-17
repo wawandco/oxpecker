@@ -22,7 +22,7 @@ func (w Plugin) Develop(ctx context.Context, root string) error {
 
 	cmd.Env = append(
 		os.Environ(),
-		"NODE_ENV=development", // ignored
+		"NODE_ENV=development",
 	)
 
 	cmd.Stdout = os.Stdout
