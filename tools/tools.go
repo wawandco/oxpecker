@@ -12,10 +12,10 @@ import (
 	"github.com/wawandco/oxpecker/plugins"
 	"github.com/wawandco/oxpecker/tools/buffalo/action"
 	"github.com/wawandco/oxpecker/tools/buffalo/app"
+	"github.com/wawandco/oxpecker/tools/buffalo/assets"
 	"github.com/wawandco/oxpecker/tools/buffalo/cmd"
 	"github.com/wawandco/oxpecker/tools/buffalo/config"
 	"github.com/wawandco/oxpecker/tools/buffalo/embedded"
-	"github.com/wawandco/oxpecker/tools/buffalo/folders"
 	"github.com/wawandco/oxpecker/tools/buffalo/middleware"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
 	"github.com/wawandco/oxpecker/tools/buffalo/render"
@@ -69,7 +69,7 @@ var Base = []plugins.Plugin{
 	&resource.Generator{},
 
 	// Initializer
-	&folders.Initializer{},
+	// &folders.Initializer{},
 	&embedded.Initializer{},
 	&model.Initializer{},
 	&render.Initializer{},
@@ -84,8 +84,11 @@ var Base = []plugins.Plugin{
 	&docker.Initializer{},
 	&app.Initializer{},
 	&standard.Initializer{},
+	&grift.Initializer{},
+	&assets.Initializer{},
 
 	&standard.AfterInitializer{},
+	&yarn.AfterInitializer{},
 
 	// Testers
 	&standard.Tester{},

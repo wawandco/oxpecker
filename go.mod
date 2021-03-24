@@ -1,6 +1,6 @@
 module github.com/wawandco/oxpecker
 
-go 1.15
+go 1.16
 
 require (
 	github.com/cockroachdb/cockroach-go v0.0.0-20190925194419-606b3d062051 // indirect
