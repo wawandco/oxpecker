@@ -4,9 +4,6 @@ var appGo = `
 package app
 
 import (
-	"{{.Module}}/app/models"
-	"{{.Module}}/app/render"
-
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 )
@@ -17,10 +14,10 @@ var (
 
 // App creates a new application with default settings and reading 
 // GO_ENV. It calls setRoutes to setup the routes for the app that's being
-// created before returing it
+// created before returning it
 func New() *buffalo.App {
 	if root != nil {
-		return app
+		return root
 	}
 
 	root = buffalo.New(buffalo.Options{
@@ -53,7 +50,7 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/", home.Show)
+	root.GET("/", home.Index)
 	root.ServeFiles("/", base.Assets)
 }
 `

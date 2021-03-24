@@ -72,7 +72,7 @@ var (
 	r = render.Engine
 )
 
-func Show(c buffalo.Context) error {
-	return c.Render(http.StatusOK, r.HTML("home.plush.html"))
+func Index(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("home/index.plush.html"))
 }
 `

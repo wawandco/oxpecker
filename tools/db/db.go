@@ -6,8 +6,7 @@ import (
 	"errors"
 	"fmt"
 
-	pop4 "github.com/gobuffalo/pop"
-	pop5 "github.com/gobuffalo/pop/v5"
+	"github.com/gobuffalo/pop/v5"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -38,6 +37,11 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	if len(args) < 2 {
 		fmt.Println("no subcommand specified, please use `db [subcommand]` to run one of the db subcommands.")
 		return nil
+	}
+
+	err := pop.LoadConfigFile()
+	if err != nil {
+		return err
 	}
 
 	name := args[1]
@@ -73,27 +77,13 @@ func (c *Command) Subcommands() []plugins.Command {
 	return c.subcommands
 }
 
-func Plugins(conns interface{}) []plugins.Plugin {
+func Plugins() []plugins.Plugin {
 	var result []plugins.Plugin
-	providers := map[string]URLProvider{}
-	switch v := conns.(type) {
-	case map[string]*pop4.Connection:
-		for k, conn := range v {
-			providers[k] = conn
-		}
-	case map[string]*pop5.Connection:
-		for k, conn := range v {
-			providers[k] = conn
-		}
-	default:
-		fmt.Println("DB plugin ONLY receives pop v4 and v5 connections")
-		return result
-	}
 
 	result = append(result, &Command{})
-	result = append(result, &CreateCommand{connections: providers})
-	result = append(result, &DropCommand{connections: providers})
-	result = append(result, &ResetCommand{connections: providers})
+	result = append(result, &CreateCommand{})
+	result = append(result, &DropCommand{})
+	result = append(result, &ResetCommand{})
 
 	return result
 }

@@ -22,6 +22,7 @@ import (
 	"github.com/wawandco/oxpecker/tools/buffalo/resource"
 	"github.com/wawandco/oxpecker/tools/buffalo/template"
 	"github.com/wawandco/oxpecker/tools/cli/help"
+	"github.com/wawandco/oxpecker/tools/db"
 	"github.com/wawandco/oxpecker/tools/docker"
 	"github.com/wawandco/oxpecker/tools/envy"
 	"github.com/wawandco/oxpecker/tools/flect"
@@ -29,6 +30,7 @@ import (
 	"github.com/wawandco/oxpecker/tools/node"
 	"github.com/wawandco/oxpecker/tools/ox"
 	"github.com/wawandco/oxpecker/tools/refresh"
+	"github.com/wawandco/oxpecker/tools/soda"
 	"github.com/wawandco/oxpecker/tools/standard"
 	"github.com/wawandco/oxpecker/tools/webpack"
 	"github.com/wawandco/oxpecker/tools/yarn"
@@ -45,10 +47,14 @@ var Base = []plugins.Plugin{
 	&refresh.Plugin{},
 	&yarn.Plugin{},
 	&envy.Developer{},
+	&db.CreateCommand{},
+	&db.DropCommand{},
+	&db.ResetCommand{},
 
 	// Application Lifecycle commands.
 	&build.Command{},
 	&dev.Command{},
+	&db.Command{},
 	&test.Command{},
 	&fix.Command{},
 	&generate.Command{},
@@ -86,6 +92,7 @@ var Base = []plugins.Plugin{
 	&standard.Initializer{},
 	&grift.Initializer{},
 	&assets.Initializer{},
+	&soda.Initializer{},
 
 	&standard.AfterInitializer{},
 	&yarn.AfterInitializer{},
