@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
@@ -9,6 +10,9 @@ import (
 )
 
 var (
+	//go:embed templates
+	templates embed.FS
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -35,8 +39,13 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
+	content, err := templates.ReadFile("templates/main.go.tmpl")
+	if err != nil {
+		return err
+	}
+
 	filename := filepath.Join(f.(string), "cmd", n.(string), "main.go")
-	err := source.Build(filename, mainGo, m.(string))
+	err = source.Build(filename, string(content), m.(string))
 
 	return err
 }
