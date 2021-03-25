@@ -73,6 +73,7 @@ var Base = []plugins.Plugin{
 	&ox.Generator{},
 	&template.Generator{},
 	&model.Generator{},
+	&action.Generator{},
 	&resource.Generator{},
 
 	// Initializer

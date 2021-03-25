@@ -7,7 +7,6 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
-	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
 )
 
@@ -45,8 +44,6 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	if err := g.generateActionFiles(args[3:]); err != nil {
 		return err
 	}
-
-	log.Infof("Action generated in: \n-- app/actions/%s.go\n-- app/actions/%s_test.go\n", g.name, g.name)
 
 	return nil
 }
