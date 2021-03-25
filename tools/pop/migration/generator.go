@@ -55,7 +55,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 
 	timestamp := time.Now().UTC().Format("20060102150405")
 	fileName := fmt.Sprintf("%s_%s", timestamp, name)
-	log.Info("Migrations generated in: \n-- migrations/%s.up.%s\n-- migrations/%s.down.%s\n", fileName, creator.Name(), fileName, creator.Name())
+	log.Infof("Migrations generated in: \n-- migrations/%s.up.%s\n-- migrations/%s.down.%s\n", fileName, creator.Name(), fileName, creator.Name())
 
 	return nil
 }

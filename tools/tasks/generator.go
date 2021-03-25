@@ -46,7 +46,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return errors.Wrap(err, "creating action file")
 	}
 
-	log.Info("task generated in: \n-- app/tasks/%s.go\n", g.name)
+	log.Infof("task generated in: \n-- app/tasks/%s.go\n", g.name)
 
 	return nil
 }
