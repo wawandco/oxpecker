@@ -2,6 +2,7 @@ package embedded
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
@@ -9,6 +10,10 @@ import (
 )
 
 var (
+
+	//go:embed templates
+	templates embed.FS
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -30,6 +35,11 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	err := source.Build(filepath.Join(f.(string), "embed.go"), embedGo, n.(string))
+	content, err := templates.ReadFile("templates/embeded.go.tmpl")
+	if err != nil {
+		return err
+	}
+
+	err = source.Build(filepath.Join(f.(string), "embed.go"), string(content), n.(string))
 	return err
 }
