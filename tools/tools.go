@@ -95,7 +95,6 @@ var Base = []plugins.Plugin{
 	&assets.Initializer{},
 	&soda.Initializer{},
 	&git.Initializer{},
-	&docker.Initializer{},
 
 	&standard.AfterInitializer{},
 	&yarn.AfterInitializer{},

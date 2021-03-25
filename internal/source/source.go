@@ -9,6 +9,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 var (
@@ -62,5 +63,7 @@ func Build(filename, source string, data interface{}) error {
 	if err != nil {
 		return errors.Wrap(err, "error writing file")
 	}
+
+	log.Infof("generated %v", filename)
 	return nil
 }

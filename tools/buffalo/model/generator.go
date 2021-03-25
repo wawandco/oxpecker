@@ -2,12 +2,12 @@ package model
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 var (
@@ -45,7 +45,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return errors.Wrap(err, "creating models error")
 	}
 
-	fmt.Printf("[info] Model generated in: \n-- app/models/%s.go\n-- app/models/%s_test.go\n", filename, filename)
+	log.Infof("Model generated in: \n-- app/models/%s.go\n-- app/models/%s_test.go\n", filename, filename)
 
 	return nil
 }

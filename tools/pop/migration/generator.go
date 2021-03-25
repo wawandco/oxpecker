@@ -11,6 +11,7 @@ import (
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
 )
 
@@ -54,7 +55,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 
 	timestamp := time.Now().UTC().Format("20060102150405")
 	fileName := fmt.Sprintf("%s_%s", timestamp, name)
-	fmt.Printf("[info] Migrations generated in: \n-- migrations/%s.up.%s\n-- migrations/%s.down.%s\n", fileName, creator.Name(), fileName, creator.Name())
+	log.Info("Migrations generated in: \n-- migrations/%s.up.%s\n-- migrations/%s.down.%s\n", fileName, creator.Name(), fileName, creator.Name())
 
 	return nil
 }

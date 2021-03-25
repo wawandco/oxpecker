@@ -2,9 +2,9 @@ package resource
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 // Generator allows to identify resource as a plugin
@@ -34,30 +34,30 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	resource := New(root, args[2:])
 
 	// Generating Templates
-	fmt.Printf("[info] Generating Actions...\n")
+	log.Info("Generating Actions...\n")
 	if err := resource.GenerateActions(); err != nil {
 		return errors.Wrap(err, "generating actions error")
 	}
 
 	// Generating Templates
-	fmt.Printf("[info] Generating Templates...\n")
+	log.Info("Generating Templates...\n")
 	if err := resource.GenerateTemplates(); err != nil {
 		return errors.Wrap(err, "generating templates error")
 	}
 
 	// Generating Model
-	fmt.Printf("[info] Generating Model...\n")
+	log.Info("Generating Model...\n")
 	if err := resource.GenerateModel(); err != nil {
 		return errors.Wrap(err, "generating model error")
 	}
 
 	// // Generating Migration
-	fmt.Printf("[info] Generating Migrations...\n")
+	log.Info("Generating Migrations...\n")
 	if err := resource.GenerateMigrations(); err != nil {
 		return errors.Wrap(err, "generating migrations error")
 	}
 
-	fmt.Printf("[info] %s resource has been generated successfully \n", resource.originalName)
+	log.Infof("%s resource has been generated successfully \n", resource.originalName)
 
 	return nil
 }

@@ -3,12 +3,12 @@ package folders
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 var (
@@ -97,7 +97,7 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 			return err
 		}
 
-		fmt.Printf("[info] Created %v folder\n", v)
+		log.Info("Created %v folder\n", v)
 	}
 
 	return nil

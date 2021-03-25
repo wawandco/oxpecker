@@ -3,7 +3,6 @@ package action
 import (
 	"context"
 	"errors"
-	"fmt"
 	"path/filepath"
 
 	"github.com/spf13/pflag"
@@ -48,10 +47,6 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 			return err
 		}
 	}
-
-	fmt.Printf("[info] Created app/actions/actions.go\n")
-	fmt.Printf("[info] Created app/actions/actions_test.go\n")
-	fmt.Printf("[info] Created app/actions/home/home.go\n")
 
 	return nil
 }

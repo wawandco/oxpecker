@@ -3,7 +3,6 @@ package liquibase
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -79,7 +79,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	path = filepath.Join(path, filename)
 	_, err = os.Stat(path)
 	if err == nil {
-		fmt.Printf("[info] %v already exists\n", path)
+		log.Info("%v already exists\n", path)
 		return nil
 	}
 
@@ -92,7 +92,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	fmt.Printf("[info] migration generated in %v\n", path)
+	log.Info("migration generated in %v\n", path)
 	return nil
 }
 

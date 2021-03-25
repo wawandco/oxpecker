@@ -31,7 +31,6 @@ func (i *AfterInitializer) AfterInitialize(ctx context.Context) error {
 	}
 
 	cmd := exec.CommandContext(context.Background(), "go", "mod", "tidy")
-	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

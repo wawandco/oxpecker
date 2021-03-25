@@ -2,12 +2,12 @@ package action
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
 )
 
@@ -46,7 +46,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	fmt.Printf("[info] Action generated in: \n-- app/actions/%s.go\n-- app/actions/%s_test.go\n", g.name, g.name)
+	log.Infof("Action generated in: \n-- app/actions/%s.go\n-- app/actions/%s_test.go\n", g.name, g.name)
 
 	return nil
 }
