@@ -17,8 +17,10 @@ func TestInitilizer(t *testing.T) {
 		}
 
 		i := Initializer{}
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "folder", root)
 
-		err = i.Initialize(context.Background(), root, []string{})
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -52,8 +54,10 @@ func TestInitilizer(t *testing.T) {
 		}
 
 		i := Initializer{}
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "folder", root)
 
-		err = i.Initialize(context.Background(), root, []string{})
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -80,7 +84,10 @@ func TestInitilizer(t *testing.T) {
 
 		i := Initializer{}
 
-		err = i.Initialize(context.Background(), root, []string{})
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "folder", root)
+
+		err = i.Initialize(ctx)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
