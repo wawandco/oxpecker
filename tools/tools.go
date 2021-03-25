@@ -26,6 +26,7 @@ import (
 	"github.com/wawandco/oxpecker/tools/docker"
 	"github.com/wawandco/oxpecker/tools/envy"
 	"github.com/wawandco/oxpecker/tools/flect"
+	"github.com/wawandco/oxpecker/tools/git"
 	"github.com/wawandco/oxpecker/tools/grift"
 	"github.com/wawandco/oxpecker/tools/node"
 	"github.com/wawandco/oxpecker/tools/ox"
@@ -93,9 +94,12 @@ var Base = []plugins.Plugin{
 	&grift.Initializer{},
 	&assets.Initializer{},
 	&soda.Initializer{},
+	&git.Initializer{},
+	&docker.Initializer{},
 
 	&standard.AfterInitializer{},
 	&yarn.AfterInitializer{},
+	&git.AfterInitializer{},
 
 	// Testers
 	&standard.Tester{},
