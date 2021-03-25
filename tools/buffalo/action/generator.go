@@ -3,6 +3,7 @@ package action
 import (
 	"context"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 
@@ -70,8 +71,12 @@ func (g Generator) createActionFile(args []string) error {
 	}{
 		Name: g.name,
 	}
+	actionTemplate, err := g.callTemplate("action.go.tmpl")
+	if err != nil {
+		return errors.Wrap(err, "error calling template")
+	}
 
-	err := source.Build(path, actionTemplate, data)
+	err = source.Build(path, actionTemplate, data)
 	if err != nil {
 		return errors.Wrap(err, "error generating action")
 	}
@@ -87,13 +92,31 @@ func (g Generator) createActionTestFile() error {
 		Name: g.name,
 	}
 
-	err := source.Build(path, actionTestTemplate, data)
+	actionTestTemplate, err := g.callTemplate("action_test.go.tmpl")
+	if err != nil {
+		return errors.Wrap(err, "error calling template")
+	}
 
-	return errors.Wrap(err, "error generating action tests")
+	err = source.Build(path, actionTestTemplate, data)
+	if err != nil {
+		return errors.Wrap(err, "error generating action")
+	}
+
+	return nil
 }
 
 func (g Generator) exists(path string) bool {
 	_, err := os.Stat(path)
 
 	return !os.IsNotExist(err)
+}
+
+func (g Generator) callTemplate(name string) (string, error) {
+
+	bt, err := fs.ReadFile(templates, filepath.Join("templates", name))
+	if err != nil {
+		return "", nil
+	}
+
+	return string(bt), nil
 }
