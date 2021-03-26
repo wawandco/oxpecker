@@ -12,22 +12,27 @@ var _ new.AfterInitializer = (*Tinit)(nil)
 
 type Tinit struct {
 	afterCalled bool
-	root        string
 	called      bool
+
+	root   string
+	folder string
+	name   string
 }
 
 func (t Tinit) Name() string { return "tinit" }
 
-func (t *Tinit) Initialize(ctx context.Context, root string, args []string) error {
+func (t *Tinit) Initialize(ctx context.Context, options new.Options) error {
 	t.called = true
-	t.root = root
+	t.folder = options.Folder
+	t.root = options.Root
+	t.name = options.Name
 
 	return nil
 }
 
-func (t *Tinit) AfterInitialize(ctx context.Context, root string, args []string) error {
+func (t *Tinit) AfterInitialize(ctx context.Context, options new.Options) error {
 	t.afterCalled = true
-	t.root = root
+	t.root = options.Root
 
 	return nil
 }

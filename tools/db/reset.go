@@ -3,15 +3,13 @@ package db
 import (
 	"context"
 	"errors"
-	"fmt"
 
-	pop4 "github.com/gobuffalo/pop"
-	pop5 "github.com/gobuffalo/pop/v5"
+	"github.com/gobuffalo/pop/v5"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 type ResetCommand struct {
-	connections    map[string]URLProvider
 	connectionName string
 
 	flags *pflag.FlagSet
@@ -30,27 +28,19 @@ func (d ResetCommand) ParentName() string {
 }
 
 func (d *ResetCommand) Run(ctx context.Context, root string, args []string) error {
-	conn := d.connections[d.connectionName]
+	conn := pop.Connections[d.connectionName]
 	if conn == nil {
 		return ErrConnectionNotFound
 	}
 
-	var resetter Resetter
-	if c, ok := conn.(*pop4.Connection); ok {
-		resetter = c.Dialect
-	}
-
-	if c, ok := conn.(*pop5.Connection); ok {
-		resetter = c.Dialect
-	}
-
+	resetter := conn.Dialect
 	if resetter == nil {
 		return errors.New("provided connection is not a Resetter")
 	}
 
 	err := resetter.DropDB()
 	if err != nil {
-		fmt.Printf("[warning] could not drop database: %v\n", err)
+		log.Warnf("could not drop database: %v\n", err)
 	}
 
 	return resetter.CreateDB()
@@ -59,27 +49,19 @@ func (d *ResetCommand) Run(ctx context.Context, root string, args []string) erro
 // RunBeforeTests will be invoked to reset the test database before
 // tests run.
 func (d *ResetCommand) RunBeforeTest(ctx context.Context, root string, args []string) error {
-	conn := d.connections["test"]
+	conn := pop.Connections[d.connectionName]
 	if conn == nil {
 		return ErrConnectionNotFound
 	}
 
-	var resetter Resetter
-	if c, ok := conn.(*pop4.Connection); ok {
-		resetter = c.Dialect
-	}
-
-	if c, ok := conn.(*pop5.Connection); ok {
-		resetter = c.Dialect
-	}
-
+	resetter := conn.Dialect
 	if resetter == nil {
 		return errors.New("provided connection is not a Resetter")
 	}
 
 	err := resetter.DropDB()
 	if err != nil {
-		fmt.Printf("[warning] could not drop database: %v\n", err)
+		log.Warnf("could not drop database: %v\n", err)
 	}
 
 	return resetter.CreateDB()

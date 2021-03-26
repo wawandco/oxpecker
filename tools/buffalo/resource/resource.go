@@ -1,18 +1,34 @@
 package resource
 
 import (
-	"bytes"
-	"io/ioutil"
+	_ "embed"
 	"os"
 	"path/filepath"
-	"text/template"
 
 	"github.com/gobuffalo/flect/name"
 	"github.com/pkg/errors"
 
 	"github.com/wawandco/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
 	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
+)
+
+var (
+	//go:embed templates/action.go.tmpl
+	actionTemplate string
+	//go:embed templates/action_test.go.tmpl
+	actionTestTemplate string
+	//go:embed templates/index.html.tmpl
+	indexHTMLTemplate string
+	//go:embed templates/new.html.tmpl
+	newHTMLTemplate string
+	//go:embed templates/edit.html.tmpl
+	editHTMLTemplate string
+	//go:embed templates/show.html.tmpl
+	showHTMLTemplate string
+	//go:embed templates/form.html.tmpl
+	formHTMLTemplate string
 )
 
 // Resource model struct
@@ -65,26 +81,16 @@ func (r *Resource) GenerateActions() error {
 	actionName := r.Name.Proper().Pluralize().Underscore().String()
 	dirPath := filepath.Join(r.root, "app", "actions")
 	actions := map[string]string{
-		actionName:           actionTmpl,
-		actionName + "_test": actionTestTmpl,
+		actionName:           actionTemplate,
+		actionName + "_test": actionTestTemplate,
 	}
 
 	for name, content := range actions {
 		filename := name + ".go"
 		path := filepath.Join(dirPath, filename)
-
-		tmpl, err := template.New(filename).Parse(content)
+		err := source.Build(path, content, r)
 		if err != nil {
-			return errors.Wrap(err, "parsing new template error")
-		}
-
-		var tpl bytes.Buffer
-		if err = tmpl.Execute(&tpl, r); err != nil {
-			return errors.Wrap(err, "executing new template error")
-		}
-
-		if err = ioutil.WriteFile(path, tpl.Bytes(), 0655); err != nil {
-			return errors.Wrap(err, "writing new template error")
+			return err
 		}
 	}
 
@@ -118,11 +124,11 @@ func (r *Resource) GenerateModel() error {
 // GenerateModel generates the templates for the resource
 func (r *Resource) GenerateTemplates() error {
 	templates := map[string]string{
-		"index": templateIndexTmpl,
-		"new":   templateNewTmpl,
-		"edit":  templateEditTmpl,
-		"show":  templateShowTmpl,
-		"form":  templateFormTmpl,
+		"index": indexHTMLTemplate,
+		"new":   newHTMLTemplate,
+		"edit":  editHTMLTemplate,
+		"show":  showHTMLTemplate,
+		"form":  formHTMLTemplate,
 	}
 
 	dirPath := filepath.Join(r.root, "app", "templates", r.Name.Underscore().String())
@@ -137,18 +143,9 @@ func (r *Resource) GenerateTemplates() error {
 		filename := name + ".plush.html"
 		path := filepath.Join(dirPath, filename)
 
-		tmpl, err := template.New(filename).Parse(content)
+		err := source.Build(path, content, r)
 		if err != nil {
-			return errors.Wrap(err, "parsing new template error")
-		}
-
-		var tpl bytes.Buffer
-		if err = tmpl.Execute(&tpl, r); err != nil {
-			return errors.Wrap(err, "executing new template error")
-		}
-
-		if err = ioutil.WriteFile(path, tpl.Bytes(), 0655); err != nil {
-			return errors.Wrap(err, "writing new template error")
+			return err
 		}
 	}
 

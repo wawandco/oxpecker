@@ -1,6 +1,6 @@
 module github.com/wawandco/oxpecker
 
-go 1.15
+go 1.16
 
 require (
 	github.com/cockroachdb/cockroach-go v0.0.0-20190925194419-606b3d062051 // indirect
@@ -15,7 +15,6 @@ require (
 	github.com/gobuffalo/pop v4.13.1+incompatible
 	github.com/gobuffalo/pop/v5 v5.3.3
 	github.com/gofrs/uuid v3.3.0+incompatible // indirect
-	github.com/jackc/pgx/v4 v4.10.1
 	github.com/lib/pq v1.8.0 // indirect
 	github.com/markbates/grift v1.5.0
 	github.com/markbates/refresh v1.11.1

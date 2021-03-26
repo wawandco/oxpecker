@@ -26,21 +26,12 @@ func TestRun(t *testing.T) {
 		t.Error("should return an error")
 	}
 
-	err = pl.Run(context.Background(), root, []string{"app"})
+	err = pl.Run(context.Background(), root, []string{"new", "app"})
 	if err != nil {
 		t.Errorf("should not return and error, got: %v", err)
 	}
 
 	//Should create the folder
-	fi, err := os.Stat(filepath.Join(root, "app"))
-	if err != nil {
-		t.Errorf("should not return and error, got: %v", err)
-	}
-
-	if !fi.IsDir() {
-		t.Errorf("should be a folder, got a file")
-	}
-
 	if !tinit.called {
 		t.Errorf("should have called initializer")
 	}
@@ -49,8 +40,16 @@ func TestRun(t *testing.T) {
 		t.Errorf("should have called afterinitialize")
 	}
 
-	if tinit.root != filepath.Join(root, "app") {
-		t.Errorf("should call initializer with root being: %v", filepath.Join(root, "app"))
+	if tinit.root != root {
+		t.Errorf("should call initializer with root being: %v", root)
+	}
+
+	if tinit.name != "app" {
+		t.Errorf("should call initializer with folder being: %v", "app")
+	}
+	exp := filepath.Join(root, "app")
+	if tinit.folder != exp {
+		t.Errorf("should call initializer with folder being: %v", exp)
 	}
 }
 
@@ -59,14 +58,14 @@ func TestFolderName(t *testing.T) {
 		args     []string
 		expected string
 	}{
-		{[]string{"aaa"}, "aaa"},
-		{[]string{"something/aaa"}, "aaa"},
-		{[]string{"something\\aaa"}, "something\\aaa"},
+		{[]string{"new", "aaa"}, "aaa"},
+		{[]string{"new", "something/aaa"}, "aaa"},
+		{[]string{"new", "something\\aaa"}, "something\\aaa"},
 	}
 
 	pl := &new.Command{}
 	for _, tcase := range tcases {
-		name := pl.FolderName(tcase.args)
+		name := pl.AppName(tcase.args)
 		if name != tcase.expected {
 			t.Errorf("should return %v got %v", tcase.expected, name)
 		}

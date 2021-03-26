@@ -2,8 +2,10 @@ package flect
 
 import (
 	"context"
-	"fmt"
 	"os"
+
+	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 type Initializer struct{}
@@ -12,48 +14,38 @@ func (i Initializer) Name() string {
 	return "flect/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, root string, args []string) error {
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 
-	rootYml := root + "/inflections.yml"
+	yml := options.Folder + "/inflections.yml"
+	content := `{ "singular": "plural" }`
 
-	content := `
-	{
-	  "singular": "plural"
-	}
-	`
-
-	_, err := os.Stat(rootYml)
+	_, err := os.Stat(yml)
 	if err == nil {
-
-		fmt.Println("inflections.yml file already exist ")
-		return nil
-
-	}
-	if os.IsNotExist(err) {
-
-		// create file if it does not exist
-		file, err := os.Create(rootYml)
-
-		if err != nil {
-			return (err)
-		}
-
-		_, err = os.OpenFile(rootYml, os.O_RDWR, 0644)
-		if err != nil {
-			return (err)
-		}
-
-		_, err = file.WriteString(content)
-		if err != nil {
-			return (err)
-		}
-
-		file.Close()
+		log.Warn("inflections.yml file already exist, skipping generation")
 
 		return nil
-
 	}
 
-	return err
+	if !os.IsNotExist(err) {
+		return err
+	}
+	// create file if it does not exist
+	file, err := os.Create(yml)
+	if err != nil {
+		return (err)
+	}
 
+	_, err = os.OpenFile(yml, os.O_RDWR, 0644)
+	if err != nil {
+		return (err)
+	}
+
+	_, err = file.WriteString(content)
+	if err != nil {
+		return (err)
+	}
+
+	file.Close()
+
+	return nil
 }

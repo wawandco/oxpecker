@@ -2,8 +2,22 @@ package refresh
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"os"
+	"path/filepath"
+	"time"
+
+	"github.com/markbates/refresh/refresh"
+	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/lifecycle/new"
+)
+
+var (
+	// the filename we will use for the generated yml.
+	filename = `.buffalo.dev.yml`
+
+	ErrNameRequired   = errors.New("name argument is required")
+	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
 type Initializer struct{}
@@ -12,66 +26,42 @@ func (i Initializer) Name() string {
 	return "refresh/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context, root string, args []string) error {
-	// check for database.dev.yml file in root location
-	rootYml := root + "/.buffalo.dev.yml"
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
+	rootYML := filepath.Join(options.Folder, filename)
 
-	content := `app_root: .
-	build_target_path : ./cmd/app
-	ignored_folders:
-	- vendor
-	- log
-	- logs
-	- assets
-	- public
-	- grifts
-	- tmp
-	- bin
-	- node_modules
-	- .sass-cache
-	included_extensions:
-	- .go
-	- .env
-	build_path: bin
-	build_delay: 200ns
-	binary_name: tmp-build
-	command_flags: []
-	enable_colors: true
-	log_name: ox`
+	config := refresh.Configuration{
+		AppRoot:         ".",
+		BuildTargetPath: "." + string(filepath.Separator) + filepath.Join(".", "cmd", options.Name),
+		BuildPath:       "bin",
+		BuildDelay:      200 * time.Nanosecond,
+		BinaryName:      fmt.Sprintf("tmp-%v-build", options.Name),
+		IgnoredFolders: []string{
+			"vendor",
+			"log",
+			"logs",
+			"assets",
+			"public",
+			"grifts",
+			"tmp",
+			"bin",
+			"node_modules",
+			".sass-cache",
+		},
 
-	_, err := os.Stat(rootYml)
-	if err == nil {
-
-		fmt.Println(".buffalo.dev.yml file already exist")
-		return nil
-
+		IncludedExtensions: []string{".go", ".env"},
+		EnableColors:       true,
+		LogName:            "ox",
 	}
-	if os.IsNotExist(err) {
 
-		// create file if it does not exist
-		file, err := os.Create(rootYml)
-
-		if err != nil {
-			fmt.Println("alo alo")
-			return (err)
-		}
-
-		_, err = os.OpenFile(rootYml, os.O_RDWR, 0644)
-		if err != nil {
-			fmt.Println("alo alo")
-			return (err)
-		}
-
-		_, err = file.WriteString(content)
-		if err != nil {
-			return (err)
-		}
-
-		file.Close()
-
-		return nil
-
+	err := config.Dump(rootYML)
+	if err != nil {
+		return err
 	}
-	return err
 
+	return nil
+}
+
+func (i *Initializer) ParseFlags([]string) {}
+func (i *Initializer) Flags() *pflag.FlagSet {
+	return pflag.NewFlagSet("refresh-initializer", pflag.ContinueOnError)
 }

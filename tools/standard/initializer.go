@@ -2,8 +2,16 @@ package standard
 
 import (
 	"context"
+	_ "embed"
+	"path/filepath"
 
-	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
+)
+
+var (
+	//go:embed templates/go.mod.tmpl
+	goModTemplate string
 )
 
 type Initializer struct{}
@@ -12,13 +20,8 @@ func (i Initializer) Name() string {
 	return "standard/initializer"
 }
 
-// - Initializes module based on args[0]
-// - Creates cmd/name/main.go
-func (i *Initializer) AfterInitialize(ctx context.Context, root string, args []string) error {
-	return nil
-}
-
-func (i *Initializer) ParseFlags(flags []string) {}
-func (i *Initializer) Flags(flags []string) *pflag.FlagSet {
-	return pflag.NewFlagSet("std/init", pflag.ContinueOnError)
+// Initialize the go module
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
+	err := source.Build(filepath.Join(options.Folder, "go.mod"), goModTemplate, options.Module)
+	return err
 }

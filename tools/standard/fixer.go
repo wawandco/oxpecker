@@ -3,7 +3,6 @@ package standard
 import (
 	"context"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -103,7 +102,6 @@ func (f Fixer) fileExists() (bool, error) {
 
 	for _, f := range files {
 		if f.Name() == "main.go" {
-			fmt.Println(f.Name() + " found")
 			return true, nil
 		}
 	}

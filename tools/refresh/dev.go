@@ -16,16 +16,16 @@ func (w Plugin) Develop(ctx context.Context, root string) error {
 		return err
 	}
 
-	r := refresh.NewWithContext(config, ctx)
-
-	return r.Start()
+	return refresh.NewWithContext(config, ctx).Start()
 }
 
 // config tries to pull the config from .buffalo.dev.yml otherwise uses default config
 func (w Plugin) config(root string) (*refresh.Configuration, error) {
-	c := &refresh.Configuration{}
-	if _, err := os.Stat(".buffalo.dev.yml"); err == nil {
-		err = c.Load(".buffalo.dev.yml")
+	_, err := os.Stat(filename)
+	if err == nil {
+		c := &refresh.Configuration{}
+		err = c.Load(filename)
+
 		return c, err
 	}
 
@@ -61,9 +61,7 @@ func (w Plugin) defaultConfig(root string) (*refresh.Configuration, error) {
 		BuildPath:    "tmp",
 		BuildDelay:   200 * time.Millisecond,
 		EnableColors: true,
-		LogName:      "x",
-
-		// BuildFlags:   bflags,
+		LogName:      "ox",
 
 		AppRoot:         root,
 		BinaryName:      name + "-build",

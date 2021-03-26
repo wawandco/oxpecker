@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -50,7 +51,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 		err = builder.RunBeforeBuild(ctx, root, args)
 		if err != nil {
-			fmt.Printf("[ERROR] %v\n", err.Error())
+			log.Error(err.Error())
 			break
 		}
 	}
@@ -61,7 +62,7 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 
 			err = builder.Build(ctx, root, args)
 			if err != nil {
-				fmt.Printf("[ERROR] %v\n", err.Error())
+				log.Errorf("%v\n", err.Error())
 				break
 			}
 		}

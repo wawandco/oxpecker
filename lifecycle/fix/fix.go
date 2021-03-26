@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -32,7 +33,7 @@ func (c Command) HelpText() string {
 }
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
-	fmt.Println("Running [fix] command")
+	log.Info("Running fix command")
 
 	//Run each of the fixers registered.
 	for _, fixer := range c.fixers {

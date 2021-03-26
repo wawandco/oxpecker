@@ -5,8 +5,8 @@ package generate
 import (
 	"context"
 	"errors"
-	"fmt"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -33,7 +33,7 @@ func (c Command) HelpText() string {
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	if len(args) < 2 {
-		fmt.Println("No generator name specified")
+		log.Error("no generator name specified")
 		return nil
 	}
 

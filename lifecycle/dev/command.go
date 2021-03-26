@@ -2,8 +2,8 @@ package dev
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 	"golang.org/x/sync/errgroup"
 )
@@ -50,7 +50,7 @@ func (d *Command) Run(ctx context.Context, root string, args []string) error {
 		wg.Go(func() error {
 			err := g(ctx, root)
 			if err != nil {
-				fmt.Println(err)
+				log.Error(err.Error())
 			}
 
 			return nil

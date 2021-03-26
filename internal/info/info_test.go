@@ -1,7 +1,6 @@
 package info
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -111,7 +110,6 @@ func TestBuildName(t *testing.T) {
 				}
 
 				name, err := BuildName()
-				fmt.Println(name)
 				if err != tcase.errExpected {
 					t.Fatalf("error should be %v got %v", tcase.errExpected, err)
 				}

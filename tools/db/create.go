@@ -3,13 +3,11 @@ package db
 import (
 	"context"
 
-	pop4 "github.com/gobuffalo/pop"
-	pop5 "github.com/gobuffalo/pop/v5"
+	"github.com/gobuffalo/pop/v5"
 	"github.com/spf13/pflag"
 )
 
 type CreateCommand struct {
-	connections    map[string]URLProvider
 	connectionName string
 	flags          *pflag.FlagSet
 }
@@ -27,20 +25,12 @@ func (d CreateCommand) ParentName() string {
 }
 
 func (d *CreateCommand) Run(ctx context.Context, root string, args []string) error {
-	conn := d.connections[d.connectionName]
+	conn := pop.Connections[d.connectionName]
 	if conn == nil {
 		return ErrConnectionNotFound
 	}
 
-	if c, ok := conn.(*pop4.Connection); ok {
-		return c.Dialect.CreateDB()
-	}
-
-	if c, ok := conn.(*pop5.Connection); ok {
-		return c.Dialect.CreateDB()
-	}
-
-	return nil
+	return conn.Dialect.CreateDB()
 }
 
 func (d *CreateCommand) ParseFlags(args []string) {
