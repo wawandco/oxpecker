@@ -3,6 +3,7 @@
 package tools
 
 import (
+	"github.com/gogo/protobuf/version"
 	"github.com/wawandco/oxpecker/lifecycle/build"
 	"github.com/wawandco/oxpecker/lifecycle/dev"
 	"github.com/wawandco/oxpecker/lifecycle/fix"
@@ -39,7 +40,7 @@ import (
 
 // Base plugins for applications lifecycle. While oxpecker
 // has other plugins this list is the base that is used across most of
-// the apps we do. Feel free to add the rest in your cmd/ox/main.go file.
+// the apps we build and maintain.
 var Base = []plugins.Plugin{
 	&help.Command{},
 
@@ -104,4 +105,5 @@ var Base = []plugins.Plugin{
 	// Testers
 	&standard.Tester{},
 	&envy.Tester{},
+	&version.Command{},
 }

@@ -14,26 +14,26 @@ var (
 
 var (
 	// Version is a Command
-	_ plugins.Command = (*Version)(nil)
+	_ plugins.Command = (*Command)(nil)
 )
 
-// Version command will print X version.
-type Version struct{}
+// Command command will print X version.
+type Command struct{}
 
-func (b Version) Name() string {
+func (b Command) Name() string {
 	return "version"
 }
 
-func (b Version) ParentName() string {
+func (b Command) ParentName() string {
 	return ""
 }
 
-func (b Version) HelpText() string {
+func (b Command) HelpText() string {
 	return "returns the current version of Oxpecker CLI"
 }
 
 // Run prints the version of the Oxpecker cli
-func (b *Version) Run(ctx context.Context, root string, args []string) error {
+func (b *Command) Run(ctx context.Context, root string, args []string) error {
 	fmt.Printf("Oxpecker version %v\n", version)
 
 	return nil
