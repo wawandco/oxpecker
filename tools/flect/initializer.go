@@ -2,9 +2,9 @@ package flect
 
 import (
 	"context"
-	"fmt"
 	"os"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
@@ -21,7 +21,7 @@ func (i *Initializer) Initialize(ctx context.Context, options new.Options) error
 
 	_, err := os.Stat(yml)
 	if err == nil {
-		fmt.Println("inflections.yml file already exist ")
+		log.Warn("inflections.yml file already exist, skipping generation")
 
 		return nil
 	}

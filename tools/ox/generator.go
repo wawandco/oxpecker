@@ -3,11 +3,11 @@ package ox
 import (
 	"context"
 	_ "embed"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
 )
 
@@ -25,7 +25,7 @@ func (g Generator) Name() string {
 func (g Generator) Generate(ctx context.Context, root string, args []string) error {
 	file := filepath.Join("cmd", "ox", "main.go")
 	if _, err := os.Stat(file); err == nil {
-		fmt.Println("[info] skipping file generation because ox/main.go exists.")
+		log.Info("skipping file generation because ox/main.go exists.")
 		return nil
 	}
 

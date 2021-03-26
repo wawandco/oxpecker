@@ -2,9 +2,7 @@ package action
 
 import (
 	"context"
-	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -53,15 +51,16 @@ func Test_ActionGenerator(t *testing.T) {
 		if !g.exists(filepath.Join(modelsPath, "user_test.go")) {
 			t.Error("'user_test.go' file does not exists on the path")
 		}
+
 		content, err := ioutil.ReadFile(filepath.Join(modelsPath, "user.go"))
 		if err != nil {
-			log.Fatal(err)
+			t.Fatal(err)
 		}
+
 		text := string(content)
 		matched, err := regexp.MatchString(`func User`, text)
 
 		if !matched {
-			fmt.Println(text)
 			t.Fatalf("File's content is not correct, %v", err)
 		}
 	})

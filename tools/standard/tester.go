@@ -2,7 +2,6 @@ package standard
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -21,14 +20,14 @@ func (b *Tester) RunBeforeTest(ctx context.Context, root string, args []string) 
 }
 
 func (p *Tester) Test(ctx context.Context, root string, args []string) error {
-	fmt.Println(">>> Running Tests")
+	log.Info("running tests")
 
 	cmd := exec.CommandContext(ctx, "go", p.testArgs(args)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	log.Infof("Running: %v\n", strings.Join(cmd.Args, " "))
+	log.Infof("Running Command: %v\n", strings.Join(cmd.Args, " "))
 
 	return cmd.Run()
 }

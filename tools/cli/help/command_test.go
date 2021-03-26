@@ -2,7 +2,6 @@ package help
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"testing"
 
@@ -47,7 +46,6 @@ func TestFindCommand(t *testing.T) {
 		}
 
 		ht, ok := result.(plugins.HelpTexter)
-		fmt.Println(ok, result.Name())
 		if result.Name() != "migrate" || !ok || ht.HelpText() != migrate.HelpText() || strings.Join(names, " ") != strings.Join(expected, " ") {
 			t.Fatal("didn't find our guy")
 		}
@@ -96,8 +94,6 @@ func (tp *testPlugin) Receive(pls []plugins.Plugin) {
 
 		tp.subcommands = append(tp.subcommands, c)
 	}
-
-	fmt.Println(tp.subcommands)
 }
 
 func (tp *testPlugin) Subcommands() []plugins.Command {

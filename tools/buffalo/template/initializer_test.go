@@ -3,7 +3,6 @@ package template
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -43,8 +42,6 @@ func TestInitializer(t *testing.T) {
 		if err != nil {
 			t.Fatal("should have created the file")
 		}
-
-		fmt.Println(string(bmodels))
 
 		if !bytes.Contains(bmodels, []byte(`<!DOCTYPE html>`)) {
 			t.Fatal("should contain HTML heading")

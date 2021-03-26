@@ -2,7 +2,6 @@ package grift
 
 import (
 	"context"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -54,7 +53,6 @@ func Test_ActionGenerator(t *testing.T) {
 		matched, err := regexp.MatchString(`"simple", func`, text)
 
 		if !matched {
-			fmt.Println(text)
 			t.Fatalf("File's content is not correct, %v", err)
 		}
 	})

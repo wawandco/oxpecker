@@ -2,10 +2,11 @@ package webpack
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 const (
@@ -47,7 +48,8 @@ func (w Plugin) Build(ctx context.Context, root string, args []string) error {
 	case javascriptPackageManagerNPM:
 		cmd = exec.CommandContext(ctx, "npm", "run", "build")
 	case javascriptPackageManagerNone:
-		fmt.Println("did not find yarn.lock nor package-lock.json, skipping webpack build.")
+		log.Warn("did not find yarn.lock nor package-lock.json, skipping webpack build.")
+
 		return nil
 	}
 

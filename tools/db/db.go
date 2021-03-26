@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/gobuffalo/pop/v5"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -35,7 +36,7 @@ func (c Command) HelpText() string {
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	if len(args) < 2 {
-		fmt.Println("no subcommand specified, please use `db [subcommand]` to run one of the db subcommands.")
+		log.Error("no subcommand specified, please use `db [subcommand]` to run one of the db subcommands.")
 		return nil
 	}
 

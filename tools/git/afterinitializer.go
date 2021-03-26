@@ -2,10 +2,10 @@ package git
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/exec"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
@@ -18,7 +18,7 @@ func (ri AfterInitializer) Name() string {
 func (ri AfterInitializer) AfterInitialize(ctx context.Context, options new.Options) error {
 	_, err := exec.LookPath("git")
 	if err != nil {
-		fmt.Println("[warning] Git repo was not initialized given git was not present")
+		log.Warn("[warning] Git repo was not initialized given git was not present")
 		return nil
 	}
 
