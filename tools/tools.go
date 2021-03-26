@@ -3,7 +3,6 @@
 package tools
 
 import (
-	"github.com/gogo/protobuf/version"
 	"github.com/wawandco/oxpecker/lifecycle/build"
 	"github.com/wawandco/oxpecker/lifecycle/dev"
 	"github.com/wawandco/oxpecker/lifecycle/fix"
@@ -23,6 +22,7 @@ import (
 	"github.com/wawandco/oxpecker/tools/buffalo/resource"
 	"github.com/wawandco/oxpecker/tools/buffalo/template"
 	"github.com/wawandco/oxpecker/tools/cli/help"
+	"github.com/wawandco/oxpecker/tools/cli/version"
 	"github.com/wawandco/oxpecker/tools/db"
 	"github.com/wawandco/oxpecker/tools/docker"
 	"github.com/wawandco/oxpecker/tools/envy"
