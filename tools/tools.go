@@ -73,10 +73,10 @@ var Base = []plugins.Plugin{
 	&ox.Generator{},
 	&template.Generator{},
 	&model.Generator{},
+	&action.Generator{},
 	&resource.Generator{},
 
 	// Initializer
-	// &folders.Initializer{},
 	&embedded.Initializer{},
 	&model.Initializer{},
 	&render.Initializer{},
@@ -95,7 +95,6 @@ var Base = []plugins.Plugin{
 	&assets.Initializer{},
 	&soda.Initializer{},
 	&git.Initializer{},
-	&docker.Initializer{},
 
 	&standard.AfterInitializer{},
 	&yarn.AfterInitializer{},

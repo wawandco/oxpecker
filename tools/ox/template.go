@@ -23,7 +23,7 @@ import (
 // when found in the source code. In here you can add/remove plugins that
 // your app will use as part of its lifecycle.
 func main() {
-  	fmt.Print("[info] Using {{.Name}}/cmd/ox \n\n")
+  	log.Info("Using {{.Name}}/cmd/ox \n\n")
 	ctx := context.Background()
     
   	pwd, err := os.Getwd()

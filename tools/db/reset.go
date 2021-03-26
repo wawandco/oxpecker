@@ -3,10 +3,10 @@ package db
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/gobuffalo/pop/v5"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 type ResetCommand struct {
@@ -40,7 +40,7 @@ func (d *ResetCommand) Run(ctx context.Context, root string, args []string) erro
 
 	err := resetter.DropDB()
 	if err != nil {
-		fmt.Printf("[warning] could not drop database: %v\n", err)
+		log.Warnf("could not drop database: %v\n", err)
 	}
 
 	return resetter.CreateDB()
@@ -61,7 +61,7 @@ func (d *ResetCommand) RunBeforeTest(ctx context.Context, root string, args []st
 
 	err := resetter.DropDB()
 	if err != nil {
-		fmt.Printf("[warning] could not drop database: %v\n", err)
+		log.Warnf("could not drop database: %v\n", err)
 	}
 
 	return resetter.CreateDB()

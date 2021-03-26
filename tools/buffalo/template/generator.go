@@ -2,12 +2,12 @@ package template
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 // Generator allows to identify template as a plugin
@@ -28,7 +28,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	fmt.Printf("[info] Template generated in app/templates/%s.plush.html \n", args[2])
+	log.Infof("Template generated in app/templates/%s.plush.html \n", args[2])
 
 	return nil
 }

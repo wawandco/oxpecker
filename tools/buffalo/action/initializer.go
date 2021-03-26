@@ -72,10 +72,6 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		}
 	}
 
-	fmt.Printf("[info] Created app/actions/actions.go\n")
-	fmt.Printf("[info] Created app/actions/actions_test.go\n")
-	fmt.Printf("[info] Created app/actions/home/home.go\n")
-
 	return nil
 }
 

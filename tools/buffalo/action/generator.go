@@ -47,8 +47,6 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	fmt.Printf("[info] Action generated in: \n-- app/actions/%s.go\n-- app/actions/%s_test.go\n", g.name, g.name)
-
 	return nil
 }
 
@@ -112,7 +110,6 @@ func (g Generator) exists(path string) bool {
 }
 
 func (g Generator) callTemplate(name string) (string, error) {
-
 	bt, err := fs.ReadFile(templates, filepath.Join("templates", name))
 	if err != nil {
 		return "", nil

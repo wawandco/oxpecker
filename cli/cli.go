@@ -2,12 +2,12 @@ package cli
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/info"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 	"github.com/wawandco/oxpecker/tools/cli/help"
 )
@@ -53,13 +53,13 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	path := filepath.Join("cmd", "ox", "main.go")
 	_, err := os.Stat(path)
 	if err != nil {
-		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
+		log.Info("Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
 
 	name, err := info.ModuleName()
 	if err != nil || name == "github.com/wawandco/oxpecker" {
-		fmt.Print("[info] Using wawandco/oxpecker/cmd/ox \n\n")
+		log.Info("Using wawandco/oxpecker/cmd/ox \n\n")
 		return c.Run(ctx, c.root, args)
 	}
 
@@ -76,7 +76,7 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 
 func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	if len(args) < 2 {
-		fmt.Println("no command provided, please provide one")
+		log.Error("no command provided, please provide one")
 		return nil
 	}
 
@@ -95,7 +95,7 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 	command := c.findCommand(args[1])
 	if command == nil {
 		// TODO: print help ?
-		fmt.Printf("did not find %s command\n", args[1])
+		log.Infof("did not find %s command\n", args[1])
 		return nil
 	}
 

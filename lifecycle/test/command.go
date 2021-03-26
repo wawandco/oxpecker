@@ -5,8 +5,8 @@ package test
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -37,7 +37,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, bt := range c.beforeTesters {
 		err = bt.RunBeforeTest(ctx, root, args[1:])
 		if err != nil {
-			fmt.Printf("[warning] Error running %v before tester: %v\n", bt.Name(), err)
+			log.Warnf("error running %v before tester: %v\n", bt.Name(), err)
 			break
 		}
 	}
@@ -54,7 +54,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	for _, at := range c.afterTesters {
 		err := at.RunAfterTest(ctx, root, args[1:])
 		if err != nil {
-			fmt.Printf("error running %v after tester: %v\n", at.Name(), err)
+			log.Errorf("error running %v after tester: %v\n", at.Name(), err)
 		}
 	}
 

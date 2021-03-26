@@ -2,12 +2,12 @@ package tasks
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
 )
 
@@ -46,7 +46,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return errors.Wrap(err, "creating action file")
 	}
 
-	fmt.Printf("[info] task generated in: \n-- app/tasks/%s.go\n", g.name)
+	log.Infof("task generated in: \n-- app/tasks/%s.go\n", g.name)
 
 	return nil
 }

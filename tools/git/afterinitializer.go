@@ -3,6 +3,7 @@ package git
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -14,12 +15,18 @@ func (ri AfterInitializer) Name() string {
 }
 
 func (ri AfterInitializer) AfterInitialize(ctx context.Context) error {
+	_, err := exec.LookPath("git")
+	if err != nil {
+		fmt.Println("[warning] Git repo was not initialized given git was not present")
+		return nil
+	}
+
 	folder, ok := ctx.Value("folder").(string)
 	if !ok {
 		return errors.New("folder needed")
 	}
 
-	err := os.Chdir(folder)
+	err = os.Chdir(folder)
 	if err != nil {
 		return err
 	}

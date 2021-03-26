@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 type Tester struct{}
@@ -26,7 +28,7 @@ func (p *Tester) Test(ctx context.Context, root string, args []string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Printf("Running: %v\n", strings.Join(cmd.Args, " "))
+	log.Infof("Running: %v\n", strings.Join(cmd.Args, " "))
 
 	return cmd.Run()
 }
