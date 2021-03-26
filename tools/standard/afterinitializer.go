@@ -18,7 +18,7 @@ func (i AfterInitializer) Name() string {
 
 // Initialize the go module
 func (i *AfterInitializer) AfterInitialize(ctx context.Context, options new.Options) error {
-	err := os.Chdir(options.Root)
+	err := os.Chdir(options.Folder)
 	if err != nil {
 		return err
 	}
