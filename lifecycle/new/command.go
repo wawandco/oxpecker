@@ -39,21 +39,23 @@ func (d *Command) Run(ctx context.Context, root string, args []string) error {
 
 	name := d.AppName(args)
 
-	ctx = context.WithValue(ctx, "args", args)
-	ctx = context.WithValue(ctx, "root", root)
-	ctx = context.WithValue(ctx, "folder", filepath.Join(root, name))
-	ctx = context.WithValue(ctx, "name", name)
-	ctx = context.WithValue(ctx, "module", args[1])
+	options := Options{
+		Args:   args,
+		Root:   root,
+		Folder: filepath.Join(root, name),
+		Name:   name,
+		Module: args[1],
+	}
 
 	for _, ini := range d.initializers {
-		err := ini.Initialize(ctx)
+		err := ini.Initialize(ctx, options)
 		if err != nil {
 			return err
 		}
 	}
 
 	for _, aini := range d.afterInitializers {
-		err := aini.AfterInitialize(ctx)
+		err := aini.AfterInitialize(ctx, options)
 		if err != nil {
 			return err
 		}

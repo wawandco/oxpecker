@@ -2,15 +2,11 @@ package model
 
 import (
 	"context"
-	"errors"
 	"io/ioutil"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
-)
-
-var (
-	ErrIncompleteArgs = errors.New("incomplete args")
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 // Initializer
@@ -20,24 +16,14 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	tmpl, err := templates.ReadFile("templates/models.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	filename := filepath.Join(f.(string), "app", "models", "models.go")
-	err = source.Build(filename, string(tmpl), m.(string))
+	filename := filepath.Join(options.Folder, "app", "models", "models.go")
+	err = source.Build(filename, string(tmpl), options.Module)
 	if err != nil {
 		return err
 	}
@@ -47,7 +33,7 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return err
 	}
 
-	filename = filepath.Join(f.(string), "app", "models", "models_test.go")
+	filename = filepath.Join(options.Folder, "app", "models", "models_test.go")
 	err = ioutil.WriteFile(filename, tmpl, 0777)
 	if err != nil {
 		return err

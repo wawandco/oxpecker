@@ -3,10 +3,10 @@ package standard
 import (
 	"context"
 	_ "embed"
-	"errors"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -21,17 +21,7 @@ func (i Initializer) Name() string {
 }
 
 // Initialize the go module
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return errors.New("incomplete")
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return errors.New("incomplete")
-	}
-
-	err := source.Build(filepath.Join(f.(string), "go.mod"), goModTemplate, m)
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
+	err := source.Build(filepath.Join(options.Folder, "go.mod"), goModTemplate, options.Module)
 	return err
 }

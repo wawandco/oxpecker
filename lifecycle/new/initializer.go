@@ -9,5 +9,5 @@ import (
 type Initializer interface {
 	// Initialize receives the context and the root folder where
 	// the application is being initialized.
-	Initialize(context.Context) error
+	Initialize(context.Context, Options) error
 }

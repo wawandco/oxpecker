@@ -4,11 +4,12 @@ import (
 	"context"
 	"os"
 	"testing"
+
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 func TestInitializer(t *testing.T) {
 	t.Run("InflectionsFileDoesNotExist", func(t *testing.T) {
-
 		root := t.TempDir()
 		err := os.Chdir(root)
 		if err != nil {
@@ -16,9 +17,12 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
+		ctx := context.Background()
+		options := new.Options{
+			Folder: root,
+		}
 
-		err = i.Initialize(context.Background(), root, []string{})
-
+		err = i.Initialize(ctx, options)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -45,12 +49,14 @@ func TestInitializer(t *testing.T) {
 		}
 
 		i := Initializer{}
+		ctx := context.Background()
+		options := new.Options{
+			Folder: root,
+		}
 
-		err = i.Initialize(context.Background(), root, []string{})
-
+		err = i.Initialize(ctx, options)
 		if err != nil {
 			t.Fatalf("error should be type nil, got %v", err)
 		}
-
 	})
 }

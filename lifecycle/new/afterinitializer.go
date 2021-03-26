@@ -10,5 +10,5 @@ import (
 type AfterInitializer interface {
 	// AfterInitialize receives the context and the root folder where
 	// the application is being initialized.
-	AfterInitialize(context.Context) error
+	AfterInitialize(context.Context, Options) error
 }

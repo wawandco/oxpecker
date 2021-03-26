@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 func TestInitilizer(t *testing.T) {
@@ -18,9 +20,11 @@ func TestInitilizer(t *testing.T) {
 
 		i := Initializer{}
 		ctx := context.Background()
-		ctx = context.WithValue(ctx, "folder", root)
+		options := new.Options{
+			Folder: filepath.Join(root),
+		}
 
-		err = i.Initialize(ctx)
+		err = i.Initialize(ctx, options)
 		if err != nil {
 			t.Fatalf("error should be nil, got %v", err)
 		}
@@ -40,61 +44,4 @@ func TestInitilizer(t *testing.T) {
 		}
 	})
 
-	t.Run("dockerFileDoesExist", func(t *testing.T) {
-		root := t.TempDir()
-		err := os.Chdir(root)
-		if err != nil {
-			t.Error("could not change to temp directory")
-		}
-
-		rootFile := filepath.Join(root, "Dockerfile")
-		_, err = os.Create(rootFile)
-		if err != nil {
-			t.Fatalf("Error creating the file, %v", err)
-		}
-
-		i := Initializer{}
-		ctx := context.Background()
-		ctx = context.WithValue(ctx, "folder", root)
-
-		err = i.Initialize(ctx)
-		if err != nil {
-			t.Fatalf("error should be nil, got %v", err)
-		}
-		_, err = os.Stat(rootFile)
-
-		if os.IsNotExist(err) {
-			t.Fatalf("Did not create  Dockerfile file , %v", err)
-		}
-	})
-
-	t.Run("dockerIgnoreDoesExist", func(t *testing.T) {
-		root := t.TempDir()
-		err := os.Chdir(root)
-		if err != nil {
-			t.Error("could not change to temp directory")
-		}
-
-		rootdoc := filepath.Join(root, ".dockerignore")
-		_, err = os.Create(rootdoc)
-
-		if err != nil {
-			t.Fatalf("Error creating the file, %v", err)
-		}
-
-		i := Initializer{}
-
-		ctx := context.Background()
-		ctx = context.WithValue(ctx, "folder", root)
-
-		err = i.Initialize(ctx)
-		if err != nil {
-			t.Fatalf("error should be nil, got %v", err)
-		}
-		_, err = os.Stat(rootdoc)
-
-		if os.IsNotExist(err) {
-			t.Fatalf("Did not create .dockerignore file , %v", err)
-		}
-	})
 }

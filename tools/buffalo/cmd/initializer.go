@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -23,29 +24,14 @@ func (i Initializer) Name() string {
 	return "cmd/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
-	n := ctx.Value("name")
-	if n == nil {
-		return ErrIncompleteArgs
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	content, err := templates.ReadFile("templates/main.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	filename := filepath.Join(f.(string), "cmd", n.(string), "main.go")
-	err = source.Build(filename, string(content), m.(string))
+	filename := filepath.Join(options.Folder, "cmd", options.Name, "main.go")
+	err = source.Build(filename, string(content), options.Module)
 
 	return err
 }

@@ -2,16 +2,12 @@ package git
 
 import (
 	"context"
-	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/spf13/pflag"
-)
-
-var (
-	ErrIncompleteArgs = errors.New("incomplete args")
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 // Initializer
@@ -21,25 +17,19 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
-	folder := f.(string)
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	keeps := []string{
 		"migrations",
 		"public",
 	}
 
 	for _, k := range keeps {
-		err := os.MkdirAll(filepath.Join(folder, k), 0777)
+		err := os.MkdirAll(filepath.Join(options.Folder, k), 0777)
 		if err != nil {
 			return err
 		}
 
-		err = ioutil.WriteFile(filepath.Join(folder, k, ".gitkeep"), []byte{}, 0777)
+		err = ioutil.WriteFile(filepath.Join(options.Folder, k, ".gitkeep"), []byte{}, 0777)
 		if err == nil {
 			continue
 		}

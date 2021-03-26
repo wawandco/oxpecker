@@ -9,6 +9,7 @@ import (
 
 	"github.com/markbates/refresh/refresh"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -25,26 +26,15 @@ func (i Initializer) Name() string {
 	return "refresh/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	n := ctx.Value("name")
-	if n == nil {
-		return ErrNameRequired
-	}
-
-	folder := ctx.Value("folder")
-	if folder == nil {
-		return ErrNameRequired
-	}
-
-	rootYML := filepath.Join(folder.(string), filename)
-	name := n.(string)
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
+	rootYML := filepath.Join(options.Folder, filename)
 
 	config := refresh.Configuration{
 		AppRoot:         ".",
-		BuildTargetPath: "." + string(filepath.Separator) + filepath.Join(".", "cmd", name),
+		BuildTargetPath: "." + string(filepath.Separator) + filepath.Join(".", "cmd", options.Name),
 		BuildPath:       "bin",
 		BuildDelay:      200 * time.Nanosecond,
-		BinaryName:      fmt.Sprintf("tmp-%v-build", name),
+		BinaryName:      fmt.Sprintf("tmp-%v-build", options.Name),
 		IgnoredFolders: []string{
 			"vendor",
 			"log",

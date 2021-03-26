@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -23,35 +24,13 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
-	n := ctx.Value("name")
-	if n == nil {
-		return ErrIncompleteArgs
-	}
-
-	data := struct {
-		Module, Name string
-	}{
-		Module: m.(string),
-		Name:   n.(string),
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	appGo, err := templates.ReadFile("templates/app.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	err = source.Build(filepath.Join(f.(string), "app", "app.go"), string(appGo), data)
+	err = source.Build(filepath.Join(options.Folder, "app", "app.go"), string(appGo), options)
 	if err != nil {
 		return err
 	}
@@ -61,7 +40,7 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return err
 	}
 
-	err = source.Build(filepath.Join(f.(string), "app", "routes.go"), string(routesGo), data)
+	err = source.Build(filepath.Join(options.Folder, "app", "routes.go"), string(routesGo), options)
 	if err != nil {
 		return err
 	}

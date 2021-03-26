@@ -3,11 +3,11 @@ package assets
 import (
 	"context"
 	"embed"
-	"errors"
 	"io/fs"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -33,17 +33,7 @@ func (i Initializer) Name() string {
 	return "assets/initializer"
 }
 
-func (i Initializer) Initialize(ctx context.Context) error {
-	module := ctx.Value("module")
-	if module == nil {
-		return errors.New("module is needed")
-	}
-
-	folder := ctx.Value("folder")
-	if folder == nil {
-		return errors.New("folder is needed")
-	}
-
+func (i Initializer) Initialize(ctx context.Context, options new.Options) error {
 	entries, err := templates.ReadDir("templates")
 	if err != nil {
 		return err
@@ -65,7 +55,7 @@ func (i Initializer) Initialize(ctx context.Context) error {
 			continue
 		}
 
-		err = source.Build(filepath.Join(folder.(string), result), template, module)
+		err = source.Build(filepath.Join(options.Folder, result), template, options.Module)
 		if err != nil {
 			return err
 		}

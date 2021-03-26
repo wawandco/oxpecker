@@ -8,6 +8,7 @@ import (
 
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -24,24 +25,14 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	renderGo, err := templates.ReadFile("templates/render.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	filename := filepath.Join(f.(string), "app", "render", "render.go")
-	err = source.Build(filename, string(renderGo), m.(string))
+	filename := filepath.Join(options.Folder, "app", "render", "render.go")
+	err = source.Build(filename, string(renderGo), options.Module)
 
 	return err
 }

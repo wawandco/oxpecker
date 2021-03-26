@@ -3,18 +3,16 @@ package embedded
 import (
 	"context"
 	"embed"
-	"errors"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
 
 	//go:embed templates
 	templates embed.FS
-
-	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
 // Initializer
@@ -24,22 +22,12 @@ func (i Initializer) Name() string {
 	return "embedded/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	n := ctx.Value("name")
-	if n == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	content, err := templates.ReadFile("templates/embeded.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	err = source.Build(filepath.Join(f.(string), "embed.go"), string(content), n.(string))
+	err = source.Build(filepath.Join(options.Folder, "embed.go"), string(content), options.Name)
 	return err
 }

@@ -2,7 +2,6 @@ package standard
 
 import (
 	"context"
-	"errors"
 	"os"
 	"os/exec"
 
@@ -18,14 +17,8 @@ func (i AfterInitializer) Name() string {
 }
 
 // Initialize the go module
-func (i *AfterInitializer) AfterInitialize(ctx context.Context) error {
-	root := ctx.Value("folder")
-	if root == nil {
-
-		return errors.New("folder is needed")
-	}
-
-	err := os.Chdir(root.(string))
+func (i *AfterInitializer) AfterInitialize(ctx context.Context, options new.Options) error {
+	err := os.Chdir(options.Root)
 	if err != nil {
 		return err
 	}

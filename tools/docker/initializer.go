@@ -3,10 +3,10 @@ package docker
 import (
 	"context"
 	"embed"
-	"errors"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -20,19 +20,13 @@ func (i Initializer) Name() string {
 	return "docker/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-
-	folder, ok := ctx.Value("folder").(string)
-	if !ok {
-		return errors.New("folder needed")
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	files := []struct {
 		path     string
 		template string
 	}{
-		{filepath.Join(folder, ".dockerignore"), "templates/dot-dockerignore.tmpl"},
-		{filepath.Join(folder, "Dockerfile"), "templates/Dockerfile.tmpl"},
+		{filepath.Join(options.Folder, ".dockerignore"), "templates/dot-dockerignore.tmpl"},
+		{filepath.Join(options.Folder, "Dockerfile"), "templates/Dockerfile.tmpl"},
 	}
 
 	for _, f := range files {

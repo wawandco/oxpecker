@@ -21,30 +21,18 @@ type Tinit struct {
 
 func (t Tinit) Name() string { return "tinit" }
 
-func (t *Tinit) Initialize(ctx context.Context) error {
+func (t *Tinit) Initialize(ctx context.Context, options new.Options) error {
 	t.called = true
-
-	if f := ctx.Value("root"); f != nil {
-		t.folder = f.(string)
-	}
-
-	if f := ctx.Value("folder"); f != nil {
-		t.folder = f.(string)
-	}
-
-	if f := ctx.Value("name"); f != nil {
-		t.name = f.(string)
-	}
+	t.folder = options.Folder
+	t.root = options.Root
+	t.name = options.Name
 
 	return nil
 }
 
-func (t *Tinit) AfterInitialize(ctx context.Context) error {
+func (t *Tinit) AfterInitialize(ctx context.Context, options new.Options) error {
 	t.afterCalled = true
-
-	if f := ctx.Value("root"); f != nil {
-		t.root = f.(string)
-	}
+	t.root = options.Root
 
 	return nil
 }

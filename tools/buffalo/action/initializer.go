@@ -9,6 +9,7 @@ import (
 
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/oxpecker/lifecycle/new"
 )
 
 var (
@@ -32,17 +33,7 @@ func (i Initializer) Name() string {
 	return "model/initializer"
 }
 
-func (i *Initializer) Initialize(ctx context.Context) error {
-	m := ctx.Value("module")
-	if m == nil {
-		return ErrIncompleteArgs
-	}
-
-	f := ctx.Value("folder")
-	if f == nil {
-		return ErrIncompleteArgs
-	}
-
+func (i *Initializer) Initialize(ctx context.Context, options new.Options) error {
 	entries, err := templates.ReadDir("templates")
 	if err != nil {
 		return err
@@ -65,7 +56,7 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 			continue
 		}
 
-		err = source.Build(filepath.Join(f.(string), result), template, m)
+		err = source.Build(filepath.Join(options.Folder, result), template, options.Module)
 		if err != nil {
 			return err
 		}
