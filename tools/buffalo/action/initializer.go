@@ -2,7 +2,10 @@ package action
 
 import (
 	"context"
+	"embed"
 	"errors"
+	"fmt"
+	"io/fs"
 	"path/filepath"
 
 	"github.com/spf13/pflag"
@@ -10,6 +13,16 @@ import (
 )
 
 var (
+
+	//go:embed templates
+	templates embed.FS
+
+	files = map[string]string{
+		"actions_test.go.tmpl": filepath.Join("app", "actions", "actions_test.go"),
+		"actions.go.tmpl":      filepath.Join("app", "actions", "actions.go"),
+		"home.go.tmpl":         filepath.Join("app", "actions", "home", "home.go"),
+	}
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -31,18 +44,29 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
-	basefolder := filepath.Join(f.(string), "app", "actions")
-	instructions := []struct {
-		file     string
-		template string
-	}{
-		{file: filepath.Join(basefolder, "actions.go"), template: actionsGo},
-		{file: filepath.Join(basefolder, "actions_test.go"), template: actionsTestGo},
-		{file: filepath.Join(basefolder, "home", "home.go"), template: homeGo},
+	entries, err := templates.ReadDir("templates")
+	if err != nil {
+		return err
 	}
 
-	for _, ins := range instructions {
-		err := source.Build(ins.file, ins.template, m.(string))
+	for _, e := range entries {
+
+		if e.IsDir() {
+			continue
+		}
+
+		bt, err := fs.ReadFile(templates, filepath.Join("templates", e.Name()))
+		if err != nil {
+			return err
+		}
+
+		template := string(bt)
+		result := files[e.Name()]
+		if result == "" {
+			continue
+		}
+
+		err = source.Build(filepath.Join(f.(string), result), template, m)
 		if err != nil {
 			return err
 		}
