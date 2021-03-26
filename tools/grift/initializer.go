@@ -2,10 +2,16 @@ package grift
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+)
+
+var (
+	//go:embed templates
+	templates embed.FS
 )
 
 type Initializer struct{}
@@ -25,6 +31,11 @@ func (i Initializer) Initialize(ctx context.Context) error {
 		return errors.New("folder name needed")
 	}
 
-	err := source.Build(filepath.Join(folder.(string), "app", "tasks", "tasks.go"), tasksGo, module)
+	content, err := templates.ReadFile("templates/grift.go.tmpl")
+	if err != nil {
+		return err
+	}
+
+	err = source.Build(filepath.Join(folder.(string), "app", "tasks", "tasks.go"), string(content), module)
 	return err
 }

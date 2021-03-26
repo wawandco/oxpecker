@@ -1,6 +1,4 @@
-package grift
-
-var tasksGo = `package tasks
+package tasks
 import (
 	"{{.}}/app"
 
@@ -12,4 +10,3 @@ import (
 func init() {
 	buffalo.Grifts(app.New())
 }
-`
