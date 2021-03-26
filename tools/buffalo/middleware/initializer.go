@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
@@ -9,6 +10,9 @@ import (
 )
 
 var (
+	//go:embed templates
+	templates embed.FS
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -30,7 +34,12 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
+	template, err := templates.ReadFile("templates/middleware.go.tmpl")
+	if err != nil {
+		return err
+	}
+
 	filename := filepath.Join(f.(string), "app", "middleware", "middleware.go")
-	err := source.Build(filename, middlewareGo, m.(string))
+	err = source.Build(filename, string(template), m.(string))
 	return err
 }

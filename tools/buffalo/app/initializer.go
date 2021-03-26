@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
@@ -9,6 +10,9 @@ import (
 )
 
 var (
+	//go:embed templates
+	templates embed.FS
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -42,12 +46,22 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		Name:   n.(string),
 	}
 
-	err := source.Build(filepath.Join(f.(string), "app", "app.go"), appGo, data)
+	appGo, err := templates.ReadFile("templates/app.go.tmpl")
 	if err != nil {
 		return err
 	}
 
-	err = source.Build(filepath.Join(f.(string), "app", "routes.go"), routesGo, data)
+	err = source.Build(filepath.Join(f.(string), "app", "app.go"), string(appGo), data)
+	if err != nil {
+		return err
+	}
+
+	routesGo, err := templates.ReadFile("templates/routes.go.tmpl")
+	if err != nil {
+		return err
+	}
+
+	err = source.Build(filepath.Join(f.(string), "app", "routes.go"), string(routesGo), data)
 	if err != nil {
 		return err
 	}

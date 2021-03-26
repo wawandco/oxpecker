@@ -1,0 +1,19 @@
+package app
+
+import (
+	base "{{.Module}}"
+	"{{.Module}}/app/actions/home"
+	"{{.Module}}/app/middleware"
+
+	"github.com/gobuffalo/buffalo"
+)
+
+// SetRoutes for the application
+func setRoutes(root *buffalo.App) {
+	root.Use(middleware.Transaction)
+	root.Use(middleware.ParameterLogger)
+	root.Use(middleware.CSRF)
+
+	root.GET("/", home.Index)
+	root.ServeFiles("/", base.Assets)
+}
