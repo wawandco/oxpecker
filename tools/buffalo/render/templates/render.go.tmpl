@@ -1,8 +1,5 @@
 package render
 
-var renderGo = `
-package render
-
 import (
 	base "{{.}}"
 
@@ -27,4 +24,3 @@ var Helpers = map[string]interface{}{
 	// to find the partials that will be used, this is important
 	"partialFeeder": base.Templates.FindString,
 }
-`

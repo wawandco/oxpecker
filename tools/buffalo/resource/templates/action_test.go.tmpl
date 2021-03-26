@@ -1,0 +1,7 @@
+package actions
+
+{{ range $a := .Actions }}
+func (as *ActionSuite) Test_{{$.Name.Resource}}Resource_{{ $a.Pascalize }}() {
+  	as.Fail("Not Implemented!")
+}
+{{ end }}

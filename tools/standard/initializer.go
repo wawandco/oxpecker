@@ -2,10 +2,16 @@ package standard
 
 import (
 	"context"
+	_ "embed"
 	"errors"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/source"
+)
+
+var (
+	//go:embed templates/go.mod.tmpl
+	goModTemplate string
 )
 
 type Initializer struct{}
@@ -26,6 +32,6 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return errors.New("incomplete")
 	}
 
-	err := source.Build(filepath.Join(f.(string), "go.mod"), gomod, m)
+	err := source.Build(filepath.Join(f.(string), "go.mod"), goModTemplate, m)
 	return err
 }

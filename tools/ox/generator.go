@@ -2,12 +2,18 @@ package ox
 
 import (
 	"context"
+	_ "embed"
 	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/internal/source"
+)
+
+var (
+	//go:embed templates/main.go.tmpl
+	mainTemplate string
 )
 
 type Generator struct{}

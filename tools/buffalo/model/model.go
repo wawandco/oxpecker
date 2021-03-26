@@ -1,11 +1,17 @@
 package model
 
 import (
+	"embed"
 	"path/filepath"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/flect/name"
 	"github.com/wawandco/oxpecker/internal/source"
+)
+
+var (
+	//go:embed templates
+	templates embed.FS
 )
 
 type Model struct {
@@ -48,7 +54,12 @@ func (m Model) createModelFile() error {
 		Imports:  buildImports(m.Attrs),
 	}
 
-	err := source.Build(path, modelTemplate, data)
+	tmpl, err := templates.ReadFile("templates/newmodel.go.tmpl")
+	if err != nil {
+		return err
+	}
+
+	err = source.Build(path, string(tmpl), data)
 	return err
 }
 
@@ -60,6 +71,11 @@ func (m Model) createModelTestFile() error {
 		Name:     name.New(m.name),
 	}
 
-	err := source.Build(path, modelTestTemplate, data)
+	tmpl, err := templates.ReadFile("templates/newmodel_test.go.tmpl")
+	if err != nil {
+		return err
+	}
+
+	err = source.Build(path, string(tmpl), data)
 	return err
 }

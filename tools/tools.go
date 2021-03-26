@@ -75,6 +75,7 @@ var Base = []plugins.Plugin{
 	&model.Generator{},
 	&action.Generator{},
 	&resource.Generator{},
+	&grift.Generator{},
 
 	// Initializer
 	&embedded.Initializer{},

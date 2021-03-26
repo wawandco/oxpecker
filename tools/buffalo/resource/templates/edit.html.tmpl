@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+    <h3 class="d-inline-block">Edit {{.Name.Proper}}</h3>
+</div>
+
+<%= formFor({{.Name.VarCaseSingle}}, {action: {{ .Name.VarCaseSingle }}Path({ {{ .Name.ParamID }}: {{ .Name.VarCaseSingle }}.ID }), method: "PUT"}) { %>
+	<%= partial("{{ .Name.Folder.Pluralize }}/form.html") %>
+    <%= linkTo({{ .Name.VarCaseSingle }}Path({ {{ .Name.ParamID }}: {{ .Name.VarCaseSingle }}.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

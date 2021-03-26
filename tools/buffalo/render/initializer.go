@@ -2,6 +2,7 @@ package render
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"path/filepath"
 
@@ -10,6 +11,9 @@ import (
 )
 
 var (
+	//go:embed templates
+	templates embed.FS
+
 	ErrIncompleteArgs = errors.New("incomplete args")
 )
 
@@ -31,8 +35,13 @@ func (i *Initializer) Initialize(ctx context.Context) error {
 		return ErrIncompleteArgs
 	}
 
+	renderGo, err := templates.ReadFile("templates/render.go.tmpl")
+	if err != nil {
+		return err
+	}
+
 	filename := filepath.Join(f.(string), "app", "render", "render.go")
-	err := source.Build(filename, renderGo, m.(string))
+	err = source.Build(filename, string(renderGo), m.(string))
 
 	return err
 }

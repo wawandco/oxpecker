@@ -1,6 +1,7 @@
 package resource
 
 import (
+	_ "embed"
 	"os"
 	"path/filepath"
 
@@ -11,6 +12,23 @@ import (
 	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
 	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
+)
+
+var (
+	//go:embed templates/action.go.tmpl
+	actionTemplate string
+	//go:embed templates/action_test.go.tmpl
+	actionTestTemplate string
+	//go:embed templates/index.html.tmpl
+	indexHTMLTemplate string
+	//go:embed templates/new.html.tmpl
+	newHTMLTemplate string
+	//go:embed templates/edit.html.tmpl
+	editHTMLTemplate string
+	//go:embed templates/show.html.tmpl
+	showHTMLTemplate string
+	//go:embed templates/form.html.tmpl
+	formHTMLTemplate string
 )
 
 // Resource model struct
@@ -63,8 +81,8 @@ func (r *Resource) GenerateActions() error {
 	actionName := r.Name.Proper().Pluralize().Underscore().String()
 	dirPath := filepath.Join(r.root, "app", "actions")
 	actions := map[string]string{
-		actionName:           actionTmpl,
-		actionName + "_test": actionTestTmpl,
+		actionName:           actionTemplate,
+		actionName + "_test": actionTestTemplate,
 	}
 
 	for name, content := range actions {
@@ -106,11 +124,11 @@ func (r *Resource) GenerateModel() error {
 // GenerateModel generates the templates for the resource
 func (r *Resource) GenerateTemplates() error {
 	templates := map[string]string{
-		"index": templateIndexTmpl,
-		"new":   templateNewTmpl,
-		"edit":  templateEditTmpl,
-		"show":  templateShowTmpl,
-		"form":  templateFormTmpl,
+		"index": indexHTMLTemplate,
+		"new":   newHTMLTemplate,
+		"edit":  editHTMLTemplate,
+		"show":  showHTMLTemplate,
+		"form":  formHTMLTemplate,
 	}
 
 	dirPath := filepath.Join(r.root, "app", "templates", r.Name.Underscore().String())

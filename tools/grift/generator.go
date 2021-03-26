@@ -1,7 +1,8 @@
-package tasks
+package grift
 
 import (
 	"context"
+	_ "embed"
 	"os"
 	"path/filepath"
 
@@ -9,6 +10,11 @@ import (
 	"github.com/pkg/errors"
 	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/internal/source"
+)
+
+var (
+	//go:embed templates/task.go.tmpl
+	taskTemplate string
 )
 
 type Generator struct {
