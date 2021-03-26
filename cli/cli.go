@@ -53,19 +53,20 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	path := filepath.Join("cmd", "ox", "main.go")
 	_, err := os.Stat(path)
 	if err != nil {
-		log.Info("Using wawandco/oxpecker/cmd/ox \n\n")
+		log.Info("Using wawandco/oxpecker/cmd/ox \n")
 		return c.Run(ctx, c.root, args)
 	}
 
 	name, err := info.ModuleName()
 	if err != nil || name == "github.com/wawandco/oxpecker" {
-		log.Info("Using wawandco/oxpecker/cmd/ox \n\n")
+		log.Info("Using wawandco/oxpecker/cmd/ox \n")
 		return c.Run(ctx, c.root, args)
 	}
 
 	bargs := []string{"run", path}
 	bargs = append(bargs, args[1:]...)
 
+	log.Infof("Using %v \n", path)
 	cmd := exec.CommandContext(ctx, "go", bargs...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
