@@ -19,6 +19,7 @@ var (
 	files = map[string]string{
 		"application.js.tmpl":    filepath.Join("app", "assets", "js", "application.js"),
 		"application.scss.tmpl":  filepath.Join("app", "assets", "css", "application.scss"),
+		"buffalo.svg.tmpl":       filepath.Join("app", "assets", "images", "buffalo.svg"),
 		"dot-babelrc.tmpl":       ".babelrc",
 		"package.json.tmpl":      "package.json",
 		"webpack.config.js.tmpl": "webpack.config.js",

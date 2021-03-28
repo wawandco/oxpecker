@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="h-full">
 <head>
-  <title>{{ . }}</title>
+  <title>app</title>
   
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-param" content="authenticity_token" />
@@ -11,8 +11,8 @@
   <%= stylesheetTag("application.css") %>
   <%= javascriptTag("application.js", {defer: true}) %>
 </head>
-<body class="">
-	<main>
+<body class="h-full">
+	<main class="container mt-3">
 		<%= yield %>
 	</main>
 </body>
