@@ -5,7 +5,7 @@ Oxpecker is an (unofficial) CLI for the Go Buffalo web development ecosystem. Ox
 
 As mentioned earlier, Ox is not the official CLI for the Go Buffalo development ecosystem, Buffalo provides the `buffalo` command.
 
-Ox is based on the experience we have had at `Wawandco` developing sustainable and scalable systems for our clients with Buffalo, where we've evidenced that Buffalo (the library) serves as a huge productivity booster.
+Ox is based on the experience we have had at [Wawandco](https://wawand.co) developing sustainable and scalable systems for our clients with Buffalo, where we've evidenced that Buffalo (the library) serves as a huge productivity booster.
 
 We decided to build our own CLI because we don't want to impact others productivity with the choices we've made but we think this could be useful for apps that are starting.
 
@@ -124,3 +124,7 @@ This command will start your application on `http://127.0.0.1:3000` on developme
 
 
 ## Credits & Acknowledgements
+
+Oxpecker would not be possible without the continuous feedback from the engineering team at [Wawandco](https://wawand.co), the continuous conversations we have inside the company allow us to be always looking for better ways to do things on the CLI.
+
+Also and not less important, this CLI would not be possible without the design that @markbates did on the `buffalo-cli`, thanks Mark for Buffalo and the Buffalo-cli plugin system.
