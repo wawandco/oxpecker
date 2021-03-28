@@ -1,14 +1,6 @@
 # Oxpecker
 
 Oxpecker is an (unofficial) CLI for the Go Buffalo web development ecosystem. Oxpecker provides the `ox` binary which provides commands for common Buffalo development operations.
-## Installation
-
-Assuming you have the Go tooling installed and `GOPATH/bin` in your PATH you can install `ox` by running:
-
-```sh
-GO111MODULE=on go install github.com/wawandco/oxpecker/cmd/ox
-```
-
 ## Ox vs Buffalo CLI
 
 As mentioned earlier, Ox is not the official CLI for the Go Buffalo development ecosystem, Buffalo provides the `buffalo` command.
@@ -20,6 +12,44 @@ We decided to build our own CLI because we don't want to impact others productiv
 Ox is based on the plugin system that Mark Bates has intended to use in `buffalo-cli`, and allows to add extra plugins based on specific development workflows.
 
 Ox also considers building multiple binaries instead of packing everything in the same binary (how the `buffalo` cli works). See more on the #building section.
+
+## Getting started
+### Installing the CLI
+
+Assuming you have the Go tooling installed and `GOPATH/bin` in your PATH you can install `ox` by running:
+
+```sh
+GO111MODULE=on go install github.com/wawandco/oxpecker/cmd/ox
+```
+
+### Creating your app
+
+Ox provides the `new` command to generate a new application from the ground, the command receives the name of the app as the first and required argument.
+
+```
+ox new yourapp
+```
+
+By running this command you will initialize your application codebase.
+
+### Setting up your Database
+
+One important step for getting started is to create your development database, to do so you will need to run:
+
+```
+ox db create
+```
+
+And Ox will instruct your DBMS to create the database. 
+### Running your application
+
+Once the application codebase and the database are build you can start your application by running:
+
+```
+ox dev
+```
+
+This command will start your application on `http://127.0.0.1:3000` on development mode.
 
 ## Important considerations
 
@@ -79,12 +109,18 @@ yourapp
 ```
 
 And the Dockerfile could just build those to be ready in the Dockerfile. 
-
-### New command
-### Run command
-### DB command
-### Generators
 ### Help
+The help command serves as a live documentation for each of the commands in the Oxpecker CLI. You can see the top level help by running:
+
+```
+ox help
+```
+
+Also, you can get specific help for a particular command by running `ox help [command]`. For example:
+
+```
+ox help new
+```
 ### Plugin System
 
 ## Credits & Acknowledgements
