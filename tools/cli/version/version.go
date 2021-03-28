@@ -3,6 +3,7 @@ package version
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -37,4 +38,13 @@ func (b *Command) Run(ctx context.Context, root string, args []string) error {
 	fmt.Printf("Oxpecker version %v\n", version)
 
 	return nil
+}
+
+func (b *Command) FindRoot() string {
+	wd, err := os.Getwd()
+	if err != nil {
+		return ""
+	}
+
+	return wd
 }

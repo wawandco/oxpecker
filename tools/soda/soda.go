@@ -1,4 +1,4 @@
-package migrate
+package soda
 
 import (
 	"github.com/gobuffalo/packd"

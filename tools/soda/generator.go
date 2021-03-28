@@ -1,4 +1,4 @@
-package migration
+package soda
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
+	"github.com/wawandco/oxpecker/tools/soda/creator"
 )
 
 // Generator allows to identify model as a plugin

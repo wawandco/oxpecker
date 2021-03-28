@@ -15,3 +15,12 @@ type Command interface {
 	// Run the command with the passed context, root and args.
 	Run(context.Context, string, []string) error
 }
+
+// RootFinder allows some commands not to depend on the go.mod to determine the root folder,
+// this comes handy for commands like New and Version.
+type RootFinder interface {
+	Plugin
+
+	// FindRoot returns the path to consider as root.
+	FindRoot() string
+}

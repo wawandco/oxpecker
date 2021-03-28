@@ -76,11 +76,6 @@ func (c *cli) Run(ctx context.Context, args []string) error {
 		return nil
 	}
 
-	root := info.RootFolder()
-	if root == "" {
-		return errors.New("go.mod not found")
-	}
-
 	// Passing args and plugins to those plugins that require them
 	for _, plugin := range c.Plugins {
 		pf, ok := plugin.(plugins.FlagParser)
@@ -98,6 +93,20 @@ func (c *cli) Run(ctx context.Context, args []string) error {
 		// TODO: print help ?
 		log.Infof("did not find %s command\n", args[1])
 		return nil
+	}
+
+	// Commands that require running within the oxpecker directory
+	// may require its root to be determined with the go.mod. However
+	// some other commands may want to determine the root by themself,
+	// doing os.Getwd or something similar. The latter ones are RootFinders.
+	root := info.RootFolder()
+	rf, ok := command.(plugins.RootFinder)
+	if root == "" && !ok {
+		return errors.New("go.mod not found")
+	}
+
+	if root == "" {
+		root = rf.FindRoot()
 	}
 
 	return command.Run(ctx, root, args[1:])

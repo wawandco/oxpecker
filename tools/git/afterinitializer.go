@@ -2,7 +2,6 @@ package git
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/exec"
 
@@ -22,15 +21,6 @@ func (ri AfterInitializer) AfterInitialize(ctx context.Context, options new.Opti
 		log.Warn("[warning] Git repo was not initialized given git was not present")
 		return nil
 	}
-
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("CWD:", wd)
-	fmt.Println("Root:", options.Root)
-	fmt.Println("Folder:", options.Folder)
 
 	err = os.Chdir(options.Folder)
 	if err != nil {

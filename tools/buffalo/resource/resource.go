@@ -11,7 +11,7 @@ import (
 	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
-	"github.com/wawandco/oxpecker/tools/pop/migration/creator"
+	"github.com/wawandco/oxpecker/tools/soda/creator"
 )
 
 var (

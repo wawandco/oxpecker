@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"github.com/gobuffalo/pop/v5"
 	"github.com/jackc/pgx/v4"
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/plugins"
@@ -20,7 +21,7 @@ var ErrInvalidInstruction = errors.New("Invalid instruction please specify up or
 type Command struct {
 	connectionName string
 	steps          int
-	connections    map[string]URLProvider
+	connections    map[string]*pop.Connection
 	flags          *pflag.FlagSet
 }
 
