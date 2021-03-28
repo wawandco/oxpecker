@@ -34,17 +34,12 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	module, err := info.ModuleName()
-	if err != nil {
-		return err
-	}
-
 	data := struct {
 		Name   string
 		Module string
 	}{
 		Name:   name,
-		Module: module,
+		Module: info.ModuleName(),
 	}
 
 	err = source.Build(file, mainTemplate, data)

@@ -29,13 +29,14 @@ func BuildName() (string, error) {
 }
 
 // ModuleName returns the full module name
-// from go.mod
-func ModuleName() (string, error) {
+// from go.mod, it returns empty if there is
+// an issue reading the go.mod
+func ModuleName() string {
 	content, err := ioutil.ReadFile("go.mod")
 	if err != nil {
-		return "", err
+		return ""
 	}
 
 	path := modfile.ModulePath(content)
-	return path, nil
+	return path
 }

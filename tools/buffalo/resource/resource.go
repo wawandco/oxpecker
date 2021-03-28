@@ -46,8 +46,8 @@ type Resource struct {
 
 // New creates a new instance of Resource
 func New(root string, args []string) *Resource {
-	module, err := info.ModuleName()
-	if err != nil {
+	module := info.ModuleName()
+	if module == "" {
 		module = root + "/app/models"
 	}
 
