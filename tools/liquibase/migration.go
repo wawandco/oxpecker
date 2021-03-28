@@ -70,7 +70,7 @@ func (cs ChangeSet) Execute(conn *pgx.Conn, file string) error {
 		return err
 	}
 
-	log.Info("Executed `%v`.\n", cs.ID)
+	log.Infof("Executed `%v`.\n", cs.ID)
 	order++
 
 	return nil
