@@ -3,10 +3,10 @@ package liquibase
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/jackc/pgx/v4"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 // Migration xml with liquibase format. A migration may be composed
@@ -70,7 +70,7 @@ func (cs ChangeSet) Execute(conn *pgx.Conn, file string) error {
 		return err
 	}
 
-	fmt.Printf("[info] Executed `%v`.\n", cs.ID)
+	log.Info("Executed `%v`.\n", cs.ID)
 	order++
 
 	return nil
@@ -84,7 +84,7 @@ func (cs ChangeSet) Rollback(conn *pgx.Conn) error {
 		return err
 	}
 
-	fmt.Printf("[info] Rolling back %v. \n", cs.ID)
+	log.Infof("Rolling back %v. \n", cs.ID)
 	_, err = tx.Exec(context.Background(), cs.RollbackSQL)
 	if err != nil {
 		return err

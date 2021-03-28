@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -14,6 +13,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -81,7 +81,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	path = filepath.Join(path, filename)
 	_, err = os.Stat(path)
 	if err == nil {
-		fmt.Printf("[info] %v already exists\n", path)
+		log.Infof("%v already exists\n", path)
 		return nil
 	}
 
@@ -111,7 +111,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	fmt.Printf("[info] migration generated in %v\n", path)
+	log.Infof("migration generated in %v\n", path)
 	return nil
 }
 

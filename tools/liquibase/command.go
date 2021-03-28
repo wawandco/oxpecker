@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/xml"
 	"errors"
-	"fmt"
 	"io/ioutil"
 
 	"github.com/gobuffalo/pop/v5"
@@ -133,7 +132,7 @@ func (lb *Command) Rollback() error {
 		}
 
 		if errors.Is(err, pgx.ErrNoRows) {
-			fmt.Printf("[info] no migrations to run down.")
+			log.Info("no migrations to run down.")
 
 			return nil
 		}
@@ -150,7 +149,7 @@ func (lb *Command) Rollback() error {
 
 			err := v.Rollback(conn)
 			if err != nil {
-				fmt.Printf("[error] error rolling back `%v`.\n", v.ID)
+				log.Errorf("[error] error rolling back `%v`.\n", v.ID)
 
 				return err
 			}
