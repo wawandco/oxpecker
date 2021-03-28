@@ -193,6 +193,10 @@ func main() {
 As you can see, the CLI instance allows to specify the plugins you want to use, and uses Base plugins to start. In order to use your own plugin you would just have to add those to the plugins that the CLI will use.
 
 ### Building your CLI
+
+One important part to mention is that the build command will not attempt to build the CLI folder. Instead the developer will need to do it when needed, either on the CLI
+
+Either on your Dockerfile or your build system you should include something like `go build ./cmd/cli` to ensure that the cli binary gets to your running environment.
 ## Credits & Acknowledgements
 
 Oxpecker would not be possible without the continuous feedback from the engineering team at [Wawandco](https://wawand.co), the continuous conversations we have inside the company allow us to be always looking for better ways to do things on the CLI.
