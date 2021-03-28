@@ -91,13 +91,13 @@ func (lb Command) Up() error {
 		for _, mc := range m.ChangeSets {
 			err = mc.Execute(conn, v.File)
 			if err != nil {
-				log.Error("[error] error executing `%v`.", mc.ID)
+				log.Errorf("error executing `%v`.", mc.ID)
 				return err
 			}
 		}
 	}
 
-	log.Info("[info] Database up to date.")
+	log.Info("Database up to date.")
 
 	return nil
 }
@@ -149,7 +149,7 @@ func (lb *Command) Rollback() error {
 
 			err := v.Rollback(conn)
 			if err != nil {
-				log.Errorf("[error] error rolling back `%v`.\n", v.ID)
+				log.Errorf("error rolling back `%v`.\n", v.ID)
 
 				return err
 			}
