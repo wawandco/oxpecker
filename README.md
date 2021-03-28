@@ -82,8 +82,6 @@ Also, you can get specific help for a particular command by running `ox help [co
 ```
 ox help new
 ```
-### Plugin System
-
 ## Getting started
 ### Installing the CLI
 
@@ -122,9 +120,23 @@ ox dev
 
 This command will start your application on `http://127.0.0.1:3000` on development mode.
 
+## Plugin System
 
+You might have read a couple of times the `plugin system` that Oxpecker uses, in short, Oxpecker uses a plugin system that allows to add and remove components depending on the need.
+
+### Base plugins
+
+To start Oxpecker uses a [base set of plugins](), these include the common things used on application development with Buffalo.
+
+- Pop
+- Soda
+- Flect
+- Envy
+- Tags
+- Validate
+- Grift
 ## Credits & Acknowledgements
 
 Oxpecker would not be possible without the continuous feedback from the engineering team at [Wawandco](https://wawand.co), the continuous conversations we have inside the company allow us to be always looking for better ways to do things on the CLI.
 
-Also and not less important, this CLI would not be possible without the design that @markbates did on the `buffalo-cli`, thanks Mark for Buffalo and the Buffalo-cli plugin system.
+Also and not less important, this CLI would not be possible without the design that [@markbates](github.com/markbates) did on the `buffalo-cli`, thanks Mark for Buffalo and the Buffalo-cli plugin system.
