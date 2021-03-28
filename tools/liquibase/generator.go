@@ -1,17 +1,19 @@
 package liquibase
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/gobuffalo/flect"
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -79,7 +81,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	path = filepath.Join(path, filename)
 	_, err = os.Stat(path)
 	if err == nil {
-		log.Infof("%v already exists\n", path)
+		fmt.Printf("[info] %v already exists\n", path)
 		return nil
 	}
 
@@ -87,12 +89,29 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	err = source.Build(path, migrationTemplate, strings.ReplaceAll(filename, ".xml", ""))
+	// Creating the folder
+	err = os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		return (err)
+	}
+
+	tmpl, err := template.New("migration-template").Parse(migrationTemplate)
 	if err != nil {
 		return err
 	}
 
-	log.Infof("migration generated in %v\n", path)
+	var tpl bytes.Buffer
+	err = tmpl.Execute(&tpl, strings.ReplaceAll(filename, ".xml", ""))
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(path, tpl.Bytes(), 0655)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("[info] migration generated in %v\n", path)
 	return nil
 }
 

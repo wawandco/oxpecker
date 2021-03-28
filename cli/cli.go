@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -16,7 +17,6 @@ import (
 // for articulating different commands, finding it and also
 // taking care of the CLI iteraction.
 type cli struct {
-	root    string
 	Plugins []plugins.Plugin
 }
 
@@ -43,7 +43,7 @@ func (c *cli) findCommand(name string) plugins.Command {
 }
 
 // Runs the CLI or cmd/ox/main.go
-func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
+func (c *cli) Wrap(ctx context.Context, args []string) error {
 	// Not sure if we should do this here or somewhere
 	// else, these are some environment variables to be set
 	// and other things to check.
@@ -55,7 +55,7 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	name := info.ModuleName()
 	if err != nil || name == "" || name == "github.com/wawandco/oxpecker" {
 		log.Info("Using wawandco/oxpecker/cmd/ox \n")
-		return c.Run(ctx, c.root, args)
+		return c.Run(ctx, args)
 	}
 
 	bargs := []string{"run", path}
@@ -70,10 +70,15 @@ func (c *cli) Wrap(ctx context.Context, pwd string, args []string) error {
 	return cmd.Run()
 }
 
-func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
+func (c *cli) Run(ctx context.Context, args []string) error {
 	if len(args) < 2 {
 		log.Error("no command provided, please provide one")
 		return nil
+	}
+
+	root := info.RootFolder()
+	if root == "" {
+		return errors.New("go.mod not found")
 	}
 
 	// Passing args and plugins to those plugins that require them
@@ -95,7 +100,7 @@ func (c *cli) Run(ctx context.Context, pwd string, args []string) error {
 		return nil
 	}
 
-	return command.Run(ctx, c.root, args[1:])
+	return command.Run(ctx, root, args[1:])
 }
 
 // New creates a CLI with the passed root and plugins. This becomes handy
