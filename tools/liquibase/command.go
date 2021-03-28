@@ -10,6 +10,7 @@ import (
 	"github.com/gobuffalo/pop/v5"
 	"github.com/jackc/pgx/v4"
 	"github.com/spf13/pflag"
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -91,13 +92,13 @@ func (lb Command) Up() error {
 		for _, mc := range m.ChangeSets {
 			err = mc.Execute(conn, v.File)
 			if err != nil {
-				fmt.Printf("[error] error executing `%v`.\n", mc.ID)
+				log.Error("[error] error executing `%v`.", mc.ID)
 				return err
 			}
 		}
 	}
 
-	fmt.Println("[info] Database up to date.")
+	log.Info("[info] Database up to date.")
 
 	return nil
 }
