@@ -135,6 +135,64 @@ To start Oxpecker uses a [base set of plugins](), these include the common thing
 - Tags
 - Validate
 - Grift
+
+### Customizing through plugins
+
+Oftentimes you may need to have your own CLI commands for common operations for your team. While the base plugins provide a foundation for Buffalo development these may fall short for specific team choices.
+
+In these cases, ox provides a plugin system that may come handy, to use it you will need to generate `cmd/cli/main.go` by running (within your app folder):
+
+```
+ox generate cli
+```
+
+This will generate a file on `yourapp/cmd/cli/main.go` that will look something like:
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"os"
+
+	_ "yourapp/app/tasks"
+	_ "yourapp/app/models"
+
+
+	"github.com/wawandco/oxpecker/cli"
+	"github.com/wawandco/oxpecker/tools"
+	"github.com/wawandco/oxpecker/tools/pop/migrate"
+)
+
+// main function for the tooling cli, will be invoked by Oxpecker
+// when found in the source code. In here you can add/remove plugins that
+// your app will use as part of its lifecycle.
+func main() {
+  	log.Info("Using yourapp/cmd/ox \n\n")
+	ctx := context.Background()
+    
+  	pwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+    
+	cl := cli.New()
+	// append your plugins here
+	cl.Plugins = append(cl.Plugins, tools.Base...)
+	cl.Plugins = append(cl.Plugins, migrate.Plugins()...)
+    
+    err = cl.Run(ctx, pwd, os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
+As you can see, the CLI instance allows to specify the plugins you want to use, and uses Base plugins to start. In order to use your own plugin you would just have to add those to the plugins that the CLI will use.
+
+### Building your CLI
 ## Credits & Acknowledgements
 
 Oxpecker would not be possible without the continuous feedback from the engineering team at [Wawandco](https://wawand.co), the continuous conversations we have inside the company allow us to be always looking for better ways to do things on the CLI.
