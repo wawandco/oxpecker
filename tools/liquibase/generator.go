@@ -81,7 +81,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	path = filepath.Join(path, filename)
 	_, err = os.Stat(path)
 	if err == nil {
-		log.Infof("%v already exists\n", path)
+		log.Infof("%v already exists.", path)
 		return nil
 	}
 
@@ -111,7 +111,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return err
 	}
 
-	log.Infof("migration generated in %v\n", path)
+	log.Infof("migration generated in %v", path)
 	return nil
 }
 

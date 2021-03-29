@@ -70,7 +70,7 @@ func (cs ChangeSet) Execute(conn *pgx.Conn, file string) error {
 		return err
 	}
 
-	log.Infof("Executed `%v`.\n", cs.ID)
+	log.Infof("Executed `%v`.", cs.ID)
 	order++
 
 	return nil
@@ -84,7 +84,7 @@ func (cs ChangeSet) Rollback(conn *pgx.Conn) error {
 		return err
 	}
 
-	log.Infof("Rolling back %v. \n", cs.ID)
+	log.Infof("Rolling back %v.", cs.ID)
 	_, err = tx.Exec(context.Background(), cs.RollbackSQL)
 	if err != nil {
 		return err

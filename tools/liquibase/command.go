@@ -149,7 +149,7 @@ func (lb *Command) Rollback() error {
 
 			err := v.Rollback(conn)
 			if err != nil {
-				log.Errorf("error rolling back `%v`.\n", v.ID)
+				log.Errorf("error rolling back `%v`.", v.ID)
 
 				return err
 			}
