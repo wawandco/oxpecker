@@ -49,7 +49,7 @@ func (d *ResetCommand) Run(ctx context.Context, root string, args []string) erro
 // RunBeforeTests will be invoked to reset the test database before
 // tests run.
 func (d *ResetCommand) RunBeforeTest(ctx context.Context, root string, args []string) error {
-	conn := pop.Connections[d.connectionName]
+	conn := pop.Connections["test"]
 	if conn == nil {
 		return ErrConnectionNotFound
 	}
