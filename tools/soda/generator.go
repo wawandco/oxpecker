@@ -27,9 +27,9 @@ func (g Generator) Name() string {
 
 // Generate generates an empty [name].plush.html file
 func (g Generator) Generate(ctx context.Context, root string, args []string) error {
-	example := "please use `ox generate migration [name] [columns?] --type=[sql|fizz]`"
 	if len(args) < 3 {
-		return errors.Errorf("no name specified, %s", example)
+		log.Info("No name specified, please use `ox generate migration [name] [columns?] --type=[sql|fizz]`")
+		return nil
 	}
 
 	g.parseFlag(args)
@@ -55,7 +55,9 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 
 	timestamp := time.Now().UTC().Format("20060102150405")
 	fileName := fmt.Sprintf("%s_%s", timestamp, name)
-	log.Infof("Migrations generated in: \n-- migrations/%s.up.%s\n-- migrations/%s.down.%s\n", fileName, creator.Name(), fileName, creator.Name())
+
+	log.Infof("generated: migrations/%s.up.%s", fileName, creator.Name())
+	log.Infof("generated: migrations/%s.down.%s", fileName, creator.Name())
 
 	return nil
 }
