@@ -6,13 +6,11 @@ import (
 
 	"github.com/wawandco/oxpecker/cli"
 	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/tools"
 )
 
+// This is the main oxpecker CLI that provides the basic functionality
+// by using the base plugins.
 func main() {
-	cli := cli.New()
-	cli.Plugins = append(cli.Plugins, tools.Base...)
-
 	err := cli.Wrap(context.Background(), os.Args)
 	if err != nil {
 		log.Error(err.Error())

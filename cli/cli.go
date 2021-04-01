@@ -140,14 +140,19 @@ func (cl *cli) Remove(names ...string) {
 	cl.Plugins = result
 }
 
+// Clear the plugin list of the CLI.
+func (cl *cli) Clear() {
+	cl.Plugins = []plugins.Plugin{}
+}
+
 // New creates a CLI with the passed root and plugins. This becomes handy
 // when specifying your own plugins.
 func New() *cli {
-	c := &cli{
+	log.Warn("cli.New() is deprecated, se with caution.")
+
+	return &cli{
 		Plugins: []plugins.Plugin{
 			help.Command{},
 		},
 	}
-
-	return c
 }
