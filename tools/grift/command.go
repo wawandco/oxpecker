@@ -11,7 +11,7 @@ import (
 
 // Grift command is a root command to run tasks
 // usage is ox task [name]. If no name is passed this will
-// list the tasjs
+// list the tasks
 type Command struct{}
 
 func (c Command) Name() string {
@@ -56,4 +56,13 @@ func (c Command) list() {
 	w.Flush()
 
 	fmt.Printf("\n\nrun one of those with: \nox task [task-name]\n")
+}
+
+func (c Command) FindRoot() string {
+	wd, err := os.Getwd()
+	if err != nil {
+		return ""
+	}
+
+	return wd
 }
