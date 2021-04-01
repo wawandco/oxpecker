@@ -17,7 +17,14 @@ type Generator struct {
 	dir      string
 }
 
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "buffalo/generate-action"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "action"
 }
 

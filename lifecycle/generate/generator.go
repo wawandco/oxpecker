@@ -10,5 +10,6 @@ import (
 // generators.
 type Generator interface {
 	plugins.Plugin
+	InvocationName() string
 	Generate(context.Context, string, []string) error
 }

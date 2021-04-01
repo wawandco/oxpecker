@@ -41,7 +41,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	var generator Generator
 	//Run each of the fixers registered.
 	for _, gen := range c.generators {
-		if gen.Name() != name {
+		if gen.InvocationName() != name {
 			continue
 		}
 

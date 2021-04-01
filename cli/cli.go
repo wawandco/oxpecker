@@ -112,6 +112,34 @@ func (c *cli) Run(ctx context.Context, args []string) error {
 	return command.Run(ctx, root, args[1:])
 }
 
+// Use passed Pugins by appending these to the
+// plugins list inside the CLI.
+func (cl *cli) Use(plugins ...plugins.Plugin) {
+	cl.Plugins = append(cl.Plugins, plugins...)
+}
+
+// Remove looks in the plugins list and removes plugins that
+// match passed names.
+func (cl *cli) Remove(names ...string) {
+	result := []plugins.Plugin{}
+	for _, pl := range cl.Plugins {
+		var found bool
+		for _, restricted := range names {
+			if pl.Name() == restricted {
+				found = true
+			}
+		}
+
+		if found {
+			continue
+		}
+
+		result = append(result, pl)
+	}
+
+	cl.Plugins = result
+}
+
 // New creates a CLI with the passed root and plugins. This becomes handy
 // when specifying your own plugins.
 func New() *cli {

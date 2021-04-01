@@ -18,7 +18,14 @@ var (
 
 type Generator struct{}
 
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "ox/generate-cli-main"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "ox"
 }
 

@@ -13,8 +13,14 @@ import (
 // Generator allows to identify template as a plugin
 type Generator struct{}
 
-// Name returns the name of the generator plugin
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "buffalo/generate-template"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "template"
 }
 
