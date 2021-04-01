@@ -4,9 +4,10 @@ package generate
 
 import (
 	"context"
-	"errors"
+	"fmt"
+	"os"
+	"text/tabwriter"
 
-	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -33,8 +34,9 @@ func (c Command) HelpText() string {
 
 func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	if len(args) < 2 {
-		log.Error("no generator name specified")
-		return nil
+		c.list()
+
+		return fmt.Errorf("no generator name specified")
 	}
 
 	name := args[1]
@@ -50,10 +52,32 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 	}
 
 	if generator == nil {
-		return errors.New("generator not found")
+		c.list()
+		return fmt.Errorf("generator `%v` not found", name)
 	}
 
 	return generator.Generate(ctx, root, args)
+}
+
+func (c Command) list() {
+	w := new(tabwriter.Writer)
+	defer w.Flush()
+
+	// minwidth, tabwidth, padding, padchar, flags
+	w.Init(os.Stdout, 8, 8, 3, '\t', 0)
+	fmt.Printf("Available Generators:\n\n")
+	fmt.Fprintf(w, "  Name\tPlugin\n")
+	fmt.Fprintf(w, "  ----\t------\n")
+	for _, plugin := range c.generators {
+		helpText := ""
+		if ht, ok := plugin.(plugins.HelpTexter); ok {
+			helpText = ht.HelpText()
+		}
+
+		fmt.Fprintf(w, "  %v\t%v\t%v\n", plugin.InvocationName(), plugin.Name(), helpText)
+	}
+
+	fmt.Fprintf(w, "\n")
 }
 
 func (c *Command) Receive(plugins []plugins.Plugin) {
