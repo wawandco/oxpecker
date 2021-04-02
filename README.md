@@ -7,7 +7,7 @@ Oxpecker bases the way it works on some considerations we've come across in our 
 
 ### Requirements
 Oxpecker requires:
-- [Go Modules]() must be enabled (`GO111MODULE=on`)
+- [Go Modules](https://blog.golang.org/using-go-modules) must be enabled (`GO111MODULE=on`)
 - Go 1.16.x or newer. This is because oxpecker generated code is based on the embed package. 
 ### Folder structure
 Oxpecker considers a different folder structure than the `buffalo` CLI. So its important to describe it, a typical oxpecker app looks like the following:
@@ -115,7 +115,7 @@ You might have read a couple of times the `plugin system` that Oxpecker uses, in
 
 ### Base plugins
 
-To start Oxpecker uses a [base set of plugins](), these include the common things used on application development with Buffalo.
+To start Oxpecker uses a [base set of plugins](https://github.com/wawandco/oxpecker/blob/da3802e39c839864827d693f0fa6c2339626b0cb/tools/tools.go#L44), these include the common things used on application development with Buffalo.
 
 - Pop
 - Soda
