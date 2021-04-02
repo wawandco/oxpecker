@@ -141,17 +141,17 @@ This will generate a file on `yourapp/cmd/cli/main.go` that will look something 
 package main
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"os"
+    "context"
+    "fmt"
+    "log"
+    "os"
 
-	"yourapp"
-	_ "yourapp/app/tasks"
-	_ "yourapp/app/models"
+    "yourapp"
+    _ "yourapp/app/tasks"
+    _ "yourapp/app/models"
 
-	"github.com/wawandco/oxpecker/cli"
-	"github.com/wawandco/oxpecker/tools/soda"
+    "github.com/wawandco/oxpecker/cli"
+    "github.com/wawandco/oxpecker/tools/soda"
 )
 
 // main function for the tooling cli, will be invoked by Oxpecker
