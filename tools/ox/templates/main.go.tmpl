@@ -10,9 +10,7 @@ import (
 	_ "{{.Module}}/app/tasks"
 	_ "{{.Module}}/app/models"
 
-
 	"github.com/wawandco/oxpecker/cli"
-	"github.com/wawandco/oxpecker/tools"
 	"github.com/wawandco/oxpecker/tools/soda"
 )
 
@@ -20,13 +18,11 @@ import (
 // when found in the source code. In here you can add/remove plugins that
 // your app will use as part of its lifecycle.
 func main() {
-  	cl := cli.New()
-	// append your plugins here
-	cl.Plugins = append(cl.Plugins, tools.Base...)
-	cl.Plugins = append(cl.Plugins, soda.Plugins({{.Module}}.Migrations)...)
-
-	err := cl.Run(context.Background(), os.Args)
+	cli.Use(soda.Plugins({{.Module}}.Migrations)...)
+	err := cli.Run(context.Background(), os.Args)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("[error] %v \n", err.Error())
+
+		os.Exit(1)
 	}
 }

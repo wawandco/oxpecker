@@ -18,8 +18,14 @@ var (
 // Generator allows to identify model as a plugin
 type Generator struct{}
 
-// Name returns the name of the generator plugin
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "buffalo/generate-model"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "model"
 }
 

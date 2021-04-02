@@ -20,8 +20,14 @@ type Generator struct {
 	migrationType string
 }
 
-// Name returns the name of the generator plugin
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "pop/generate-migration"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "migration"
 }
 
