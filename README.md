@@ -177,7 +177,7 @@ One important part to mention is that the build command will not attempt to buil
 
 Either on your Dockerfile or your build system you should include something like `go build ./cmd/cli` to ensure that the cli binary gets to your running environment.
 
-## Ox vs Buffalo CLI
+### Ox vs Buffalo CLI
 
 As mentioned earlier, Ox is not the official CLI for the Go Buffalo development ecosystem, Buffalo provides the `buffalo` command.
 
