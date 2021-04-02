@@ -158,14 +158,14 @@ import (
 // when found in the source code. In here you can add/remove plugins that
 // your app will use as part of its lifecycle.
 func main() {
-  // using Soda Plugins
-	cli.Use(soda.Plugins(yourapp.Migrations)...)
-	err := cli.Run(context.Background(), os.Args)
-	if err != nil {
-		fmt.Printf("[error] %v \n", err.Error())
+    // using Soda Plugins
+    cli.Use(soda.Plugins(yourapp.Migrations)...)
+    err := cli.Run(context.Background(), os.Args)
+    if err != nil {
+        fmt.Printf("[error] %v \n", err.Error())
 
-		os.Exit(1)
-	}
+        os.Exit(1)
+    }
 }
 ```
 
