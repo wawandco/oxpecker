@@ -91,7 +91,7 @@ func (c *Command) FindRoot() string {
 		return ""
 	}
 
-	return wd
+	return root
 }
 
 func Plugins() []plugins.Plugin {
