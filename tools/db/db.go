@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/gobuffalo/pop/v5"
 	"github.com/wawandco/oxpecker/internal/log"
@@ -76,6 +77,15 @@ func (c *Command) Receive(pls []plugins.Plugin) {
 
 func (c *Command) Subcommands() []plugins.Command {
 	return c.subcommands
+}
+
+func (c *Command) FindRoot() string {
+	wd, err := os.Getwd()
+	if err != nil {
+		return ""
+	}
+
+	return wd
 }
 
 func Plugins() []plugins.Plugin {
