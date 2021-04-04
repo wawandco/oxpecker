@@ -44,7 +44,7 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 
 	err := pop.LoadConfigFile()
 	if err != nil {
-		return err
+		log.Error(err.Error())
 	}
 
 	name := args[1]
