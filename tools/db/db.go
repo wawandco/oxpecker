@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
+	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
@@ -80,7 +81,12 @@ func (c *Command) Subcommands() []plugins.Command {
 }
 
 func (c *Command) FindRoot() string {
-	wd, err := os.Getwd()
+	root := info.RootFolder()
+	if root != "" {
+		return root
+	}
+
+	root, err := os.Getwd()
 	if err != nil {
 		return ""
 	}
