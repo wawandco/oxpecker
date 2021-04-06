@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/fizz"
+	"github.com/pkg/errors"
 )
 
 type dropTable struct {
@@ -12,7 +13,10 @@ type dropTable struct {
 }
 
 func (dt *dropTable) Generate(args []string) error {
-	name := strings.TrimPrefix(dt.name, "drop_table_")
+	name := strings.TrimPrefix(dt.name, "drop_table")
+	if name == "" {
+		return errors.Errorf("no table name")
+	}
 
 	table := fizz.NewTable(name, map[string]interface{}{
 		"timestamps": false,

@@ -5,6 +5,7 @@ import (
 
 	"github.com/gobuffalo/fizz"
 	"github.com/gobuffalo/flect"
+	"github.com/pkg/errors"
 )
 
 type createTable struct {
@@ -13,7 +14,10 @@ type createTable struct {
 }
 
 func (ct *createTable) Generate(args []string) error {
-	name := strings.TrimPrefix(ct.name, "create_table_")
+	name := strings.TrimPrefix(ct.name, "create_table")
+	if name == "" {
+		return errors.Errorf("no table name")
+	}
 
 	table := fizz.NewTable(name, map[string]interface{}{
 		"timestamps": false,
