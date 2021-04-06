@@ -11,16 +11,23 @@ type SmartFizzer interface {
 	UnFizz() string
 }
 
-func New(name string) SmartFizzer {
-	sf := &createTable{name: name}
+func New(name string, args []string) (SmartFizzer, error) {
+	var sf SmartFizzer
 
-	if strings.HasPrefix(name, "create_table") {
-		return &createTable{name: name}
+	switch {
+	case strings.HasPrefix(name, "create_table"):
+		sf = &createTable{name: name}
+	case strings.HasPrefix(name, "drop_table"):
+		sf = &dropTable{name: name}
+	case strings.HasPrefix(name, "rename"):
+		sf = &rename{name: name}
+	default:
+		sf = &createTable{name: name}
 	}
 
-	if strings.HasPrefix(name, "drop_table") {
-		return &dropTable{name: name}
+	if err := sf.Generate(args); err != nil {
+		return sf, err
 	}
 
-	return sf
+	return sf, nil
 }

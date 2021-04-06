@@ -26,9 +26,8 @@ func (f FizzCreator) Name() string {
 func (f *FizzCreator) Create(dir string, args []string) error {
 	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[0])))
 
-	sf := smartfizz.New(name)
-
-	if err := sf.Generate(args); err != nil {
+	sf, err := smartfizz.New(name, args)
+	if err != nil {
 		return err
 	}
 
