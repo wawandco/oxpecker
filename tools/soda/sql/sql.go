@@ -1,4 +1,4 @@
-package creator
+package sql
 
 import (
 	"fmt"
@@ -11,16 +11,21 @@ import (
 	"github.com/pkg/errors"
 )
 
-// SQLCreator model struct for fizz generation files
-type SQLCreator struct{}
+// Creator model struct for fizz generation files
+type Creator struct{}
 
 // Name is the name of the migration type
-func (s SQLCreator) Name() string {
+func (s Creator) Name() string {
 	return "sql"
 }
 
+// Creates a type or not
+func (f *Creator) Creates(mtype string) bool {
+	return mtype == "sql"
+}
+
 // Create will create 2 .sql empty files for the migration
-func (s *SQLCreator) Create(dir string, args []string) error {
+func (s *Creator) Create(dir string, args []string) error {
 	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[0])))
 	timestamp := time.Now().UTC().Format("20060102150405")
 	fileName := fmt.Sprintf("%s_%s", timestamp, name)
@@ -36,7 +41,7 @@ func (s *SQLCreator) Create(dir string, args []string) error {
 	return nil
 }
 
-func (s *SQLCreator) createFile(dir, name, runFlag string) error {
+func (s *Creator) createFile(dir, name, runFlag string) error {
 	fileName := fmt.Sprintf("%s.%s.sql", name, runFlag)
 	file, err := os.Create(filepath.Join(dir, fileName))
 	if err != nil {

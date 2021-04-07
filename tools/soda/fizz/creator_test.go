@@ -1,4 +1,4 @@
-package creator
+package fizz
 
 import (
 	"path/filepath"

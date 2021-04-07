@@ -1,4 +1,4 @@
-package creator
+package sql
 
 import (
 	"path/filepath"
@@ -7,7 +7,7 @@ import (
 )
 
 func Test_SQL_Create(t *testing.T) {
-	s := SQLCreator{}
+	s := Creator{}
 
 	t.Run("generate migration files", func(t *testing.T) {
 		dir := t.TempDir()

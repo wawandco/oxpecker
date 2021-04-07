@@ -1,4 +1,4 @@
-package smartfizz
+package fizz
 
 import (
 	"strings"
