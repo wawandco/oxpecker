@@ -34,6 +34,7 @@ import (
 	"github.com/wawandco/oxpecker/tools/refresh"
 	"github.com/wawandco/oxpecker/tools/soda"
 	"github.com/wawandco/oxpecker/tools/soda/fizz"
+	"github.com/wawandco/oxpecker/tools/soda/sql"
 	"github.com/wawandco/oxpecker/tools/standard"
 	"github.com/wawandco/oxpecker/tools/webpack"
 	"github.com/wawandco/oxpecker/tools/yarn"
@@ -110,6 +111,6 @@ var Base = []plugins.Plugin{
 	&version.Command{},
 
 	// Migration Creators
-	&fizz.Creator{}
-	&sql.Creator{}
+	&fizz.Creator{},
+	&sql.Creator{},
 }

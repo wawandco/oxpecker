@@ -11,7 +11,7 @@ import (
 	"github.com/wawandco/oxpecker/internal/info"
 	"github.com/wawandco/oxpecker/internal/source"
 	"github.com/wawandco/oxpecker/tools/buffalo/model"
-	"github.com/wawandco/oxpecker/tools/soda/creator"
+	"github.com/wawandco/oxpecker/tools/soda/fizz"
 )
 
 var (
@@ -100,12 +100,9 @@ func (r *Resource) GenerateActions() error {
 // GenerateModel generates the migrations for the resource
 func (r *Resource) GenerateMigrations() error {
 	migrationPath := filepath.Join(r.root, "migrations")
-	creator, err := creator.CreateMigrationFor("fizz")
-	if err != nil {
-		return errors.Wrap(err, "error looking for migration creator")
-	}
+	creator := fizz.Creator{}
 
-	if err = creator.Create(migrationPath, r.originalArgs); err != nil {
+	if err := creator.Create(migrationPath, r.originalArgs); err != nil {
 		return errors.Wrap(err, "failed creating migrations")
 	}
 

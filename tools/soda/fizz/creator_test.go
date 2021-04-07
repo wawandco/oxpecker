@@ -7,7 +7,7 @@ import (
 )
 
 func Test_Fizz_Create(t *testing.T) {
-	f := FizzCreator{}
+	f := Creator{}
 
 	t.Run("generate migration files", func(t *testing.T) {
 		dir := t.TempDir()
