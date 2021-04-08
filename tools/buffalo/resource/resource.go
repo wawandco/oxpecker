@@ -102,7 +102,7 @@ func (r *Resource) GenerateMigrations() error {
 	migrationPath := filepath.Join(r.root, "migrations")
 	creator := fizz.Creator{}
 
-	if err := creator.Create(migrationPath, r.originalArgs); err != nil {
+	if err := creator.Create(migrationPath, r.originalName, r.originalArgs); err != nil {
 		return errors.Wrap(err, "failed creating migrations")
 	}
 

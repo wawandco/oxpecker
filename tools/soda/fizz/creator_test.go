@@ -11,9 +11,10 @@ func Test_Fizz_Create(t *testing.T) {
 
 	t.Run("generate migration files", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"users"}
+		name := "users"
+		args := []string{""}
 
-		if err := f.Create(dir, args); err != nil {
+		if err := f.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 
@@ -38,9 +39,10 @@ func Test_Fizz_Create(t *testing.T) {
 
 	t.Run("generate migration singularized name", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"company"}
+		name := "company"
+		args := []string{""}
 
-		if err := f.Create(dir, args); err != nil {
+		if err := f.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 

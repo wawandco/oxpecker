@@ -19,12 +19,12 @@ func (f Creator) Name() string {
 }
 
 // Creates a type or not
-func (f *Creator) Creates(mtype string) bool {
+func (f Creator) Creates(mtype string) bool {
 	return mtype == "fizz"
 }
 
 // Create will create 2 .fizz files for the migration
-func (f *Creator) Create(dir string, args []string) error {
+func (f Creator) Create(dir, name string, args []string) error {
 	// name := flect.Underscore(flect.Pluralize(strings.ToLower(args[0])))
 
 	// sf, err := smartfizz.New(name, args)

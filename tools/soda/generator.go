@@ -4,17 +4,27 @@ import (
 	"context"
 	"errors"
 	"os"
+	"path/filepath"
 	"strings"
 
+	"github.com/gobuffalo/flect"
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
+)
+
+var (
+	// These are the interfaces we know that this
+	// plugin must satisfy for its correct functionality
+	_ plugins.Plugin     = (*Generator)(nil)
+	_ plugins.FlagParser = (*Generator)(nil)
 )
 
 // Generator allows to identify model as a plugin
 type Generator struct {
 	creators Creators
 
+	flags         *pflag.FlagSet
 	migrationType string
 }
 
@@ -36,32 +46,30 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return nil
 	}
 
-	g.parseFlag(args)
-
 	cr := g.creators.CreatorFor(g.migrationType)
 	if cr == nil {
-		return errors.New("Not found")
+		return errors.New("type not found")
 	}
 
-	err := cr.Create("", "", []string{})
+	dirPath := filepath.Join(root, "migrations")
+	if !g.exists(dirPath) {
+		if err := os.MkdirAll(dirPath, 0755); err != nil {
+			return err
+		}
+	}
+
+	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[2])))
+	columns := g.parseColumns(args[2:])
+
+	err := cr.Create(dirPath, name, columns)
 	if err != nil {
 		return err
 	}
-
-	// dirPath := filepath.Join(root, "migrations")
-	// if !g.exists(dirPath) {
-	// 	if err := os.MkdirAll(dirPath, 0755); err != nil {
-	// 		return err
-	// 	}
-	// }
 
 	// creator, err := creator.CreateMigrationFor(strings.ToLower(g.migrationType))
 	// if err != nil {
 	// 	return err
 	// }
-
-	// name := flect.Underscore(flect.Pluralize(strings.ToLower(args[2])))
-	// columns := g.parseColumns(args[2:])
 
 	// if err = creator.Create(dirPath, columns); err != nil {
 	// 	return errors.Wrap(err, "failed creating migrations")
@@ -76,16 +84,31 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	return nil
 }
 
+func (g *Generator) ParseFlags(args []string) {
+	g.flags = pflag.NewFlagSet("type", pflag.ContinueOnError)
+	g.flags.StringVarP(&g.migrationType, "type", "t", "fizz", "the type of the migration")
+	g.flags.Parse(args) //nolint:errcheck,we don't care hence the flag
+}
+
+func (g *Generator) Flags() *pflag.FlagSet {
+	return g.flags
+}
+
+func (g *Generator) Receive(pls []plugins.Plugin) {
+	for _, v := range pls {
+		cr, ok := v.(Creator)
+		if !ok {
+			continue
+		}
+
+		g.creators = append(g.creators, cr)
+	}
+}
+
 func (g Generator) exists(path string) bool {
 	_, err := os.Stat(path)
 
 	return !os.IsNotExist(err)
-}
-
-func (g *Generator) parseFlag(args []string) {
-	flags := pflag.NewFlagSet("type", pflag.ContinueOnError)
-	flags.StringVarP(&g.migrationType, "type", "t", "fizz", "the type of the migration")
-	flags.Parse(args) //nolint:errcheck,we don't care hence the flag
 }
 
 func (g *Generator) parseColumns(args []string) []string {
@@ -101,15 +124,4 @@ func (g *Generator) parseColumns(args []string) []string {
 	}
 
 	return columns
-}
-
-func (g *Generator) Receive(pls []plugins.Plugin) {
-	for _, v := range pls {
-		cr, ok := v.(Creator)
-		if !ok {
-			continue
-		}
-
-		g.creators = append(g.creators, cr)
-	}
 }

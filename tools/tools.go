@@ -64,6 +64,7 @@ var Base = []plugins.Plugin{
 	&generate.Command{},
 	&new.Command{},
 	&grift.Command{},
+	&version.Command{},
 
 	// Builders
 	&node.Builder{},
@@ -108,7 +109,6 @@ var Base = []plugins.Plugin{
 	// Testers
 	&standard.Tester{},
 	&envy.Tester{},
-	&version.Command{},
 
 	// Migration Creators
 	&fizz.Creator{},

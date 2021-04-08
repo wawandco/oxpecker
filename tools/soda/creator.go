@@ -1,5 +1,15 @@
 package soda
 
+import (
+	"fmt"
+
+	"github.com/wawandco/oxpecker/tools/soda/fizz"
+	"github.com/wawandco/oxpecker/tools/soda/sql"
+)
+
+var _ Creator = fizz.Creator{}
+var _ Creator = sql.Creator{}
+
 type Creator interface {
 	// Receives a migration type string and returns if it
 	// applies to it or not.
@@ -11,8 +21,9 @@ type Creator interface {
 
 type Creators []Creator
 
-func (a Creators) CreatorFor(name string) Creator {
-	for _, x := range a {
+func (c Creators) CreatorFor(name string) Creator {
+	fmt.Println("CREATORS----------------------->", c)
+	for _, x := range c {
 		if x.Creates(name) {
 			return x
 		}

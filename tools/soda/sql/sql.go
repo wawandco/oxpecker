@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
-	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
 )
 
@@ -20,13 +18,12 @@ func (s Creator) Name() string {
 }
 
 // Creates a type or not
-func (f *Creator) Creates(mtype string) bool {
+func (f Creator) Creates(mtype string) bool {
 	return mtype == "sql"
 }
 
 // Create will create 2 .sql empty files for the migration
-func (s *Creator) Create(dir string, args []string) error {
-	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[0])))
+func (s Creator) Create(dir, name string, args []string) error {
 	timestamp := time.Now().UTC().Format("20060102150405")
 	fileName := fmt.Sprintf("%s_%s", timestamp, name)
 
@@ -41,7 +38,7 @@ func (s *Creator) Create(dir string, args []string) error {
 	return nil
 }
 
-func (s *Creator) createFile(dir, name, runFlag string) error {
+func (s Creator) createFile(dir, name, runFlag string) error {
 	fileName := fmt.Sprintf("%s.%s.sql", name, runFlag)
 	file, err := os.Create(filepath.Join(dir, fileName))
 	if err != nil {
