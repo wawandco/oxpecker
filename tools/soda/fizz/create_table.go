@@ -8,15 +8,17 @@ import (
 	"github.com/pkg/errors"
 )
 
-type createTable struct {
-	name  string
-	table fizz.Table
+type createTable struct{}
+
+func (ct *createTable) match(name string) bool {
+	return strings.HasPrefix(name, "create_table")
 }
 
-func (ct *createTable) Generate(args []string) error {
-	name := strings.TrimPrefix(ct.name, "create_table")
+func (ct *createTable) GenerateFizz(name string, args []string) (string, string, error) {
+	var up, down string
+	name = strings.TrimPrefix(name, "create_table")
 	if name == "" {
-		return errors.Errorf("no table name")
+		return up, down, errors.Errorf("no table name")
 	}
 
 	table := fizz.NewTable(name, map[string]interface{}{
@@ -42,19 +44,12 @@ func (ct *createTable) Generate(args []string) error {
 		}
 
 		if err := table.Column(name, colType, o); err != nil {
-			return err
+			return up, down, err
 		}
 	}
 
-	ct.table = table
+	up = table.Fizz()
+	down = table.UnFizz()
 
-	return nil
-}
-
-func (ct createTable) Fizz() string {
-	return ct.table.Fizz()
-}
-
-func (ct createTable) UnFizz() string {
-	return ct.table.UnFizz()
+	return up, down, nil
 }

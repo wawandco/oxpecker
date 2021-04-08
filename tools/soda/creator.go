@@ -1,8 +1,6 @@
 package soda
 
 import (
-	"fmt"
-
 	"github.com/wawandco/oxpecker/tools/soda/fizz"
 	"github.com/wawandco/oxpecker/tools/soda/sql"
 )
@@ -22,7 +20,6 @@ type Creator interface {
 type Creators []Creator
 
 func (c Creators) CreatorFor(name string) Creator {
-	fmt.Println("CREATORS----------------------->", c)
 	for _, x := range c {
 		if x.Creates(name) {
 			return x

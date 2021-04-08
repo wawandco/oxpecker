@@ -16,12 +16,17 @@ type rename struct {
 	renType string
 }
 
-func (rt *rename) Generate(args []string) error {
+func (ct rename) match(name string) bool {
+	return strings.HasPrefix(name, "rename")
+}
+
+func (rt *rename) GenerateFizz(name string, args []string) (string, string, error) {
+	var up, down string
 	var reg *regexp.Regexp
 
-	isTable := strings.HasPrefix(rt.name, "rename_table")
-	isColumn := strings.HasPrefix(rt.name, "rename_column")
-	isIndex := strings.HasPrefix(rt.name, "rename_index")
+	isTable := strings.HasPrefix(name, "rename_table")
+	isColumn := strings.HasPrefix(name, "rename_column")
+	isIndex := strings.HasPrefix(name, "rename_index")
 
 	if isTable {
 		reg = regexp.MustCompile(`rename_table_(\w+)_to_(\w+)`)
@@ -38,11 +43,11 @@ func (rt *rename) Generate(args []string) error {
 		rt.renType = "index"
 	}
 
-	if !reg.MatchString(rt.name) {
-		return errors.Errorf("invalid renamer, please write a valid argument")
+	if !reg.MatchString(name) {
+		return up, down, errors.Errorf("invalid renamer, please write a valid argument")
 	}
 
-	matches := reg.FindAllStringSubmatch(rt.name, -1)[0][1:]
+	matches := reg.FindAllStringSubmatch(name, -1)[0][1:]
 	rt.oldName = matches[0]
 	rt.newName = matches[1]
 
@@ -50,10 +55,13 @@ func (rt *rename) Generate(args []string) error {
 		rt.table = matches[2]
 	}
 
-	return nil
+	up = rt.fizz()
+	down = rt.unFizz()
+
+	return up, down, nil
 }
 
-func (rt rename) Fizz() string {
+func (rt rename) fizz() string {
 	switch rt.renType {
 	case "column":
 		return fmt.Sprintf(`rename_column("%s", "%s", "%s")`, rt.table, rt.oldName, rt.newName)
@@ -64,7 +72,7 @@ func (rt rename) Fizz() string {
 	}
 }
 
-func (rt rename) UnFizz() string {
+func (rt rename) unFizz() string {
 	switch rt.renType {
 	case "column":
 		return fmt.Sprintf(`rename_column("%s", "%s", "%s")`, rt.table, rt.newName, rt.oldName)

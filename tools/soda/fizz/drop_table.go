@@ -7,30 +7,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-type dropTable struct {
-	name  string
-	table fizz.Table
+type dropTable struct{}
+
+func (ct dropTable) match(name string) bool {
+	return strings.HasPrefix(name, "drop_table")
 }
 
-func (dt *dropTable) Generate(args []string) error {
-	name := strings.TrimPrefix(dt.name, "drop_table")
+func (dt *dropTable) GenerateFizz(name string, args []string) (string, string, error) {
+	var up, down string
+	name = strings.TrimPrefix(name, "drop_table")
 	if name == "" {
-		return errors.Errorf("no table name")
+		return up, down, errors.Errorf("no table name")
 	}
 
 	table := fizz.NewTable(name, map[string]interface{}{
 		"timestamps": false,
 	})
 
-	dt.table = table
-
-	return nil
-}
-
-func (dt dropTable) Fizz() string {
-	return dt.table.UnFizz()
-}
-
-func (dt dropTable) UnFizz() string {
-	return dt.table.Fizz()
+	return table.UnFizz(), table.Fizz(), nil
 }

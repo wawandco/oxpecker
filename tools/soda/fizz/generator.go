@@ -1,18 +1,28 @@
 package fizz
 
+var generators = MigrationGenerators{
+	&createTable{},
+	&dropTable{},
+	&rename{},
+}
+
 type MigrationGenerator interface {
-	AppliesTo(string) bool
-	GenerateFizz(string, []string) error
+	match(string) bool
+	GenerateFizz(string, []string) (string, string, error)
 }
 
 type MigrationGenerators []MigrationGenerator
 
-func (a MigrationGenerators) GeneratorFor(name string) *MigrationGenerator {
+func (a MigrationGenerators) GeneratorFor(name string) MigrationGenerator {
+	// Setting create table migration by default
+	var mg MigrationGenerator = &createTable{}
+
 	for _, x := range a {
-		if x.AppliesTo(name) {
-			return &x
+		if x.match(name) {
+			mg = x
+			break
 		}
 	}
 
-	return nil
+	return mg
 }
