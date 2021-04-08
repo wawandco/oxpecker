@@ -59,27 +59,12 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 	}
 
 	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[2])))
-	columns := g.parseColumns(args[2:])
+	columns := g.parseColumns(args[3:])
 
 	err := cr.Create(dirPath, name, columns)
 	if err != nil {
 		return err
 	}
-
-	// creator, err := creator.CreateMigrationFor(strings.ToLower(g.migrationType))
-	// if err != nil {
-	// 	return err
-	// }
-
-	// if err = creator.Create(dirPath, columns); err != nil {
-	// 	return errors.Wrap(err, "failed creating migrations")
-	// }
-
-	// timestamp := time.Now().UTC().Format("20060102150405")
-	// fileName := fmt.Sprintf("%s_%s", timestamp, name)
-
-	// log.Infof("generated: migrations/%s.up.%s", fileName, creator.Name())
-	// log.Infof("generated: migrations/%s.down.%s", fileName, creator.Name())
 
 	return nil
 }

@@ -25,7 +25,7 @@ func (ct *createTable) GenerateFizz(name string, args []string) (string, string,
 		"timestamps": false,
 	})
 
-	for _, arg := range args[1:] {
+	for _, arg := range args[0:] {
 		slice := strings.Split(arg, ":")
 		if len(slice) == 1 {
 			slice = append(slice, "string")

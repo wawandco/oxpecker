@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/wawandco/oxpecker/internal/log"
 )
 
 // Creator model struct for fizz generation files
@@ -34,6 +35,9 @@ func (s Creator) Create(dir, name string, args []string) error {
 	if err := s.createFile(dir, fileName, "down"); err != nil {
 		return err
 	}
+
+	log.Infof("generated: %s/%s.up.sql", dir, fileName)
+	log.Infof("generated: %s/%s.down.sql", dir, fileName)
 
 	return nil
 }
