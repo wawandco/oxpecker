@@ -9,7 +9,6 @@ import (
 )
 
 type rename struct {
-	name    string
 	newName string
 	oldName string
 	table   string
