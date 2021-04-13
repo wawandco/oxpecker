@@ -58,7 +58,7 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		}
 	}
 
-	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[2])))
+	name := flect.Underscore(flect.Pluralize(args[2]))
 	columns := g.parseColumns(args[3:])
 
 	err := cr.Create(dirPath, name, columns)
