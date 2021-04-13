@@ -15,7 +15,7 @@ type rename struct {
 	renType string
 }
 
-func (ct rename) match(name string) bool {
+func (rt rename) match(name string) bool {
 	return strings.HasPrefix(name, "rename")
 }
 
