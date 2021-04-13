@@ -2,6 +2,7 @@ package fizz
 
 var generators = MigrationGenerators{
 	&addColumn{},
+	&changeColumn{},
 	&createTable{},
 	&dropTable{},
 	&rename{},
