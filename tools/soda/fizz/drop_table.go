@@ -9,7 +9,7 @@ import (
 
 type dropTable struct{}
 
-func (ct dropTable) match(name string) bool {
+func (dt dropTable) match(name string) bool {
 	return strings.HasPrefix(name, "drop_table")
 }
 
