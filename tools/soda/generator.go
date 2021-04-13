@@ -97,10 +97,6 @@ func (g Generator) exists(path string) bool {
 }
 
 func (g *Generator) parseColumns(args []string) []string {
-	if len(args) == 1 {
-		return args
-	}
-
 	var columns []string
 	for _, arg := range args {
 		if !strings.HasPrefix(arg, "-") {
