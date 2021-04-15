@@ -10,8 +10,14 @@ import (
 // Generator allows to identify resource as a plugin
 type Generator struct{}
 
-// Name returns the name of the generator plugin
+// Name returns the name of the plugin
 func (g Generator) Name() string {
+	return "buffalo/generate-resource"
+}
+
+// InvocationName is used to identify the generator when
+// the generate command is called.
+func (g Generator) InvocationName() string {
 	return "resource"
 }
 
