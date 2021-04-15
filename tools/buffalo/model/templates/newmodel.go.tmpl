@@ -6,17 +6,17 @@ import (
 	{{- end }}
 )
 
-// {{ .Name.Proper.String }} model struct
+// {{ .Name.Proper.String }} model struct.
 type {{ .Name.Proper.String }} struct {
 	{{- range $attr := .Attrs }}
-	{{ $attr.Name.Pascalize }}	{{$attr.GoType }} ` + "`" + `json:"{{ $attr.Name.Underscore }}" db:"{{ $attr.Name.Underscore }}"` + "`" + `
+	{{ $attr.Name.Pascalize }} {{"\t"}}	{{$attr.GoType }} {{"\t"}} `json:"{{ $attr.Name.Underscore }}" db:"{{ $attr.Name.Underscore }}"`
 	{{- end }}
 }
 
-// {{ .Name.Proper.Pluralize }} array model struct of {{ .Name.Proper.String }}
+// {{ .Name.Proper.Pluralize }} array model struct of {{ .Name.Proper.String }}.
 type {{ .Name.Proper.Pluralize }} []{{ .Name.Proper.String }}
 
-// String converts the struct into a string value
+// String converts the struct into a string value.
 func ({{ .Char }} {{ .Name.Proper.String }}) String() string {
 	return fmt.Sprintf("%+v\n", {{ .Char }})
 }
