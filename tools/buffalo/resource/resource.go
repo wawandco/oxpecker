@@ -52,7 +52,7 @@ func New(root string, args []string) *Resource {
 	}
 
 	modelsPath := filepath.Join(root, "app", "models")
-	model := model.New(modelsPath, args[0], args[0:])
+	model := model.New(modelsPath, args[0], args[1:])
 	actions := []name.Ident{
 		name.New("list"),
 		name.New("show"),
