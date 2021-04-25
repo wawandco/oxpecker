@@ -8,6 +8,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+var ErrInvalidRenamer error = errors.New("invalid renamer, please write a valid argument")
+
 type rename struct {
 	newName string
 	oldName string
@@ -42,8 +44,12 @@ func (rt *rename) GenerateFizz(name string, args []string) (string, string, erro
 		rt.renType = "index"
 	}
 
+	if reg == nil {
+		return up, down, ErrInvalidRenamer
+	}
+
 	if !reg.MatchString(name) {
-		return up, down, errors.Errorf("invalid renamer, please write a valid argument")
+		return up, down, ErrInvalidRenamer
 	}
 
 	matches := reg.FindAllStringSubmatch(name, -1)[0][1:]
