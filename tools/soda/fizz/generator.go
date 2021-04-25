@@ -15,6 +15,7 @@ var generators = MigrationGenerators{
 var (
 	ErrExpressionNotMatch error = errors.New("generator do not match a valid expression")
 	ErrNoColumnFound      error = errors.New("no arguments was received, at least 1 column is required")
+	ErrNoTableName        error = errors.New("no table name")
 )
 
 type MigrationGenerator interface {
