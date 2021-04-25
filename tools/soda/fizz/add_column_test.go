@@ -55,7 +55,7 @@ func Test_Add_Column(t *testing.T) {
 	})
 }
 
-func Test_Matches(t *testing.T) {
+func Test_Add_Column_Matches(t *testing.T) {
 	ac := addColumn{}
 
 	cases := []struct {
