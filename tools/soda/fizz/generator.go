@@ -1,12 +1,21 @@
 package fizz
 
+import "errors"
+
 var generators = MigrationGenerators{
 	&addColumn{},
 	&changeColumn{},
 	&createTable{},
 	&dropTable{},
 	&rename{},
+	&dropIndex{},
 }
+
+// Errors
+var (
+	ErrExpressionNotMatch error = errors.New("generator do not match a valid expression")
+	ErrNoColumnFound      error = errors.New("no arguments was received, at least 1 column is required")
+)
 
 type MigrationGenerator interface {
 	match(string) bool

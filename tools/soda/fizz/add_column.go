@@ -6,8 +6,9 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/flect"
-	"github.com/pkg/errors"
 )
+
+var acReg = regexp.MustCompile(`add(?:ing)?_\w+_to_(\w+)`)
 
 type addColumn struct {
 	columns map[string]string
@@ -15,17 +16,15 @@ type addColumn struct {
 }
 
 func (ac addColumn) match(name string) bool {
-	return strings.HasPrefix(name, "add")
+	return acReg.MatchString(name)
 }
 
 func (ac *addColumn) GenerateFizz(name string, args []string) (string, string, error) {
 	if len(args) == 0 {
-		return "", "", errors.Errorf("no arguments was received, at least 1 column is required")
+		return "", "", ErrNoColumnFound
 	}
 
-	reg := regexp.MustCompile(`add_\w+_to_(\w+)`)
-
-	matches := reg.FindAllStringSubmatch(name, -1)[0][1:]
+	matches := acReg.FindAllStringSubmatch(name, -1)[0][1:]
 	ac.columns = ac.parsecolumns(args)
 	ac.table = matches[0]
 
@@ -53,7 +52,8 @@ func (ac addColumn) unFizz() string {
 }
 
 func (ac *addColumn) parsecolumns(args []string) map[string]string {
-	cols := make(map[string]string, 0)
+	cols := make(map[string]string)
+
 	for _, arg := range args {
 		slice := strings.Split(arg, ":")
 		if len(slice) == 1 {
