@@ -4,52 +4,47 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-
-	"github.com/pkg/errors"
 )
+
+var ccReg = regexp.MustCompile(`change_(\w+)_(\w+)`)
 
 type changeColumn struct {
 	column     string
 	newColType string
 	table      string
+	isNull     bool
 }
 
 func (cc changeColumn) match(name string) bool {
-	return strings.HasPrefix(name, "change")
+	return ccReg.MatchString(name)
 }
 
 func (cc *changeColumn) GenerateFizz(name string, args []string) (string, string, error) {
 	if len(args) == 0 {
-		return "", "", errors.Errorf("no arguments was received, at least 1 column is required")
+		return "", "", ErrNoColumnFound
 	}
 
-	reg := regexp.MustCompile(`change_(\w+)_(\w+)`)
-
-	matches := reg.FindAllStringSubmatch(name, -1)[0][1:]
+	matches := ccReg.FindAllStringSubmatch(name, -1)[0][1:]
 	cc.table = matches[0]
 	cc.column = matches[1]
-	cc.newColType = cc.parsecolumns(args)
+	cc.newColType = columnType(args[0])
+	cc.isNull = strings.Contains(args[0], "nulls")
 
 	return cc.fizz(), cc.unFizz(), nil
 }
 
 func (cc changeColumn) fizz() string {
-	return fmt.Sprintf(`change_column("%s", "%s", "%s", {})`, cc.table, cc.column, cc.newColType)
+	return fmt.Sprintf(`change_column("%s", "%s", "%s", {%s})`, cc.table, cc.column, cc.newColType, cc.parseNull())
 }
 
 func (cc changeColumn) unFizz() string {
 	return fmt.Sprintf(`change_column("%s", "%s", "string", {})`, cc.table, cc.column)
 }
 
-func (cc changeColumn) parsecolumns(args []string) string {
-	arg := args[0]
-
-	slice := strings.Split(arg, ":")
-	if len(slice) == 1 {
-		slice = append(slice, "string")
+func (cc changeColumn) parseNull() string {
+	if !cc.isNull {
+		return ""
 	}
 
-	colType := columnType(slice[1])
-
-	return colType
+	return "null: true"
 }
