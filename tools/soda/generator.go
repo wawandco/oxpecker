@@ -2,21 +2,29 @@ package soda
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/gobuffalo/flect"
-	"github.com/pkg/errors"
 	"github.com/spf13/pflag"
 	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/tools/soda/creator"
+	"github.com/wawandco/oxpecker/plugins"
+)
+
+var (
+	// These are the interfaces we know that this
+	// plugin must satisfy for its correct functionality
+	_ plugins.Plugin     = (*Generator)(nil)
+	_ plugins.FlagParser = (*Generator)(nil)
 )
 
 // Generator allows to identify model as a plugin
 type Generator struct {
+	creators Creators
+
+	flags         *pflag.FlagSet
 	migrationType string
 }
 
@@ -38,7 +46,10 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		return nil
 	}
 
-	g.parseFlag(args)
+	cr := g.creators.CreatorFor(g.migrationType)
+	if cr == nil {
+		return errors.New("type not found")
+	}
 
 	dirPath := filepath.Join(root, "migrations")
 	if !g.exists(dirPath) {
@@ -47,25 +58,36 @@ func (g Generator) Generate(ctx context.Context, root string, args []string) err
 		}
 	}
 
-	creator, err := creator.CreateMigrationFor(strings.ToLower(g.migrationType))
+	name := flect.Underscore(flect.Pluralize(args[2]))
+	columns := g.parseColumns(args[3:])
+
+	err := cr.Create(dirPath, name, columns)
 	if err != nil {
 		return err
 	}
 
-	name := flect.Underscore(flect.Pluralize(strings.ToLower(args[2])))
-	columns := g.parseColumns(args[2:])
-
-	if err = creator.Create(dirPath, columns); err != nil {
-		return errors.Wrap(err, "failed creating migrations")
-	}
-
-	timestamp := time.Now().UTC().Format("20060102150405")
-	fileName := fmt.Sprintf("%s_%s", timestamp, name)
-
-	log.Infof("generated: migrations/%s.up.%s", fileName, creator.Name())
-	log.Infof("generated: migrations/%s.down.%s", fileName, creator.Name())
-
 	return nil
+}
+
+func (g *Generator) ParseFlags(args []string) {
+	g.flags = pflag.NewFlagSet("type", pflag.ContinueOnError)
+	g.flags.StringVarP(&g.migrationType, "type", "t", "fizz", "the type of the migration")
+	g.flags.Parse(args) //nolint:errcheck,we don't care hence the flag
+}
+
+func (g *Generator) Flags() *pflag.FlagSet {
+	return g.flags
+}
+
+func (g *Generator) Receive(pls []plugins.Plugin) {
+	for _, v := range pls {
+		cr, ok := v.(Creator)
+		if !ok {
+			continue
+		}
+
+		g.creators = append(g.creators, cr)
+	}
 }
 
 func (g Generator) exists(path string) bool {
@@ -74,17 +96,7 @@ func (g Generator) exists(path string) bool {
 	return !os.IsNotExist(err)
 }
 
-func (g *Generator) parseFlag(args []string) {
-	flags := pflag.NewFlagSet("type", pflag.ContinueOnError)
-	flags.StringVarP(&g.migrationType, "type", "t", "fizz", "the type of the migration")
-	flags.Parse(args) //nolint:errcheck,we don't care hence the flag
-}
-
 func (g *Generator) parseColumns(args []string) []string {
-	if len(args) == 1 {
-		return args
-	}
-
 	var columns []string
 	for _, arg := range args {
 		if !strings.HasPrefix(arg, "-") {

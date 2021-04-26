@@ -1,4 +1,4 @@
-package creator
+package fizz
 
 import (
 	"path/filepath"
@@ -7,13 +7,14 @@ import (
 )
 
 func Test_Fizz_Create(t *testing.T) {
-	f := FizzCreator{}
+	f := Creator{}
 
 	t.Run("generate migration files", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"users"}
+		name := "users"
+		args := []string{}
 
-		if err := f.Create(dir, args); err != nil {
+		if err := f.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 
@@ -38,14 +39,15 @@ func Test_Fizz_Create(t *testing.T) {
 
 	t.Run("generate migration singularized name", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"company"}
+		name := "company"
+		args := []string{}
 
-		if err := f.Create(dir, args); err != nil {
+		if err := f.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 
 		// Validating files existence
-		match, err := filepath.Glob(filepath.Join(dir, "*companies.*.fizz"))
+		match, err := filepath.Glob(filepath.Join(dir, "*company.*.fizz"))
 		if err != nil {
 			t.Errorf("searching for files should not error, but got %v", err)
 		}
@@ -54,12 +56,12 @@ func Test_Fizz_Create(t *testing.T) {
 			t.Error("migration files does not exists on the path")
 		}
 
-		if !strings.HasSuffix(match[0], "_companies.down.fizz") {
+		if !strings.HasSuffix(match[0], "_company.down.fizz") {
 			t.Error("'companies.up.fizz' file does not exists on the path")
 		}
 
-		if !strings.HasSuffix(match[1], "_companies.up.fizz") {
-			t.Error("'companies.down.fizz' file does not exists on the path")
+		if !strings.HasSuffix(match[1], "_company.up.fizz") {
+			t.Error("'company.down.fizz' file does not exists on the path")
 		}
 	})
 }

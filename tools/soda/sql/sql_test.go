@@ -1,4 +1,4 @@
-package creator
+package sql
 
 import (
 	"path/filepath"
@@ -7,13 +7,14 @@ import (
 )
 
 func Test_SQL_Create(t *testing.T) {
-	s := SQLCreator{}
+	s := Creator{}
 
 	t.Run("generate migration files", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"users"}
+		name := "users"
+		args := []string{}
 
-		if err := s.Create(dir, args); err != nil {
+		if err := s.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 
@@ -38,14 +39,15 @@ func Test_SQL_Create(t *testing.T) {
 
 	t.Run("generate migration singularized name", func(t *testing.T) {
 		dir := t.TempDir()
-		args := []string{"company"}
+		name := "company"
+		args := []string{}
 
-		if err := s.Create(dir, args); err != nil {
+		if err := s.Create(dir, name, args); err != nil {
 			t.Errorf("creating migration files should not be error, but got %v", err)
 		}
 
 		// Validating files existence
-		match, err := filepath.Glob(filepath.Join(dir, "*companies.*.sql"))
+		match, err := filepath.Glob(filepath.Join(dir, "*company.*.sql"))
 		if err != nil {
 			t.Errorf("searching for files should not error, but got %v", err)
 		}
@@ -54,12 +56,12 @@ func Test_SQL_Create(t *testing.T) {
 			t.Error("migration files does not exists on the path")
 		}
 
-		if !strings.HasSuffix(match[0], "_companies.down.sql") {
-			t.Error("'companies.up.sql' file does not exists on the path")
+		if !strings.HasSuffix(match[0], "company.down.sql") {
+			t.Error("'company.up.sql' file does not exists on the path")
 		}
 
-		if !strings.HasSuffix(match[1], "_companies.up.sql") {
-			t.Error("'companies.down.sql' file does not exists on the path")
+		if !strings.HasSuffix(match[1], "company.up.sql") {
+			t.Error("'company.down.sql' file does not exists on the path")
 		}
 	})
 }

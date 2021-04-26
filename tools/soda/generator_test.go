@@ -6,15 +6,22 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/oxpecker/tools/soda/fizz"
+	"github.com/wawandco/oxpecker/tools/soda/sql"
 )
 
 func Test_Generate(t *testing.T) {
 	g := Generator{}
+	g.Receive([]plugins.Plugin{&fizz.Creator{}, &sql.Creator{}})
 
 	t.Run("generate fizz migration", func(t *testing.T) {
 		dir := t.TempDir()
+		args := []string{"generate", "migration", "users", "--type=fizz"}
 
-		if err := g.Generate(context.Background(), dir, []string{"generate", "migration", "users", "--type=fizz"}); err != nil {
+		g.ParseFlags(args)
+		if err := g.Generate(context.Background(), dir, args); err != nil {
 			t.Errorf("should not be error, but got %v", err)
 		}
 
@@ -39,8 +46,10 @@ func Test_Generate(t *testing.T) {
 
 	t.Run("generate sql migration", func(t *testing.T) {
 		dir := t.TempDir()
+		args := []string{"generate", "migration", "company", "--type=sql"}
+		g.ParseFlags(args)
 
-		if err := g.Generate(context.Background(), dir, []string{"generate", "migration", "company", "--type=sql"}); err != nil {
+		if err := g.Generate(context.Background(), dir, args); err != nil {
 			t.Errorf("should not be error, but got %v", err)
 		}
 
@@ -64,15 +73,20 @@ func Test_Generate(t *testing.T) {
 	})
 
 	t.Run("generate invalid migration should error", func(t *testing.T) {
-		if err := g.Generate(context.Background(), t.TempDir(), []string{"generate", "migration", "company", "--type=invalid"}); err == nil {
+		args := []string{"generate", "migration", "company", "--type=invalid"}
+		g.ParseFlags(args)
+
+		if err := g.Generate(context.Background(), t.TempDir(), args); err == nil {
 			t.Errorf("should be error, but got %v", err)
 		}
 	})
 
 	t.Run("generate migration without type should generate fizz", func(t *testing.T) {
 		dir := t.TempDir()
+		args := []string{"generate", "migration", "templates"}
+		g.ParseFlags(args)
 
-		if err := g.Generate(context.Background(), dir, []string{"generate", "migration", "templates"}); err != nil {
+		if err := g.Generate(context.Background(), dir, args); err != nil {
 			t.Errorf("should not be error, but got %v", err)
 		}
 
@@ -97,8 +111,10 @@ func Test_Generate(t *testing.T) {
 
 	t.Run("generate migration with empty type should generate fizz", func(t *testing.T) {
 		dir := t.TempDir()
+		args := []string{"generate", "migration", "invoices", "--type"}
+		g.ParseFlags(args)
 
-		if err := g.Generate(context.Background(), dir, []string{"generate", "migration", "invoices", "--type"}); err != nil {
+		if err := g.Generate(context.Background(), dir, args); err != nil {
 			t.Errorf("should not be error, but got %v", err)
 		}
 
@@ -123,8 +139,10 @@ func Test_Generate(t *testing.T) {
 
 	t.Run("generate fizz migration with args", func(t *testing.T) {
 		dir := t.TempDir()
+		args := []string{"generate", "migration", "users", "description:string", "quantity:int"}
+		g.ParseFlags(args)
 
-		if err := g.Generate(context.Background(), dir, []string{"generate", "migration", "users", "description:string", "quantity:int"}); err != nil {
+		if err := g.Generate(context.Background(), dir, args); err != nil {
 			t.Errorf("should not be error, but got %v", err)
 		}
 
