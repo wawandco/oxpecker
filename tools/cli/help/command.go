@@ -11,7 +11,7 @@ var (
 	// Help is a Command
 	_ plugins.Command = (*Command)(nil)
 
-	ErrSubCommandNotFound = errors.New("Subcommand not found")
+	ErrSubCommandNotFound = errors.New("subcommand not found")
 )
 
 // Help command that prints
@@ -59,11 +59,30 @@ func (h *Command) findCommand(args []string) (plugins.Command, []string) {
 		var name = args[argIndex]
 		for _, c := range commands {
 			// TODO: If its a subcommand check also the SubcommandName
-			if c.Name() != name {
+			a, ok := c.(plugins.Aliaser)
+			if !ok {
+				if c.Name() != name {
+					continue
+				}
+				fndNames = append(fndNames, c.Name())
+				command = c
+				break
+			}
+
+			if a.Alias() != name && c.Name() != name {
 				continue
 			}
-			fndNames = append(fndNames, c.Name())
-			command = c
+
+			if c.Name() == name {
+				fndNames = append(fndNames, c.Name())
+				command = c
+				break
+			}
+
+			if a.Alias() == name {
+				fndNames = append(fndNames, a.Alias())
+				command = c
+			}
 			break
 		}
 

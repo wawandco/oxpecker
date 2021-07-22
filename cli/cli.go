@@ -32,11 +32,15 @@ func (c *cli) findCommand(name string) plugins.Command {
 			continue
 		}
 
-		if command.Name() != name {
-			continue
+		alias, ok := cm.(plugins.Aliaser)
+		if ok && alias.Alias() == name {
+			return command
 		}
 
-		return command
+		if command.Name() == name {
+			return command
+		}
+
 	}
 
 	return nil
