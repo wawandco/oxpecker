@@ -24,6 +24,10 @@ func (c Command) Name() string {
 	return "generate"
 }
 
+func (c Command) Alias() string {
+	return "g"
+}
+
 func (c Command) ParentName() string {
 	return ""
 }

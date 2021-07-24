@@ -24,3 +24,8 @@ type RootFinder interface {
 	// FindRoot returns the path to consider as root.
 	FindRoot() string
 }
+
+// Aiaser allows commands to have aliases
+type Aliaser interface {
+	Alias() string
+}
