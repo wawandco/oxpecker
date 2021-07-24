@@ -9,7 +9,7 @@ import (
 // RunBeforeBuild attempts to run yarn install if it finds yarn.lock
 func (p *Plugin) RunBeforeBuild(ctx context.Context, root string, args []string) error {
 	cmd := p.buildCmd(ctx)
-	if p == nil {
+	if cmd == nil {
 		return nil
 	}
 
