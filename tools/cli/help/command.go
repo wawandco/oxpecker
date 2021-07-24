@@ -96,10 +96,7 @@ func (h *Command) findCommand(args []string) (plugins.Command, []string) {
 			break
 		}
 
-		var sbcm []plugins.Command
-		sbcm = append(sbcm, sc.Subcommands()...)
-
-		commands = sbcm
+		commands = sc.Subcommands()
 	}
 
 	return command, fndNames
