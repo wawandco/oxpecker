@@ -50,7 +50,7 @@ func (d *Command) Run(ctx context.Context, root string, args []string) error {
 	folder := filepath.Join(root, name)
 
 	if _, err := os.Stat(folder); err == nil && !d.force {
-		return errors.New("Folder already exist")
+		return errors.New("folder already exist")
 	}
 
 	err := os.RemoveAll(folder)

@@ -51,6 +51,11 @@ func (h *Command) printSingle(command plugins.Command, names []string) {
 			fmt.Fprintf(w, "  %v\t%v\n", scomm.Name(), helpText)
 		}
 	}
+	if th, ok := command.(plugins.Aliaser); ok {
+		fmt.Println("Alias:")
+		fmt.Println(th.Alias())
+		fmt.Println("")
+	}
 
 	if th, ok := command.(plugins.FlagParser); ok {
 		fmt.Println("Flags:")
