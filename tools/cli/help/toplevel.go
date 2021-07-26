@@ -21,6 +21,7 @@ func (h *Command) printTopLevel() {
 	// minwidth, tabwidth, padding, padchar, flags
 	w.Init(os.Stdout, 8, 8, 3, '\t', 0)
 	fmt.Println("Commands:")
+	fmt.Println("Command\t     Alias")
 
 	for _, plugin := range h.commands {
 		helpText := ""
@@ -28,7 +29,11 @@ func (h *Command) printTopLevel() {
 			helpText = ht.HelpText()
 		}
 
-		fmt.Fprintf(w, "  %v\t%v\n", plugin.Name(), helpText)
+		if p, ok := plugin.(plugins.Aliaser); ok {
+			fmt.Fprintf(w, "  %v\t%v\t%v\n", plugin.Name(), p.Alias(), helpText)
+		} else {
+			fmt.Fprintf(w, "  %v\t\t%v\n", plugin.Name(), helpText)
+		}
 	}
 
 }

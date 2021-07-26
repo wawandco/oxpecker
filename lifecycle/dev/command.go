@@ -22,6 +22,10 @@ func (d Command) Name() string {
 	return "dev"
 }
 
+func (c Command) Alias() string {
+	return "d"
+}
+
 func (d Command) ParentName() string {
 	return ""
 }

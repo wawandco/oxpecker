@@ -23,6 +23,10 @@ func (h Command) Name() string {
 	return "help"
 }
 
+func (c Command) Alias() string {
+	return "h"
+}
+
 func (h Command) ParentName() string {
 	return ""
 }
