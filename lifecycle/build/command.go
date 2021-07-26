@@ -27,6 +27,10 @@ func (b Command) ParentName() string {
 	return ""
 }
 
+func (c Command) Alias() string {
+	return "b"
+}
+
 //HelpText returns the help Text of build function
 func (b Command) HelpText() string {
 	return "builds a buffalo app from within the root folder of the project"

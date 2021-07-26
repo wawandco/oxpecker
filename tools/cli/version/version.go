@@ -25,6 +25,10 @@ func (b Command) Name() string {
 	return "version"
 }
 
+func (c Command) Alias() string {
+	return "v"
+}
+
 func (b Command) ParentName() string {
 	return ""
 }
