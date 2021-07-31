@@ -1,0 +1,2 @@
+baseurl = "https://oxpecker.netlify.com"
+canonifyURLs = true
