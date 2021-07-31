@@ -26,3 +26,4 @@ gin-bin
 .idea/
 .vscode
 docs/bin
+docs/resources/_gen
