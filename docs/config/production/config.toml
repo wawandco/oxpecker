@@ -1,2 +1,2 @@
-baseurl = "https://oxpecker.netlify.com"
+baseurl = "https://oxpecker.netlify.app"
 canonifyURLs = true
