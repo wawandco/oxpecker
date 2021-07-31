@@ -1,12 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind forms;
-@tailwind aspect-ratio;
 
-a {
-    @apply text-blue-500 underline;
-}
 
 ul {
     @apply text-2xl ml-5 pl-5 list-disc;
