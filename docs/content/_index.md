@@ -1,5 +1,3 @@
 ---
 title: "Oxpecker"
 ---
-
-Hello
