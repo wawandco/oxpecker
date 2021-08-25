@@ -113,4 +113,7 @@ var Base = []plugins.Plugin{
 	// Migration Creators
 	&fizz.Creator{},
 	&sql.Creator{},
+
+	// Aftergenerators
+	&standard.GoModAfterGenerator{},
 }

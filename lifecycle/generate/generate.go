@@ -8,6 +8,7 @@ import (
 	"os"
 	"text/tabwriter"
 
+	"github.com/wawandco/oxpecker/internal/log"
 	"github.com/wawandco/oxpecker/plugins"
 )
 
@@ -17,7 +18,8 @@ var _ plugins.Command = (*Command)(nil)
 var _ plugins.PluginReceiver = (*Command)(nil)
 
 type Command struct {
-	generators []Generator
+	generators      []Generator
+	aftergenerators []AfterGenerator
 }
 
 func (c Command) Name() string {
@@ -60,7 +62,15 @@ func (c *Command) Run(ctx context.Context, root string, args []string) error {
 		return fmt.Errorf("generator `%v` not found", name)
 	}
 
-	return generator.Generate(ctx, root, args)
+	err := generator.Generate(ctx, root, args)
+	for _, ag := range c.aftergenerators {
+		aerr := ag.AfterGenerate(ctx, root, args)
+		if aerr != nil {
+			log.Errorf("Error running after generator %v: %v", ag.Name(), aerr)
+		}
+	}
+
+	return err
 }
 
 func (c Command) list() {
@@ -92,5 +102,14 @@ func (c *Command) Receive(plugins []plugins.Plugin) {
 		}
 
 		c.generators = append(c.generators, ptool)
+	}
+
+	for _, plugin := range plugins {
+		ptool, ok := plugin.(AfterGenerator)
+		if !ok {
+			continue
+		}
+
+		c.aftergenerators = append(c.aftergenerators, ptool)
 	}
 }
