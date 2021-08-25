@@ -49,6 +49,11 @@ func (d *ResetCommand) Run(ctx context.Context, root string, args []string) erro
 // RunBeforeTests will be invoked to reset the test database before
 // tests run.
 func (d *ResetCommand) RunBeforeTest(ctx context.Context, root string, args []string) error {
+	err := pop.LoadConfigFile()
+	if err != nil {
+		return err
+	}
+
 	conn := pop.Connections["test"]
 	if conn == nil {
 		return ErrConnectionNotFound
@@ -59,7 +64,7 @@ func (d *ResetCommand) RunBeforeTest(ctx context.Context, root string, args []st
 		return errors.New("provided connection is not a Resetter")
 	}
 
-	err := resetter.DropDB()
+	err = resetter.DropDB()
 	if err != nil {
 		log.Warnf("could not drop database: %v\n", err)
 	}
