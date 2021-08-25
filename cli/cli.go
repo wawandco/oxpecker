@@ -58,7 +58,7 @@ func (c *cli) Wrap(ctx context.Context, args []string) error {
 	_, err := os.Stat(path)
 	name := info.ModuleName()
 	if err != nil || name == "" || name == "github.com/wawandco/oxpecker" {
-		log.Info("Using wawandco/oxpecker/cmd/ox \n")
+		log.Info("Using github.com/wawandco/oxpecker/cmd/ox \n")
 		return c.Run(ctx, args)
 	}
 
