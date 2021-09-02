@@ -2,13 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-
-ul {
-    @apply text-2xl ml-5 pl-5 list-disc;
+#post-content h3 {
+   font-weight: bold;
+   font-size: 1.2rem;
+   margin-bottom: 0.5rem;
+   margin-top: 2rem;
 }
 
-p { @apply mb-4 }
+#post-content p {
+    font-weight: 300;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
 
-h2 {
-    @apply text-lg font-light text-gray-500;
+#post-content .highlight pre {
+    font-family: monospace;
+    padding: 20px;
+}
+
+#post-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    font-weight: 300;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#post-content p code{
+    color: #0EA5E9;
+    display: inline-block;
+    margin-bottom: 0.5rem;
 }

@@ -1,3 +1,29 @@
 baseURL = "https://oxpecker.netlify.app"
 languageCode = "en-us"
 title = "Oxpecker"
+
+[menu]
+[[menu.main]]
+  name = 'Introduction'
+  url = '/'
+  weight = 1
+[[menu.main]]
+  name = 'Getting Started'
+  url = '/documentation/installation'
+  weight = 2
+[[menu.main]]
+  name = 'Folder Structure'
+  url = '/documentation/structure/'
+  weight = 3
+[[menu.main]]
+  name = 'Commands'
+  url = '/documentation/commands/'
+  weight = 4
+[[menu.main]]
+  name = 'Plugins'
+  url = '/documentation/plugins/'
+  weight = 5
+[[menu.main]]
+  name = 'Changelog'
+  url = '/documentation/changelog'
+  weight = 6
