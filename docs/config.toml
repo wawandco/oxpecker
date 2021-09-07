@@ -8,10 +8,6 @@ title = "Oxpecker"
   url = '/'
   weight = 1
 [[menu.main]]
-  name = 'Getting Started'
-  url = '/documentation/installation'
-  weight = 2
-[[menu.main]]
   name = 'Folder Structure'
   url = '/documentation/structure/'
   weight = 3
