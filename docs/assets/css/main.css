@@ -10,9 +10,8 @@
 }
 
 #post-content p {
-    font-weight: 300;
+    @apply mb-4 text-lg font-light;
     font-size: 1rem;
-    margin-bottom: 0.5rem;
 }
 
 #post-content .highlight pre {
