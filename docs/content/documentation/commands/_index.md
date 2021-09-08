@@ -5,3 +5,5 @@ draft: false
 children: command
 ---
 
+The Ox CLi ships with a set of commands that can be used for the application development workflow. Commands come from a list of default plugins, these can be changed in your Ox application depending on what your preferences are, to know more about this see the plugins section. To get more information on how to use each of these you can always use the help command.
+

@@ -5,13 +5,18 @@
             <h1 class="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"> {{.Params.title}} </h1>
         </div>
               
-        <div class="mt-8 prose-lg max-w-3xl mb-16">
+        <div class="mt-8 prose-lg max-w-3xl">
             {{.Content}}
         </div>
 
-        <div class="mt-8 prose-lg max-w-3xl">
+        <div class="prose-lg max-w-3xl">
             {{range where .Site.Pages.ByDate "Params.type" .Params.children }}
-                <a href="{{.Permalink}}" class="block">{{.Params.Title}}</a>
+                <div class="mb-4">
+                    <h2 class="font-medium text-lg">
+                        <a href="{{.Permalink}}">{{.Params.Title}}</a>
+                    </h2>
+                    <p class="text-xs">{{.Params.Short}}</p>    
+                </div>                
             {{end}}
         </div>
     </div>
