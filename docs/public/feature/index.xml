@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Features on Oxpecker</title>
+    <link>https://oxpecker.netlify.app/feature/</link>
+    <description>Recent content in Features on Oxpecker</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Sep 2021 15:45:12 -0500</lastBuildDate><atom:link href="https://oxpecker.netlify.app/feature/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Feature4</title>
+      <link>https://oxpecker.netlify.app/feature/feature4/</link>
+      <pubDate>Wed, 01 Sep 2021 15:45:12 -0500</pubDate>
+      
+      <guid>https://oxpecker.netlify.app/feature/feature4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Feature3</title>
+      <link>https://oxpecker.netlify.app/feature/feature3/</link>
+      <pubDate>Wed, 01 Sep 2021 15:45:08 -0500</pubDate>
+      
+      <guid>https://oxpecker.netlify.app/feature/feature3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Feature2</title>
+      <link>https://oxpecker.netlify.app/feature/feature2/</link>
+      <pubDate>Wed, 01 Sep 2021 15:45:03 -0500</pubDate>
+      
+      <guid>https://oxpecker.netlify.app/feature/feature2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Feature1</title>
+      <link>https://oxpecker.netlify.app/feature/feature1/</link>
+      <pubDate>Wed, 01 Sep 2021 15:34:37 -0500</pubDate>
+      
+      <guid>https://oxpecker.netlify.app/feature/feature1/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
