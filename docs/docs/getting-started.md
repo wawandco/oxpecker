@@ -7,7 +7,7 @@ title: Getting Started
 In order to get started with the Ox CLI you should install. You can grab the binary from the github repository or you can install from source, which is the recommended way. To install from source you should run:
 
 ```sh
-go install github.com/wawandco/oxpecker/cmd/ox@latest
+go install github.com/wawandco/ox/cmd/ox@latest
 ```
 
 Once this completes you should have the ox binary in your terminal. You can test it and see if it works by running:
@@ -19,9 +19,9 @@ ox help
 You should see something like:
 
 ```sh
-[info] Using wawandco/oxpecker/cmd/ox 
+[info] Using wawandco/ox/cmd/ox 
 
-Oxpecker allows to build apps with ease
+Ox allows to build apps with ease
 
 Usage:
   ox [command]
@@ -37,7 +37,7 @@ Command      Alias
   generate      g       Allows to invoke registered generator plugins
   new                   Generates a new app with registered plugins
   task                  Runs grifts tasks previously imported in the CLI
-  version       v       returns the current version of Oxpecker CLI
+  version       v       returns the current version of Ox CLI
 ```
 
 Which means you're all set.

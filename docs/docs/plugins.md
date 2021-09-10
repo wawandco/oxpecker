@@ -7,11 +7,11 @@ sidebar_position: 9
 
 ## Plugin System
 
-You might have read a couple of times the `plugin system` that Oxpecker uses, in short, Oxpecker uses a plugin system that allows to add and remove components depending on the need.
+You might have read a couple of times the `plugin system` that Ox uses, in short, Ox uses a plugin system that allows to add and remove components depending on the need.
 
 ### Base plugins
 
-To start Oxpecker uses a [base set of plugins](https://github.com/wawandco/oxpecker/blob/da3802e39c839864827d693f0fa6c2339626b0cb/tools/tools.go#L44), these include the common things used on application development with Buffalo.
+To start Ox uses a [base set of plugins](https://github.com/wawandco/ox/blob/da3802e39c839864827d693f0fa6c2339626b0cb/tools/tools.go#L44), these include the common things used on application development with Buffalo.
 
 - Pop
 - Soda
@@ -45,11 +45,11 @@ import (
     _ "yourapp/app/tasks"
     _ "yourapp/app/models"
 
-    "github.com/wawandco/oxpecker/cli"
-    "github.com/wawandco/oxpecker/tools/soda"
+    "github.com/wawandco/ox/cli"
+    "github.com/wawandco/ox/tools/soda"
 )
 
-// main function for the tooling cli, will be invoked by Oxpecker
+// main function for the tooling cli, will be invoked by Ox
 // when found in the source code. In here you can add/remove plugins that
 // your app will use as part of its lifecycle.
 func main() {
