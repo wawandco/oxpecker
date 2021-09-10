@@ -1,25 +1,9 @@
 ---
-title: "Plugins"
-date: 2021-09-02T14:47:08-05:00
-draft: false
-sidebar_position: 9
+title: "Architecture"
+sidebar_position: 1 
 ---
 
-## Plugin System
-
 You might have read a couple of times the `plugin system` that Ox uses, in short, Ox uses a plugin system that allows to add and remove components depending on the need.
-
-### Base plugins
-
-To start Ox uses a [base set of plugins](https://github.com/wawandco/ox/blob/da3802e39c839864827d693f0fa6c2339626b0cb/tools/tools.go#L44), these include the common things used on application development with Buffalo.
-
-- Pop
-- Soda
-- Flect
-- Envy
-- Tags
-- Validate
-- Grift
 
 ### Customizing through plugins
 Oftentimes you may need to have your own CLI commands for common operations for your team. While the base plugins provide a foundation for Buffalo development these may fall short for specific team choices.
@@ -66,7 +50,3 @@ func main() {
 
 As you can see, the CLI instance allows to specify the plugins you want to use, and uses Base plugins to start. In order to use your own plugin you would just have to add those to the plugins that the CLI will use.
 
-### Building your CLI
-One important part to mention is that the build command will not attempt to build the CLI folder. Instead the developer will need to do it when needed, either on the CLI
-
-Either on your Dockerfile or your build system you should include something like `go build ./cmd/cli` to ensure that the cli binary gets to your running environment.

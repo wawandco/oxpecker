@@ -9,7 +9,7 @@ To install ox, run:
 go install github.com/wawandco/ox/cmd/ox@latest
 ```
 
-To know more about Ox 
+To know more about Ox take a look at [our documentation site](https://oxcli.dev).
 
 ### Ox vs Buffalo CLI
 
