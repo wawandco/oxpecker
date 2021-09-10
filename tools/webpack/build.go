@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/ox/internal/log"
 )
 
 const (

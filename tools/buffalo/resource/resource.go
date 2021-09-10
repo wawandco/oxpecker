@@ -8,10 +8,10 @@ import (
 	"github.com/gobuffalo/flect/name"
 	"github.com/pkg/errors"
 
-	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxpecker/internal/source"
-	"github.com/wawandco/oxpecker/tools/buffalo/model"
-	"github.com/wawandco/oxpecker/tools/soda/fizz"
+	"github.com/wawandco/ox/internal/info"
+	"github.com/wawandco/ox/internal/source"
+	"github.com/wawandco/ox/tools/buffalo/model"
+	"github.com/wawandco/ox/tools/soda/fizz"
 )
 
 var (

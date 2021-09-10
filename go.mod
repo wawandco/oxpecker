@@ -1,4 +1,4 @@
-module github.com/wawandco/oxpecker
+module github.com/wawandco/ox
 
 go 1.16
 

@@ -1,8 +1,8 @@
 package soda
 
 import (
-	"github.com/wawandco/oxpecker/tools/soda/fizz"
-	"github.com/wawandco/oxpecker/tools/soda/sql"
+	"github.com/wawandco/ox/tools/soda/fizz"
+	"github.com/wawandco/ox/tools/soda/sql"
 )
 
 var _ Creator = fizz.Creator{}

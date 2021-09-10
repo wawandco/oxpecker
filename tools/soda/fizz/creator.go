@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/ox/internal/source"
 )
 
 var (

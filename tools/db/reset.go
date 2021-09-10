@@ -6,7 +6,7 @@ import (
 
 	"github.com/gobuffalo/pop/v5"
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/ox/internal/log"
 )
 
 type ResetCommand struct {

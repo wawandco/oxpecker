@@ -6,7 +6,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // printSingle prints help details for a passed plugin

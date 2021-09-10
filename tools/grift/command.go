@@ -7,7 +7,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/markbates/grift/grift"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 var (

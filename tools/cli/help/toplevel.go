@@ -5,13 +5,13 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // printTopLevel prints the top level help text with a table that contains top level
 // commands (names) and descriptions.
 func (h *Command) printTopLevel() {
-	fmt.Printf("Oxpecker allows to build apps with ease\n\n")
+	fmt.Printf("Ox allows to build apps with ease\n\n")
 	fmt.Println("Usage:")
 	fmt.Printf("  ox [command]\n\n")
 

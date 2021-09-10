@@ -8,8 +8,8 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/internal/source"
 )
 
 var (

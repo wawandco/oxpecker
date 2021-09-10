@@ -7,10 +7,10 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/tools/cli/help"
+	"github.com/wawandco/ox/internal/info"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
+	"github.com/wawandco/ox/tools/cli/help"
 )
 
 // cli is the CLI wrapper for our tool. It is in charge
@@ -57,8 +57,8 @@ func (c *cli) Wrap(ctx context.Context, args []string) error {
 	path := filepath.Join("cmd", "ox", "main.go")
 	_, err := os.Stat(path)
 	name := info.ModuleName()
-	if err != nil || name == "" || name == "github.com/wawandco/oxpecker" {
-		log.Info("Using github.com/wawandco/oxpecker/cmd/ox \n")
+	if err != nil || name == "" || name == "github.com/wawandco/ox" {
+		log.Info("Using github.com/wawandco/ox/cmd/ox \n")
 		return c.Run(ctx, args)
 	}
 
@@ -99,7 +99,7 @@ func (c *cli) Run(ctx context.Context, args []string) error {
 		return nil
 	}
 
-	// Commands that require running within the oxpecker directory
+	// Commands that require running within the ox directory
 	// may require its root to be determined with the go.mod. However
 	// some other commands may want to determine the root by themself,
 	// doing os.Getwd or something similar. The latter ones are RootFinders.

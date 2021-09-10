@@ -8,9 +8,9 @@ import (
 	"os"
 
 	"github.com/gobuffalo/pop/v5"
-	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/internal/info"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)

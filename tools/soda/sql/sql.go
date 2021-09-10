@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/ox/internal/log"
 )
 
 // Creator model struct for fizz generation files

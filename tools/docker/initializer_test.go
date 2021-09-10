@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/wawandco/oxpecker/lifecycle/new"
+	"github.com/wawandco/ox/lifecycle/new"
 )
 
 func TestInitilizer(t *testing.T) {

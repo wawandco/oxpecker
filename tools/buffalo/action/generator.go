@@ -8,7 +8,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
-	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/ox/internal/source"
 )
 
 type Generator struct {

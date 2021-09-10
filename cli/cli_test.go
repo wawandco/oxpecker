@@ -3,12 +3,12 @@ package cli
 import (
 	"testing"
 
-	"github.com/wawandco/oxpecker/lifecycle/build"
-	"github.com/wawandco/oxpecker/lifecycle/dev"
-	"github.com/wawandco/oxpecker/lifecycle/generate"
-	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/tools/cli/help"
-	"github.com/wawandco/oxpecker/tools/cli/version"
+	"github.com/wawandco/ox/lifecycle/build"
+	"github.com/wawandco/ox/lifecycle/dev"
+	"github.com/wawandco/ox/lifecycle/generate"
+	"github.com/wawandco/ox/plugins"
+	"github.com/wawandco/ox/tools/cli/help"
+	"github.com/wawandco/ox/tools/cli/version"
 )
 
 func Test_CliTestingAliaser(t *testing.T) {

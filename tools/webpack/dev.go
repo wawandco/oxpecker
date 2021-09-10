@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/ox/internal/log"
 )
 
 func (w Plugin) Develop(ctx context.Context, root string) error {

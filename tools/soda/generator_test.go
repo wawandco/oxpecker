@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/tools/soda/fizz"
-	"github.com/wawandco/oxpecker/tools/soda/sql"
+	"github.com/wawandco/ox/plugins"
+	"github.com/wawandco/ox/tools/soda/fizz"
+	"github.com/wawandco/ox/tools/soda/sql"
 )
 
 func Test_Generate(t *testing.T) {

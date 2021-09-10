@@ -1,6 +1,6 @@
 package test
 
-import "github.com/wawandco/oxpecker/plugins"
+import "github.com/wawandco/ox/plugins"
 
 // Receive takes BeforeTesters, AfterTesters and Testers
 // from the passed list of pugins and save those in the

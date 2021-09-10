@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/wawandco/oxpecker/cli"
+	"github.com/wawandco/ox/cli"
 )
 
 func TestNewApp(t *testing.T) {

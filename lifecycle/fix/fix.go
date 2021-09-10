@@ -7,8 +7,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
 )
 
 //HelpText returns the help Text of build function

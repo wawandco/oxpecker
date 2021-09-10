@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 var (

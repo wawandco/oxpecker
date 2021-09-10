@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 func TestFindCommand(t *testing.T) {

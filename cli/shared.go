@@ -3,8 +3,8 @@ package cli
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/plugins"
-	"github.com/wawandco/oxpecker/tools"
+	"github.com/wawandco/ox/plugins"
+	"github.com/wawandco/ox/tools"
 )
 
 var (

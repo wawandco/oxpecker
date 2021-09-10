@@ -6,7 +6,7 @@ import (
 
 	"github.com/gobuffalo/packd"
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 var (

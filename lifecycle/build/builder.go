@@ -3,7 +3,7 @@ package build
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // Builder interface allows to set the build steps to be run.

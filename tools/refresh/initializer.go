@@ -9,7 +9,7 @@ import (
 
 	"github.com/markbates/refresh/refresh"
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/lifecycle/new"
+	"github.com/wawandco/ox/lifecycle/new"
 )
 
 var (

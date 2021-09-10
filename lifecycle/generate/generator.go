@@ -3,7 +3,7 @@ package generate
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // Generator allows to identify those plugins that are

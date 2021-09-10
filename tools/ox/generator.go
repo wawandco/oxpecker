@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/wawandco/oxpecker/internal/info"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/ox/internal/info"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/internal/source"
 )
 
 var (

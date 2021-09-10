@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)
@@ -40,7 +40,7 @@ func (d Command) HelpText() string {
 }
 
 // Run each of the initializers and afterinitializers to
-// compose the initial oxpecker application.
+// compose the initial ox application.
 func (d *Command) Run(ctx context.Context, root string, args []string) error {
 	if len(args) < 2 {
 		return ErrNoNameProvided

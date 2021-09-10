@@ -2,7 +2,7 @@ package soda
 
 import (
 	"github.com/gobuffalo/packd"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 func Plugins(migrations packd.Box) []plugins.Plugin {

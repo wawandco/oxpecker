@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // AfterTester is suited for things that need to run after the tests

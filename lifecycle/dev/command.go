@@ -3,8 +3,8 @@ package dev
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
 	"golang.org/x/sync/errgroup"
 )
 

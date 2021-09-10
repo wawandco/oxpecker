@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
 )
 
 var _ plugins.Command = (*Command)(nil)

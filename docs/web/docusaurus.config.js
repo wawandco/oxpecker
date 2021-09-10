@@ -12,7 +12,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'Wawandco', // Usually your GitHub org/user name.
-  projectName: 'oxpecker', // Usually your repo name.
+  projectName: 'ox', // Usually your repo name.
 
   presets: [
     [
@@ -49,7 +49,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             label: 'Documentation',
           },
           {
-            href: 'https://github.com/wawandco/oxpecker',
+            href: 'https://github.com/wawandco/ox',
             label: 'GitHub',
             position: 'right',
           },

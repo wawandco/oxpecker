@@ -6,8 +6,8 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/wawandco/oxpecker/internal/source"
-	"github.com/wawandco/oxpecker/lifecycle/new"
+	"github.com/wawandco/ox/internal/source"
+	"github.com/wawandco/ox/lifecycle/new"
 )
 
 var (

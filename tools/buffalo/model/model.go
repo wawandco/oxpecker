@@ -6,7 +6,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/flect/name"
-	"github.com/wawandco/oxpecker/internal/source"
+	"github.com/wawandco/ox/internal/source"
 )
 
 var (

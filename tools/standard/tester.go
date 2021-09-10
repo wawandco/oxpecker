@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/wawandco/oxpecker/internal/log"
+	"github.com/wawandco/ox/internal/log"
 )
 
 type Tester struct{}

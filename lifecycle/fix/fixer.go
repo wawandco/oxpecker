@@ -3,7 +3,7 @@ package fix
 import (
 	"context"
 
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/plugins"
 )
 
 // Fixer interface is created for those commands that fill fix certain

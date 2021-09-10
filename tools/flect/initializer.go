@@ -4,8 +4,8 @@ import (
 	"context"
 	"os"
 
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/lifecycle/new"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/lifecycle/new"
 )
 
 type Initializer struct{}

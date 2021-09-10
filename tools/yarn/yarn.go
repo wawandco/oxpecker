@@ -1,6 +1,6 @@
 package yarn
 
-import "github.com/wawandco/oxpecker/plugins"
+import "github.com/wawandco/ox/plugins"
 
 var (
 	_ plugins.Plugin = (*Plugin)(nil)

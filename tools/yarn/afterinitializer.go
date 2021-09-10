@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/wawandco/oxpecker/lifecycle/new"
+	"github.com/wawandco/ox/lifecycle/new"
 )
 
 type AfterInitializer struct{}

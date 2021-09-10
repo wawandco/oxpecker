@@ -9,8 +9,8 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/spf13/pflag"
-	"github.com/wawandco/oxpecker/internal/log"
-	"github.com/wawandco/oxpecker/plugins"
+	"github.com/wawandco/ox/internal/log"
+	"github.com/wawandco/ox/plugins"
 )
 
 var (
