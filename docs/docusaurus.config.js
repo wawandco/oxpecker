@@ -20,7 +20,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          "path": "../content",
           "showLastUpdateAuthor": false,
           "showLastUpdateTime": false,
           sidebarPath: require.resolve('./sidebars.js'),
